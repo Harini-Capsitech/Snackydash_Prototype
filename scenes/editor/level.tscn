@@ -1,0 +1,870 @@
+[gd_scene format=3 uid="uid://b7sx6sish47ox"]
+
+[ext_resource type="Script" uid="uid://bhm7hfqpslvn1" path="res://scripts/level_editor/LevelEditor.gd" id="1_y377r"]
+[ext_resource type="Texture2D" uid="uid://d0jn2tsckbqyr" path="res://assets/textures/road.png" id="2_f8oq8"]
+[ext_resource type="Texture2D" uid="uid://0rdrylc6dv53" path="res://assets/textures/island.png" id="3_sx23n"]
+[ext_resource type="Texture2D" uid="uid://dyg8nn3h73ap3" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_10_48_AM-removebg-preview.png" id="4_xg4dn"]
+[ext_resource type="Texture2D" uid="uid://b5vq32cfp8iv2" path="res://Sprites/Gemini_Generated_Image_parwvbparwvbparw-removebg-preview.png" id="5_5pxw1"]
+[ext_resource type="Texture2D" uid="uid://bx6gxvtnqmvfu" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_17_51_AM-removebg-preview.png" id="6_2thkr"]
+[ext_resource type="Texture2D" uid="uid://clgvkh7hw62su" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_19_30_AM-removebg-preview.png" id="7_nt7o6"]
+[ext_resource type="Texture2D" uid="uid://dqk7gej4x36q0" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_20_36_AM-removebg-preview.png" id="8_14ect"]
+[ext_resource type="Texture2D" uid="uid://cdansxnsw3he2" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_21_19_AM-removebg-preview.png" id="9_rx7q2"]
+[ext_resource type="Texture2D" uid="uid://hhbhne1038q0" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_26_19_AM-removebg-preview.png" id="10_0ajou"]
+[ext_resource type="Script" uid="uid://bdxfhemocm2r1" path="res://scripts/level_editor/LevelData.gd" id="11_f8oq8"]
+
+[sub_resource type="Resource" id="Resource_sx23n"]
+script = ExtResource("11_f8oq8")
+islands = Array[Dictionary]([{
+"height": 6.0,
+"width": 4.0,
+"x": 3.0,
+"y": 0.0
+}, {
+"height": 6.0,
+"width": 4.0,
+"x": 3.0,
+"y": 9.0
+}, {
+"height": 7.0,
+"width": 5.0,
+"x": 2.0,
+"y": 4.0
+}, {
+"height": 3.0,
+"width": 3.0,
+"x": 3.0,
+"y": 7.0
+}])
+slots = Array[Dictionary]([{
+"height": 5.0,
+"width": 4.0,
+"x": -1.0,
+"y": 2.0
+}, {
+"height": 5.0,
+"width": 4.0,
+"x": 6.0,
+"y": 2.0
+}, {
+"height": 5.0,
+"width": 4.0,
+"x": 6.0,
+"y": 0.0
+}, {
+"height": 5.0,
+"width": 4.0,
+"x": -1.0,
+"y": 0.0
+}, {
+"height": 5.0,
+"width": 4.0,
+"x": 4.0,
+"y": -1.0
+}, {
+"height": 5.0,
+"width": 4.0,
+"x": 2.0,
+"y": -1.0
+}])
+roads = Array[Dictionary]([{
+"height": 1.0,
+"width": 5.0,
+"x": 2.0,
+"y": 2.0
+}, {
+"height": 2.0,
+"width": 1.0,
+"x": 2.0,
+"y": 3.0
+}, {
+"height": 2.0,
+"width": 1.0,
+"x": 6.0,
+"y": 3.0
+}, {
+"height": 1.0,
+"width": 7.0,
+"x": 1.0,
+"y": 5.0
+}, {
+"height": 5.0,
+"width": 1.0,
+"x": 1.0,
+"y": 6.0
+}, {
+"height": 5.0,
+"width": 1.0,
+"x": 7.0,
+"y": 6.0
+}, {
+"height": 1.0,
+"width": 7.0,
+"x": 1.0,
+"y": 11.0
+}, {
+"height": 2.0,
+"width": 1.0,
+"x": 4.0,
+"y": 9.0
+}, {
+"height": 2.0,
+"width": 1.0,
+"x": 2.0,
+"y": 12.0
+}, {
+"height": 2.0,
+"width": 1.0,
+"x": 6.0,
+"y": 12.0
+}, {
+"height": 1.0,
+"width": 5.0,
+"x": 2.0,
+"y": 14.0
+}, {
+"height": 1.0,
+"width": 5.0,
+"x": 2.0,
+"y": 16.0
+}])
+entities = Array[Dictionary]([{
+"cell_x": 4,
+"cell_y": 11,
+"type": "player"
+}, {
+"cell_x": 4,
+"cell_y": 8,
+"type": "box"
+}, {
+"cell_x": 2,
+"cell_y": 3,
+"type": "apple_red"
+}, {
+"cell_x": 2,
+"cell_y": 2,
+"type": "apple_red"
+}, {
+"cell_x": 3,
+"cell_y": 2,
+"type": "apple_red"
+}, {
+"cell_x": 4,
+"cell_y": 2,
+"type": "apple_red"
+}, {
+"cell_x": 5,
+"cell_y": 2,
+"type": "apple_red"
+}, {
+"cell_x": 6,
+"cell_y": 2,
+"type": "apple_red"
+}, {
+"cell_x": 6,
+"cell_y": 3,
+"type": "apple_red"
+}, {
+"cell_x": 2,
+"cell_y": 5,
+"type": "apple_red"
+}, {
+"cell_x": 3,
+"cell_y": 5,
+"type": "apple_red"
+}, {
+"cell_x": 4,
+"cell_y": 5,
+"type": "apple_red"
+}, {
+"cell_x": 5,
+"cell_y": 5,
+"type": "apple_red"
+}, {
+"cell_x": 6,
+"cell_y": 5,
+"type": "apple_red"
+}, {
+"cell_x": 1,
+"cell_y": 5,
+"type": "blueberry"
+}, {
+"cell_x": 1,
+"cell_y": 6,
+"type": "blueberry"
+}, {
+"cell_x": 1,
+"cell_y": 7,
+"type": "blueberry"
+}, {
+"cell_x": 1,
+"cell_y": 8,
+"type": "blueberry"
+}, {
+"cell_x": 1,
+"cell_y": 9,
+"type": "blueberry"
+}, {
+"cell_x": 1,
+"cell_y": 10,
+"type": "blueberry"
+}, {
+"cell_x": 1,
+"cell_y": 11,
+"type": "blueberry"
+}, {
+"cell_x": 2,
+"cell_y": 11,
+"type": "blueberry"
+}, {
+"cell_x": 3,
+"cell_y": 11,
+"type": "blueberry"
+}, {
+"cell_x": 2,
+"cell_y": 12,
+"type": "apple_green"
+}, {
+"cell_x": 2,
+"cell_y": 13,
+"type": "apple_green"
+}, {
+"cell_x": 2,
+"cell_y": 14,
+"type": "apple_green"
+}, {
+"cell_x": 3,
+"cell_y": 14,
+"type": "apple_green"
+}, {
+"cell_x": 4,
+"cell_y": 14,
+"type": "apple_green"
+}, {
+"cell_x": 5,
+"cell_y": 14,
+"type": "apple_green"
+}, {
+"cell_x": 6,
+"cell_y": 14,
+"type": "apple_green"
+}, {
+"cell_x": 6,
+"cell_y": 13,
+"type": "apple_green"
+}, {
+"cell_x": 6,
+"cell_y": 12,
+"type": "apple_green"
+}])
+
+[node name="Level" type="Node2D" unique_id=277332672]
+script = ExtResource("1_y377r")
+road_texture = ExtResource("2_f8oq8")
+island_texture_9slice = ExtResource("3_sx23n")
+slot_texture_9slice = ExtResource("4_xg4dn")
+entity_sprites = {
+"apple_green": ExtResource("7_nt7o6"),
+"apple_red": ExtResource("6_2thkr"),
+"blueberry": ExtResource("8_14ect"),
+"box": ExtResource("10_0ajou"),
+"peach": ExtResource("9_rx7q2"),
+"player": ExtResource("5_5pxw1")
+}
+target_level_resource = SubResource("Resource_sx23n")
+level_file_path = "res://levels/level_example.tres"
+add_road_rect = Rect2i(2, 16, 5, 1)
+add_island_rect = Rect2i(3, 7, 3, 3)
+add_slot_rect = Rect2i(3, 7, 3, 3)
+entity_grid_pos = Vector2i(6, 12)
+selected_entity_type = "apple_green"
+
+[node name="Background" type="Node2D" parent="." unique_id=488870481]
+
+[node name="Islands" type="Node2D" parent="." unique_id=809701427]
+z_index = 10
+
+[node name="@NinePatchRect@85564" type="NinePatchRect" parent="Islands" unique_id=1067698687]
+offset_left = 160.0
+offset_top = 20.0
+offset_right = 417.0
+offset_bottom = 383.0
+texture = ExtResource("3_sx23n")
+patch_margin_left = 32
+patch_margin_top = 32
+patch_margin_right = 32
+patch_margin_bottom = 32
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+metadata/grid_x = 0
+metadata/grid_y = 0
+metadata/grid_w = 9
+metadata/grid_h = 17
+
+[node name="_NinePatchRect_85564" type="NinePatchRect" parent="Islands" unique_id=82291025]
+offset_left = 166.0
+offset_top = 591.0
+offset_right = 414.0
+offset_bottom = 954.0
+texture = ExtResource("3_sx23n")
+patch_margin_left = 32
+patch_margin_top = 32
+patch_margin_right = 32
+patch_margin_bottom = 32
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+metadata/grid_x = 0
+metadata/grid_y = 0
+metadata/grid_w = 9
+metadata/grid_h = 17
+
+[node name="_NinePatchRect_85565" type="NinePatchRect" parent="Islands" unique_id=762493968]
+offset_left = 135.0
+offset_top = 243.0
+offset_right = 463.0
+offset_bottom = 720.0
+texture = ExtResource("3_sx23n")
+patch_margin_left = 32
+patch_margin_top = 32
+patch_margin_right = 32
+patch_margin_bottom = 32
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+metadata/grid_x = 0
+metadata/grid_y = 0
+metadata/grid_w = 9
+metadata/grid_h = 17
+
+[node name="Island_3_7" type="NinePatchRect" parent="Islands" unique_id=1236142013]
+offset_left = 192.0
+offset_top = 448.0
+offset_right = 384.0
+offset_bottom = 640.0
+texture = ExtResource("3_sx23n")
+patch_margin_left = 32
+patch_margin_top = 32
+patch_margin_right = 32
+patch_margin_bottom = 32
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+metadata/grid_x = 3
+metadata/grid_y = 7
+metadata/grid_w = 3
+metadata/grid_h = 3
+
+[node name="Entities" type="Node2D" parent="." unique_id=118385481]
+z_index = 40
+
+[node name="@Sprite2D@85576" type="Sprite2D" parent="Entities" unique_id=1489754246]
+position = Vector2(288, 736)
+scale = Vector2(0.104575165, 0.104575165)
+texture = ExtResource("5_5pxw1")
+metadata/grid_x = 4
+metadata/grid_y = 11
+metadata/type = "player"
+
+[node name="@Sprite2D@85577" type="Sprite2D" parent="Entities" unique_id=947462388]
+position = Vector2(286, 504.5)
+scale = Vector2(0.37600005, 0.318)
+texture = ExtResource("10_0ajou")
+metadata/grid_x = 4
+metadata/grid_y = 8
+metadata/type = "box"
+
+[node name="@Sprite2D@85578" type="Sprite2D" parent="Entities" unique_id=1642476473]
+position = Vector2(160, 224)
+scale = Vector2(0.128, 0.128)
+texture = ExtResource("6_2thkr")
+metadata/grid_x = 2
+metadata/grid_y = 3
+metadata/type = "apple_red"
+
+[node name="@Sprite2D@85579" type="Sprite2D" parent="Entities" unique_id=1081251312]
+position = Vector2(160, 160)
+scale = Vector2(0.128, 0.128)
+texture = ExtResource("6_2thkr")
+metadata/grid_x = 2
+metadata/grid_y = 2
+metadata/type = "apple_red"
+
+[node name="@Sprite2D@85580" type="Sprite2D" parent="Entities" unique_id=1586494518]
+position = Vector2(224, 160)
+scale = Vector2(0.128, 0.128)
+texture = ExtResource("6_2thkr")
+metadata/grid_x = 3
+metadata/grid_y = 2
+metadata/type = "apple_red"
+
+[node name="@Sprite2D@85581" type="Sprite2D" parent="Entities" unique_id=1574397771]
+position = Vector2(288, 160)
+scale = Vector2(0.128, 0.128)
+texture = ExtResource("6_2thkr")
+metadata/grid_x = 4
+metadata/grid_y = 2
+metadata/type = "apple_red"
+
+[node name="@Sprite2D@85582" type="Sprite2D" parent="Entities" unique_id=1056708687]
+position = Vector2(352, 160)
+scale = Vector2(0.128, 0.128)
+texture = ExtResource("6_2thkr")
+metadata/grid_x = 5
+metadata/grid_y = 2
+metadata/type = "apple_red"
+
+[node name="@Sprite2D@85583" type="Sprite2D" parent="Entities" unique_id=430389040]
+position = Vector2(416, 160)
+scale = Vector2(0.128, 0.128)
+texture = ExtResource("6_2thkr")
+metadata/grid_x = 6
+metadata/grid_y = 2
+metadata/type = "apple_red"
+
+[node name="@Sprite2D@85584" type="Sprite2D" parent="Entities" unique_id=1382259371]
+position = Vector2(416, 224)
+scale = Vector2(0.128, 0.128)
+texture = ExtResource("6_2thkr")
+metadata/grid_x = 6
+metadata/grid_y = 3
+metadata/type = "apple_red"
+
+[node name="@Sprite2D@85585" type="Sprite2D" parent="Entities" unique_id=458120291]
+position = Vector2(160, 352)
+scale = Vector2(0.128, 0.128)
+texture = ExtResource("6_2thkr")
+metadata/grid_x = 2
+metadata/grid_y = 5
+metadata/type = "apple_red"
+
+[node name="@Sprite2D@85586" type="Sprite2D" parent="Entities" unique_id=649500719]
+position = Vector2(224, 352)
+scale = Vector2(0.128, 0.128)
+texture = ExtResource("6_2thkr")
+metadata/grid_x = 3
+metadata/grid_y = 5
+metadata/type = "apple_red"
+
+[node name="@Sprite2D@85587" type="Sprite2D" parent="Entities" unique_id=1389022050]
+position = Vector2(288, 352)
+scale = Vector2(0.128, 0.128)
+texture = ExtResource("6_2thkr")
+metadata/grid_x = 4
+metadata/grid_y = 5
+metadata/type = "apple_red"
+
+[node name="@Sprite2D@85588" type="Sprite2D" parent="Entities" unique_id=419475768]
+position = Vector2(352, 352)
+scale = Vector2(0.128, 0.128)
+texture = ExtResource("6_2thkr")
+metadata/grid_x = 5
+metadata/grid_y = 5
+metadata/type = "apple_red"
+
+[node name="@Sprite2D@85589" type="Sprite2D" parent="Entities" unique_id=1508884025]
+position = Vector2(416, 352)
+scale = Vector2(0.128, 0.128)
+texture = ExtResource("6_2thkr")
+metadata/grid_x = 6
+metadata/grid_y = 5
+metadata/type = "apple_red"
+
+[node name="@Sprite2D@85590" type="Sprite2D" parent="Entities" unique_id=1554099823]
+position = Vector2(96, 352)
+scale = Vector2(0.128, 0.128)
+texture = ExtResource("8_14ect")
+metadata/grid_x = 1
+metadata/grid_y = 5
+metadata/type = "blueberry"
+
+[node name="@Sprite2D@85591" type="Sprite2D" parent="Entities" unique_id=62212027]
+position = Vector2(96, 416)
+scale = Vector2(0.128, 0.128)
+texture = ExtResource("8_14ect")
+metadata/grid_x = 1
+metadata/grid_y = 6
+metadata/type = "blueberry"
+
+[node name="@Sprite2D@85592" type="Sprite2D" parent="Entities" unique_id=1667190694]
+position = Vector2(96, 480)
+scale = Vector2(0.128, 0.128)
+texture = ExtResource("8_14ect")
+metadata/grid_x = 1
+metadata/grid_y = 7
+metadata/type = "blueberry"
+
+[node name="@Sprite2D@85593" type="Sprite2D" parent="Entities" unique_id=1933583422]
+position = Vector2(96, 544)
+scale = Vector2(0.128, 0.128)
+texture = ExtResource("8_14ect")
+metadata/grid_x = 1
+metadata/grid_y = 8
+metadata/type = "blueberry"
+
+[node name="@Sprite2D@85594" type="Sprite2D" parent="Entities" unique_id=1952756283]
+position = Vector2(96, 608)
+scale = Vector2(0.128, 0.128)
+texture = ExtResource("8_14ect")
+metadata/grid_x = 1
+metadata/grid_y = 9
+metadata/type = "blueberry"
+
+[node name="@Sprite2D@85595" type="Sprite2D" parent="Entities" unique_id=537617521]
+position = Vector2(96, 672)
+scale = Vector2(0.128, 0.128)
+texture = ExtResource("8_14ect")
+metadata/grid_x = 1
+metadata/grid_y = 10
+metadata/type = "blueberry"
+
+[node name="@Sprite2D@85596" type="Sprite2D" parent="Entities" unique_id=548332375]
+position = Vector2(96, 736)
+scale = Vector2(0.128, 0.128)
+texture = ExtResource("8_14ect")
+metadata/grid_x = 1
+metadata/grid_y = 11
+metadata/type = "blueberry"
+
+[node name="@Sprite2D@85597" type="Sprite2D" parent="Entities" unique_id=780479209]
+position = Vector2(160, 736)
+scale = Vector2(0.128, 0.128)
+texture = ExtResource("8_14ect")
+metadata/grid_x = 2
+metadata/grid_y = 11
+metadata/type = "blueberry"
+
+[node name="@Sprite2D@85598" type="Sprite2D" parent="Entities" unique_id=513073978]
+position = Vector2(224, 736)
+scale = Vector2(0.128, 0.128)
+texture = ExtResource("8_14ect")
+metadata/grid_x = 3
+metadata/grid_y = 11
+metadata/type = "blueberry"
+
+[node name="@Sprite2D@85599" type="Sprite2D" parent="Entities" unique_id=1543198352]
+position = Vector2(160, 800)
+scale = Vector2(0.128, 0.128)
+texture = ExtResource("7_nt7o6")
+metadata/grid_x = 2
+metadata/grid_y = 12
+metadata/type = "apple_green"
+
+[node name="@Sprite2D@85600" type="Sprite2D" parent="Entities" unique_id=1782179146]
+position = Vector2(160, 864)
+scale = Vector2(0.128, 0.128)
+texture = ExtResource("7_nt7o6")
+metadata/grid_x = 2
+metadata/grid_y = 13
+metadata/type = "apple_green"
+
+[node name="@Sprite2D@85601" type="Sprite2D" parent="Entities" unique_id=81044906]
+position = Vector2(160, 928)
+scale = Vector2(0.128, 0.128)
+texture = ExtResource("7_nt7o6")
+metadata/grid_x = 2
+metadata/grid_y = 14
+metadata/type = "apple_green"
+
+[node name="@Sprite2D@85602" type="Sprite2D" parent="Entities" unique_id=1071977852]
+position = Vector2(224, 928)
+scale = Vector2(0.128, 0.128)
+texture = ExtResource("7_nt7o6")
+metadata/grid_x = 3
+metadata/grid_y = 14
+metadata/type = "apple_green"
+
+[node name="@Sprite2D@85603" type="Sprite2D" parent="Entities" unique_id=1365420874]
+position = Vector2(288, 928)
+scale = Vector2(0.128, 0.128)
+texture = ExtResource("7_nt7o6")
+metadata/grid_x = 4
+metadata/grid_y = 14
+metadata/type = "apple_green"
+
+[node name="@Sprite2D@85604" type="Sprite2D" parent="Entities" unique_id=238596910]
+position = Vector2(352, 928)
+scale = Vector2(0.128, 0.128)
+texture = ExtResource("7_nt7o6")
+metadata/grid_x = 5
+metadata/grid_y = 14
+metadata/type = "apple_green"
+
+[node name="@Sprite2D@85605" type="Sprite2D" parent="Entities" unique_id=1911541499]
+position = Vector2(416, 928)
+scale = Vector2(0.128, 0.128)
+texture = ExtResource("7_nt7o6")
+metadata/grid_x = 6
+metadata/grid_y = 14
+metadata/type = "apple_green"
+
+[node name="@Sprite2D@85606" type="Sprite2D" parent="Entities" unique_id=827941720]
+position = Vector2(416, 864)
+scale = Vector2(0.128, 0.128)
+texture = ExtResource("7_nt7o6")
+metadata/grid_x = 6
+metadata/grid_y = 13
+metadata/type = "apple_green"
+
+[node name="@Sprite2D@85607" type="Sprite2D" parent="Entities" unique_id=1085881899]
+position = Vector2(416, 800)
+scale = Vector2(0.128, 0.128)
+texture = ExtResource("7_nt7o6")
+metadata/grid_x = 6
+metadata/grid_y = 12
+metadata/type = "apple_green"
+
+[node name="Slots" type="Node2D" parent="." unique_id=2120537480]
+z_index = 30
+
+[node name="@NinePatchRect@85575" type="NinePatchRect" parent="Slots" unique_id=885892555]
+offset_left = -49.0
+offset_top = 108.0
+offset_right = 180.0
+offset_bottom = 413.0
+texture = ExtResource("4_xg4dn")
+patch_margin_left = 40
+patch_margin_top = 40
+patch_margin_right = 40
+patch_margin_bottom = 40
+metadata/grid_x = 3
+metadata/grid_y = 7
+metadata/grid_w = 3
+metadata/grid_h = 3
+
+[node name="_NinePatchRect_85575" type="NinePatchRect" parent="Slots" unique_id=1187118992]
+offset_left = 397.0
+offset_top = 111.0
+offset_right = 631.0
+offset_bottom = 418.0
+texture = ExtResource("4_xg4dn")
+patch_margin_left = 40
+patch_margin_top = 40
+patch_margin_right = 40
+patch_margin_bottom = 40
+metadata/grid_x = 3
+metadata/grid_y = 7
+metadata/grid_w = 3
+metadata/grid_h = 3
+
+[node name="_NinePatchRect_85576" type="NinePatchRect" parent="Slots" unique_id=399013185]
+offset_left = 395.0
+offset_top = -21.0
+offset_right = 629.0
+offset_bottom = 286.0
+texture = ExtResource("4_xg4dn")
+patch_margin_left = 40
+patch_margin_top = 40
+patch_margin_right = 40
+patch_margin_bottom = 40
+metadata/grid_x = 3
+metadata/grid_y = 7
+metadata/grid_w = 3
+metadata/grid_h = 3
+
+[node name="_NinePatchRect_85577" type="NinePatchRect" parent="Slots" unique_id=1621828226]
+offset_left = -58.0
+offset_top = -24.0
+offset_right = 176.0
+offset_bottom = 283.0
+texture = ExtResource("4_xg4dn")
+patch_margin_left = 40
+patch_margin_top = 40
+patch_margin_right = 40
+patch_margin_bottom = 40
+metadata/grid_x = 3
+metadata/grid_y = 7
+metadata/grid_w = 3
+metadata/grid_h = 3
+
+[node name="_NinePatchRect_85578" type="NinePatchRect" parent="Slots" unique_id=1792848923]
+offset_left = 271.0
+offset_top = -85.0
+offset_right = 505.0
+offset_bottom = 222.0
+texture = ExtResource("4_xg4dn")
+patch_margin_left = 40
+patch_margin_top = 40
+patch_margin_right = 40
+patch_margin_bottom = 40
+metadata/grid_x = 3
+metadata/grid_y = 7
+metadata/grid_w = 3
+metadata/grid_h = 3
+
+[node name="_NinePatchRect_85579" type="NinePatchRect" parent="Slots" unique_id=585793948]
+offset_left = 141.0
+offset_top = -87.0
+offset_right = 375.0
+offset_bottom = 220.0
+texture = ExtResource("4_xg4dn")
+patch_margin_left = 40
+patch_margin_top = 40
+patch_margin_right = 40
+patch_margin_bottom = 40
+metadata/grid_x = 3
+metadata/grid_y = 7
+metadata/grid_w = 3
+metadata/grid_h = 3
+
+[node name="Roads" type="Node2D" parent="." unique_id=754576442]
+z_index = 20
+
+[node name="@NinePatchRect@85565" type="NinePatchRect" parent="Roads" unique_id=877668016]
+offset_left = 128.0
+offset_top = 128.0
+offset_right = 448.0
+offset_bottom = 192.0
+texture = ExtResource("2_f8oq8")
+region_rect = Rect2(202, 35, 273, 298)
+axis_stretch_horizontal = 1
+metadata/grid_x = 2
+metadata/grid_y = 2
+metadata/grid_w = 5
+metadata/grid_h = 1
+
+[node name="@NinePatchRect@85566" type="NinePatchRect" parent="Roads" unique_id=868808994]
+offset_left = 192.0
+offset_top = 192.0
+offset_right = 320.0
+offset_bottom = 256.0
+rotation = 1.5707964
+texture = ExtResource("2_f8oq8")
+region_rect = Rect2(202, 35, 273, 298)
+axis_stretch_horizontal = 1
+metadata/grid_x = 2
+metadata/grid_y = 3
+metadata/grid_w = 1
+metadata/grid_h = 2
+
+[node name="@NinePatchRect@85567" type="NinePatchRect" parent="Roads" unique_id=1974345000]
+offset_left = 448.0
+offset_top = 192.0
+offset_right = 576.0
+offset_bottom = 256.0
+rotation = 1.5707964
+texture = ExtResource("2_f8oq8")
+region_rect = Rect2(202, 35, 273, 298)
+axis_stretch_horizontal = 1
+metadata/grid_x = 6
+metadata/grid_y = 3
+metadata/grid_w = 1
+metadata/grid_h = 2
+
+[node name="@NinePatchRect@85568" type="NinePatchRect" parent="Roads" unique_id=1795935457]
+offset_left = 64.0
+offset_top = 320.0
+offset_right = 512.0
+offset_bottom = 384.0
+texture = ExtResource("2_f8oq8")
+region_rect = Rect2(202, 35, 273, 298)
+axis_stretch_horizontal = 1
+metadata/grid_x = 1
+metadata/grid_y = 5
+metadata/grid_w = 7
+metadata/grid_h = 1
+
+[node name="@NinePatchRect@85569" type="NinePatchRect" parent="Roads" unique_id=2047444579]
+offset_left = 128.0
+offset_top = 384.0
+offset_right = 448.0
+offset_bottom = 448.0
+rotation = 1.5707964
+texture = ExtResource("2_f8oq8")
+region_rect = Rect2(202, 35, 273, 298)
+axis_stretch_horizontal = 1
+metadata/grid_x = 1
+metadata/grid_y = 6
+metadata/grid_w = 1
+metadata/grid_h = 5
+
+[node name="@NinePatchRect@85570" type="NinePatchRect" parent="Roads" unique_id=1619441241]
+offset_left = 512.0
+offset_top = 384.0
+offset_right = 832.0
+offset_bottom = 448.0
+rotation = 1.5707964
+texture = ExtResource("2_f8oq8")
+region_rect = Rect2(202, 35, 273, 298)
+axis_stretch_horizontal = 1
+metadata/grid_x = 7
+metadata/grid_y = 6
+metadata/grid_w = 1
+metadata/grid_h = 5
+
+[node name="@NinePatchRect@85571" type="NinePatchRect" parent="Roads" unique_id=1027758132]
+offset_left = 64.0
+offset_top = 704.0
+offset_right = 512.0
+offset_bottom = 768.0
+texture = ExtResource("2_f8oq8")
+region_rect = Rect2(202, 35, 273, 298)
+axis_stretch_horizontal = 1
+metadata/grid_x = 1
+metadata/grid_y = 11
+metadata/grid_w = 7
+metadata/grid_h = 1
+
+[node name="Road_4_9" type="NinePatchRect" parent="Roads" unique_id=1074522226]
+offset_left = 320.0
+offset_top = 576.0
+offset_right = 448.0
+offset_bottom = 640.0
+rotation = 1.5707964
+texture = ExtResource("2_f8oq8")
+region_rect = Rect2(202, 35, 273, 298)
+axis_stretch_horizontal = 1
+metadata/grid_x = 4
+metadata/grid_y = 9
+metadata/grid_w = 1
+metadata/grid_h = 2
+
+[node name="@NinePatchRect@85572" type="NinePatchRect" parent="Roads" unique_id=1866766742]
+offset_left = 192.0
+offset_top = 768.0
+offset_right = 320.0
+offset_bottom = 832.0
+rotation = 1.5707964
+texture = ExtResource("2_f8oq8")
+region_rect = Rect2(202, 35, 273, 298)
+axis_stretch_horizontal = 1
+metadata/grid_x = 2
+metadata/grid_y = 12
+metadata/grid_w = 1
+metadata/grid_h = 2
+
+[node name="@NinePatchRect@85573" type="NinePatchRect" parent="Roads" unique_id=293679534]
+offset_left = 448.0
+offset_top = 768.0
+offset_right = 576.0
+offset_bottom = 832.0
+rotation = 1.5707964
+texture = ExtResource("2_f8oq8")
+region_rect = Rect2(202, 35, 273, 298)
+axis_stretch_horizontal = 1
+metadata/grid_x = 6
+metadata/grid_y = 12
+metadata/grid_w = 1
+metadata/grid_h = 2
+
+[node name="@NinePatchRect@85574" type="NinePatchRect" parent="Roads" unique_id=2045655146]
+offset_left = 128.0
+offset_top = 896.0
+offset_right = 448.0
+offset_bottom = 960.0
+texture = ExtResource("2_f8oq8")
+region_rect = Rect2(202, 35, 273, 298)
+axis_stretch_horizontal = 1
+metadata/grid_x = 2
+metadata/grid_y = 14
+metadata/grid_w = 5
+metadata/grid_h = 1
+
+[node name="Road_2_16" type="NinePatchRect" parent="Roads" unique_id=309103421]
+offset_left = 128.0
+offset_top = 1024.0
+offset_right = 448.0
+offset_bottom = 1088.0
+texture = ExtResource("2_f8oq8")
+region_rect = Rect2(0, 0, 716, 717)
+axis_stretch_horizontal = 1
+metadata/grid_x = 2
+metadata/grid_y = 16
+metadata/grid_w = 5
+metadata/grid_h = 1

@@ -6,15 +6,28 @@ const DIRECTION_NAMES := ["UP", "RIGHT", "DOWN", "LEFT"]
 
 static func solve(data: LevelData, node_limit: int = 50000, depth_limit: int = 200) -> Dictionary:
 	var result := {"solvable": false, "solution": [], "node_count": 0, "limited": false, "message": ""}
-	if not LevelValidator.is_valid(data):
-		result["message"] = "Cannot solve an invalid level."
-		return result
-
+	
+	var road_cells: Array[Vector2i] = []
+	for r in data.roads:
+		for x in range(r.width):
+			for y in range(r.height):
+				road_cells.append(Vector2i(r.x + x, r.y + y))
+				
 	var grid := GridManager.new()
-	grid.setup_level(data.width, data.height, data.cell_size, data.road_cells, _blocked_cells(data))
-	var fruits: Array[Dictionary] = data.fruits
-	var trucks: Array[Dictionary] = data.trucks
-	var initial := {"position": data.player_start, "collected": [], "progress": _zero_progress(trucks), "path": []}
+	grid.setup_level(data.grid_columns, data.grid_rows, int(data.cell_size.x), road_cells, [])
+	
+	var fruits: Array[Dictionary] = []
+	var trucks: Array[Dictionary] = []
+	var player_start: Vector2i = Vector2i.ZERO
+	for e in data.entities:
+		if e.type == "player":
+			player_start = Vector2i(e.cell_x, e.cell_y)
+		elif e.type == "box":
+			trucks.append({"position": Vector2i(e.cell_x, e.cell_y), "type": "apple_red", "required": 5})
+		else:
+			fruits.append({"position": Vector2i(e.cell_x, e.cell_y), "type": e.type})
+
+	var initial := {"position": player_start, "collected": [], "progress": _zero_progress(trucks), "path": []}
 	var queue: Array[Dictionary] = [initial]
 	var visited := {_state_key(initial): true}
 
@@ -82,9 +95,3 @@ static func _zero_progress(trucks: Array[Dictionary]) -> Array:
 	for _truck in trucks:
 		progress.append(0)
 	return progress
-
-static func _blocked_cells(data: LevelData) -> Array[Vector2i]:
-	var result: Array[Vector2i] = []
-	for footprint in data.blocked_footprints:
-		result.append_array(data.footprint_cells(footprint))
-	return result

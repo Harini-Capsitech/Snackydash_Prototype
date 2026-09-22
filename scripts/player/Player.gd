@@ -6,11 +6,26 @@ class_name Player
 var inventory: Dictionary = {}
 
 var tail_cells: Array[Vector2i] = []
-var tail_segments: Array[ColorRect] = []
-var pending_growth_colors: Array[Color] = []
+var entity_sprites: Dictionary = {}
+var tail_segments: Array[Dictionary] = [] # Array of {"type": String, "node": Node2D}
+var pending_growth_types: Array[String] = []
 
-func setup(start_cell: Vector2i, gm: GridManager):
+func setup(start_cell: Vector2i, gm: GridManager, sprites: Dictionary = {}):
+    entity_sprites = sprites
     movement.setup(start_cell, gm)
+    
+    if has_node("ColorRect"):
+        get_node("ColorRect").queue_free()
+        
+    var tex = entity_sprites.get("player")
+    if tex:
+        var sprite = Sprite2D.new()
+        sprite.texture = tex
+        var tex_size = tex.get_size()
+        if tex_size.x > 0 and tex_size.y > 0:
+            var scale_factor = min(gm.cell_size / float(tex_size.x), gm.cell_size / float(tex_size.y))
+            sprite.scale = Vector2(scale_factor, scale_factor)
+        add_child(sprite)
 
 func add_fruit(type: String):
     if not inventory.has(type):
@@ -22,40 +37,55 @@ func get_fruit_count(type: String) -> int:
     return inventory.get(type, 0)
     
 func remove_fruit(type: String, amount: int):
-    if inventory.has(type):
-        inventory[type] = max(0, inventory[type] - amount)
+    if not inventory.has(type):
+        return
+    inventory[type] = max(0, inventory[type] - amount)
+    
+    # Remove matching fruit segments starting from the back
+    var removed = 0
+    var i = tail_segments.size() - 1
+    while i >= 0 and removed < amount:
+        if tail_segments[i]["type"] == type:
+            var segment = tail_segments[i]
+            segment["node"].queue_free()
+            tail_segments.remove_at(i)
+            tail_cells.remove_at(i)
+            removed += 1
+        i -= 1
 
 func grow_tail(type: String):
-    var color = Color(0, 0.4, 0.8)
-    if type == "APPLE":
-        color = Color.RED
-    elif type == "BANANA":
-        color = Color.YELLOW
-    pending_growth_colors.append(color)
+    pending_growth_types.append(type)
 
 func update_tail(old_cell: Vector2i):
     tail_cells.insert(0, old_cell)
-    
-    if pending_growth_colors.size() > 0:
-        var color = pending_growth_colors.pop_front()
-        var new_segment = ColorRect.new()
-        new_segment.size = Vector2(60, 60)
-        # Offset to center it like the player head
-        new_segment.position = -Vector2(30, 30)
-        new_segment.color = color
-        
-        # Create a container node for the segment so we can position it in world space easily
+
+    if pending_growth_types.size() > 0:
+        var type = pending_growth_types.pop_front()
+        var tex = entity_sprites.get(type)
+
         var container = Node2D.new()
-        container.add_child(new_segment)
-        # Add to parent (the root or GameManager) so it doesn't move with the head
+        if tex:
+            var sprite = Sprite2D.new()
+            sprite.texture = tex
+            var tex_size = tex.get_size()
+            if tex_size.x > 0 and tex_size.y > 0:
+                var scale_factor = min(movement.grid_manager.cell_size / float(tex_size.x), movement.grid_manager.cell_size / float(tex_size.y))
+                sprite.scale = Vector2(scale_factor, scale_factor)
+            container.add_child(sprite)
+
         get_parent().add_child(container)
-        tail_segments.append(new_segment)
+        tail_segments.append({"type": type, "node": container})
     else:
         if tail_cells.size() > tail_segments.size():
             tail_cells.pop_back()
-            
-    # Update visual positions
+
+    _update_visuals()
+
+func _update_visuals():
     for i in range(tail_segments.size()):
         if i < tail_cells.size():
             var cell_pos = movement.grid_manager.cell_to_world(tail_cells[i])
-            tail_segments[i].get_parent().position = cell_pos
+            tail_segments[i]["node"].position = cell_pos
+
+func get_tail_cells() -> Array[Vector2i]:
+    return tail_cells

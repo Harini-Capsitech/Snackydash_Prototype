@@ -2,42 +2,108 @@ extends Node2D
 class_name Truck
 
 var grid_cell: Vector2i
-var required_type: String
-var required_amount: int
-var delivered_amount: int = 0
+var crates: Array[Dictionary] = [] # [{"type": "apple_green", "amount": 9, "delivered": 0}]
 var completed := false
 var grid_manager: GridManager
+var entity_sprites: Dictionary = {}
+var current_crate_sprites: Array[Node] = []
 
-func setup(cell: Vector2i, type: String, req_amt: int, gm: GridManager):
+func setup(cell: Vector2i, _type: String, _req_amt: int, gm: GridManager, tex: Texture2D = null, sprites: Dictionary = {}):
     grid_cell = cell
-    required_type = type
-    required_amount = req_amt
     grid_manager = gm
+    entity_sprites = sprites
     position = grid_manager.cell_to_world(grid_cell)
+    
+    if has_node("ColorRect"):
+        get_node("ColorRect").queue_free()
+        
+    if tex:
+        var sprite = Sprite2D.new()
+        sprite.texture = tex
+        var tex_size = tex.get_size()
+        if tex_size.x > 0 and tex_size.y > 0:
+            var scale_factor = min(grid_manager.cell_size / float(tex_size.x), grid_manager.cell_size / float(tex_size.y))
+            sprite.scale = Vector2(scale_factor, scale_factor)
+        add_child(sprite)
+
+func set_crates(crate_list: Array[Dictionary]):
+    crates = crate_list
+    _update_visuals()
 
 func can_deliver(player: Player) -> bool:
-    return not completed and player.get_fruit_count(required_type) > 0
+    if completed or crates.is_empty():
+        return false
+    return player.get_fruit_count(crates[0]["type"]) > 0
 
 func deliver(player: Player):
-    var p_count = player.get_fruit_count(required_type)
-    var needed = required_amount - delivered_amount
-    var amount_to_deliver = min(p_count, needed)
-    
-    if amount_to_deliver > 0:
-        player.remove_fruit(required_type, amount_to_deliver)
+    if completed or crates.is_empty():
+        return
         
-        # Add visual representation
-        for i in range(amount_to_deliver):
+    var cascade_happened = false
+    while not crates.is_empty():
+        var top_crate = crates[0]
+        var p_count = player.get_fruit_count(top_crate["type"])
+        var needed = top_crate["amount"] - top_crate.get("delivered", 0)
+        
+        var amount_to_deliver = min(p_count, needed)
+        
+        if amount_to_deliver > 0:
+            player.remove_fruit(top_crate["type"], amount_to_deliver)
+            top_crate["delivered"] = top_crate.get("delivered", 0) + amount_to_deliver
+            cascade_happened = true
+            
+            # Animate the delivery (visual representation)
+            _animate_delivery(amount_to_deliver, top_crate["type"], top_crate["delivered"])
+            
+            if top_crate["delivered"] >= top_crate["amount"]:
+                crates.pop_front()
+                if not crates.is_empty():
+                    _clear_delivered_fruits_animated()
+                # Loop will continue to check the NEXT crate in the cascade!
+                _update_visuals()
+            else:
+                break # Partially filled
+        else:
+            break # No matching fruits for this crate
+            
+    if crates.is_empty() and cascade_happened:
+        completed = true
+
+func _update_visuals():
+    # Show active top crate UI (just print for now, could be a label)
+    if not crates.is_empty():
+        var t = crates[0]
+        print("Truck needs: %s (%d/%d)" % [t["type"], t.get("delivered", 0), t["amount"]])
+
+func _clear_delivered_fruits_animated():
+    for s in current_crate_sprites:
+        if is_instance_valid(s):
+            var tween = create_tween()
+            tween.tween_property(s, "modulate:a", 0.0, 0.5)
+            tween.tween_callback(s.queue_free)
+    current_crate_sprites.clear()
+
+func _animate_delivery(amount: int, fruit_type: String, current_delivered: int):
+    var tex = entity_sprites.get(fruit_type)
+    for i in range(amount):
+        var index = (current_delivered - amount) + i
+        var col = index % 3
+        var row = int(index / 3)
+        var pos = Vector2(-15 + col * 15, -15 + row * 15)
+        
+        if tex:
+            var sprite = Sprite2D.new()
+            sprite.texture = tex
+            var tex_size = tex.get_size()
+            if tex_size.x > 0 and tex_size.y > 0:
+                sprite.scale = Vector2(20.0 / tex_size.x, 20.0 / tex_size.y)
+            sprite.position = pos
+            add_child(sprite)
+            current_crate_sprites.append(sprite)
+        else:
             var fruit_rect = ColorRect.new()
             fruit_rect.size = Vector2(10, 10)
-            if required_type == "APPLE":
-                fruit_rect.color = Color.RED
-            elif required_type == "BANANA":
-                fruit_rect.color = Color.YELLOW
-            # Position them next to each other inside the truck
-            fruit_rect.position = Vector2(-30 + (delivered_amount + i) * 15, -30)
+            fruit_rect.color = Color.WHITE
+            fruit_rect.position = pos - Vector2(5, 5)
             add_child(fruit_rect)
-            
-        delivered_amount += amount_to_deliver
-        if delivered_amount >= required_amount:
-            completed = true
+            current_crate_sprites.append(fruit_rect)
