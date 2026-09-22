@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://cth23q12wmqd6"]
-
-[ext_resource type="Script" uid="uid://bdxfhemocm2r1" path="res://scripts/level_editor/LevelData.gd" id="1_lygi0"]
-
-[resource]
-script = ExtResource("1_lygi0")
-grid_columns = 5
-grid_rows = 5

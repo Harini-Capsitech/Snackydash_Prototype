@@ -25,7 +25,7 @@ func build(data: LevelData, grid: GridManager, game_manager: Node2D) -> Dictiona
 				road_cells.append(Vector2i(r.x + x, r.y + y))
 				
 	var blocked_cells: Array[Vector2i] = []
-	if data.get("obstacles"):
+	if data.obstacles != null:
 		blocked_cells.append_array(data.obstacles)
 	grid.setup_level(data.grid_columns, data.grid_rows, int(data.cell_size.x), road_cells, blocked_cells)
 	
@@ -73,7 +73,8 @@ func build(data: LevelData, grid: GridManager, game_manager: Node2D) -> Dictiona
 	var truck_scene := load("res://scenes/Truck.tscn")
 	var trucks: Array[Truck] = []
 	
-	for obs in data.get("obstacles", []):
+	var obstacles: Array[Vector2i] = data.obstacles if data.obstacles != null else []
+	for obs in obstacles:
 		var sprite = Sprite2D.new()
 		sprite.texture = entity_sprites.get("rock", null)
 		if sprite.texture:

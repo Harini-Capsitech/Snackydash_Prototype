@@ -13,8 +13,9 @@
 
 [sub_resource type="Resource" id="Resource_sx23n"]
 script = ExtResource("11_f8oq8")
-grid_columns = 7
-grid_rows = 7
+grid_columns = 5
+grid_rows = 5
+obstacles = Array[Vector2i]([Vector2i(6, 12), Vector2i(2, 2)])
 
 [node name="Level" type="Node2D" unique_id=277332672]
 script = ExtResource("1_y377r")
@@ -29,7 +30,7 @@ entity_sprites = {
 "rock": ExtResource("9_y377r")
 }
 target_level_resource = SubResource("Resource_sx23n")
-level_file_path = "res://levels/level_example.tres"
+level_file_path = "res://levels/level_example1.tres"
 grid_width = 5
 grid_height = 5
 add_road_rect = Rect2i(2, 16, 5, 1)

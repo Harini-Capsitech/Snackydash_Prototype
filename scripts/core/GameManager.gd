@@ -52,7 +52,7 @@ func _load_level():
 	_update_debug()
 
 func _load_level_data() -> LevelData:
-	var requested_path := "res://levels/level_example.tres"
+	var requested_path := "res://levels/level_example1.tres"
 	var session := get_node_or_null("/root/LevelSession")
 	if session != null and session.get("level_path") != "":
 		requested_path = session.get("level_path")

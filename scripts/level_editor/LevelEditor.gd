@@ -317,7 +317,8 @@ func _load_level():
 	if typeof(texture_overlap) == TYPE_INT or typeof(texture_overlap) == TYPE_FLOAT:
 		overlap = int(texture_overlap)
 	
-	for r_data in res.get("roads", []):
+	var roads_list = res.roads if res.roads != null else []
+	for r_data in roads_list:
 		var road = NinePatchRect.new()
 		road.name = "Road_" + str(r_data.x) + "_" + str(r_data.y)
 		road.texture = road_texture
@@ -371,7 +372,8 @@ func _load_level():
 		sprite.set_meta("grid_y", e_data.cell_y)
 		sprite.set_meta("type", t_str)
 		
-	for obs in res.get("obstacles", []):
+	var obstacles_list = res.obstacles if res.obstacles != null else []
+	for obs in obstacles_list:
 		var sprite = Sprite2D.new()
 		var t_str = "rock"
 		sprite.name = "Entity_" + t_str + "_" + str(obs.x) + "_" + str(obs.y)
