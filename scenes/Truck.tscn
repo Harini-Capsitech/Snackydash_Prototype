@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://truck_scene_uid"]
+
+[ext_resource type="Script" path="res://scripts/trucks/Truck.gd" id="1_tr"]
+
+[node name="Truck" type="Node2D"]
+script = ExtResource("1_tr")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0.45, 0.25, 0.12, 1)

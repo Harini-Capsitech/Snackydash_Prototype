@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://fruit_scene_uid"]
+
+[ext_resource type="Script" path="res://scripts/items/Fruit.gd" id="1_fr"]
+
+[node name="Fruit" type="Node2D"]
+script = ExtResource("1_fr")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+color = Color(1, 0, 0, 1)
