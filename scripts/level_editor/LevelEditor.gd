@@ -102,10 +102,10 @@ func _assimilate_dragged_sprite(sprite: Sprite2D):
 		if sprite.centered:
 			top_left_px -= size_px / 2.0
 			
-		var grid_x = round(top_left_px.x / cell_size.x)
-		var grid_y = round(top_left_px.y / cell_size.y)
-		var grid_w = max(1, round(size_px.x / cell_size.x))
-		var grid_h = max(1, round(size_px.y / cell_size.y))
+		var grid_x = int(round(top_left_px.x / cell_size.x))
+		var grid_y = int(round(top_left_px.y / cell_size.y))
+		var grid_w = int(max(1, round(size_px.x / cell_size.x)))
+		var grid_h = int(max(1, round(size_px.y / cell_size.y)))
 		
 		# Prevent placing outside grid bounds
 		if grid_x < 0 or grid_x >= grid_width or grid_y < 0 or grid_y >= grid_height:
@@ -125,9 +125,9 @@ func _assimilate_dragged_sprite(sprite: Sprite2D):
 			break
 			
 	if matched_type != "":
-		# Calculate grid position
-		var grid_x = floor(sprite.position.x / cell_size.x)
-		var grid_y = floor(sprite.position.y / cell_size.y)
+		# Calculate grid position as integers
+		var grid_x = int(floor(sprite.position.x / cell_size.x))
+		var grid_y = int(floor(sprite.position.y / cell_size.y))
 		
 		if grid_x < 0 or grid_x >= grid_width or grid_y < 0 or grid_y >= grid_height:
 			return
@@ -149,7 +149,7 @@ func _assimilate_dragged_sprite(sprite: Sprite2D):
 		# Remove any existing entity at this position (unless it's the same sprite)
 		for child in entities_node.get_children():
 			if child != sprite and child.has_meta("grid_x") and child.has_meta("grid_y"):
-				if child.get_meta("grid_x") == grid_x and child.get_meta("grid_y") == grid_y:
+				if int(child.get_meta("grid_x")) == grid_x and int(child.get_meta("grid_y")) == grid_y:
 					child.queue_free()
 					
 		print("Assimilated dragged object as ", matched_type, " at ", Vector2i(grid_x, grid_y))
@@ -345,14 +345,28 @@ func _save_level():
 	var obstacles: Array[Vector2i] = []
 	if entities_node:
 		for child in entities_node.get_children():
-			if child.has_meta("grid_x"):
+			if child.has_meta("type"):
 				var t_str = child.get_meta("type")
+				
+				# Recalculate based on current visual position in case user dragged it around
+				var g_x = int(floor(child.position.x / cell_size.x))
+				var g_y = int(floor(child.position.y / cell_size.y))
+				
+				if g_x < 0 or g_x >= grid_width or g_y < 0 or g_y >= grid_height:
+					continue
+					
+				# Visually snap it to guarantee it aligns with the saved data
+				child.position = Vector2(g_x * cell_size.x + cell_size.x / 2.0, g_y * cell_size.y + cell_size.y / 2.0)
+				child.name = "Entity_" + t_str + "_" + str(g_x) + "_" + str(g_y)
+				child.set_meta("grid_x", g_x)
+				child.set_meta("grid_y", g_y)
+				
 				if t_str == "rock":
-					obstacles.append(Vector2i(child.get_meta("grid_x"), child.get_meta("grid_y")))
+					obstacles.append(Vector2i(g_x, g_y))
 				else:
 					entities.append({
-						"cell_x": child.get_meta("grid_x"),
-						"cell_y": child.get_meta("grid_y"),
+						"cell_x": g_x,
+						"cell_y": g_y,
 						"type": t_str
 					})
 	level_data.entities = entities
