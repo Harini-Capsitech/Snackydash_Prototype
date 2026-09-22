@@ -2,283 +2,39 @@
 
 [ext_resource type="Script" uid="uid://bhm7hfqpslvn1" path="res://scripts/level_editor/LevelEditor.gd" id="1_y377r"]
 [ext_resource type="Texture2D" uid="uid://d0jn2tsckbqyr" path="res://assets/textures/road.png" id="2_f8oq8"]
-[ext_resource type="Texture2D" uid="uid://0rdrylc6dv53" path="res://assets/textures/island.png" id="3_sx23n"]
-[ext_resource type="Texture2D" uid="uid://dyg8nn3h73ap3" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_10_48_AM-removebg-preview.png" id="4_xg4dn"]
 [ext_resource type="Texture2D" uid="uid://b5vq32cfp8iv2" path="res://Sprites/Gemini_Generated_Image_parwvbparwvbparw-removebg-preview.png" id="5_5pxw1"]
 [ext_resource type="Texture2D" uid="uid://bx6gxvtnqmvfu" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_17_51_AM-removebg-preview.png" id="6_2thkr"]
 [ext_resource type="Texture2D" uid="uid://clgvkh7hw62su" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_19_30_AM-removebg-preview.png" id="7_nt7o6"]
 [ext_resource type="Texture2D" uid="uid://dqk7gej4x36q0" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_20_36_AM-removebg-preview.png" id="8_14ect"]
 [ext_resource type="Texture2D" uid="uid://cdansxnsw3he2" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_21_19_AM-removebg-preview.png" id="9_rx7q2"]
+[ext_resource type="Texture2D" uid="uid://do3s3efjsirmk" path="res://Sprites/ChatGPT_Image_Sep_22__2026__05_16_44_PM-removebg-preview.png" id="9_y377r"]
 [ext_resource type="Texture2D" uid="uid://hhbhne1038q0" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_26_19_AM-removebg-preview.png" id="10_0ajou"]
 [ext_resource type="Script" uid="uid://bdxfhemocm2r1" path="res://scripts/level_editor/LevelData.gd" id="11_f8oq8"]
 
 [sub_resource type="Resource" id="Resource_sx23n"]
 script = ExtResource("11_f8oq8")
-grid_columns = 5
-grid_rows = 5
-islands = Array[Dictionary]([{
-"height": 6.0,
-"width": 4.0,
-"x": 3.0,
-"y": 0.0
-}, {
-"height": 6.0,
-"width": 4.0,
-"x": 3.0,
-"y": 9.0
-}, {
-"height": 7.0,
-"width": 5.0,
-"x": 2.0,
-"y": 4.0
-}, {
-"height": 3.0,
-"width": 3.0,
-"x": 3.0,
-"y": 7.0
-}])
-slots = Array[Dictionary]([{
-"height": 5.0,
-"width": 4.0,
-"x": -1.0,
-"y": 2.0
-}, {
-"height": 5.0,
-"width": 4.0,
-"x": 6.0,
-"y": 2.0
-}, {
-"height": 5.0,
-"width": 4.0,
-"x": 6.0,
-"y": 0.0
-}, {
-"height": 5.0,
-"width": 4.0,
-"x": -1.0,
-"y": 0.0
-}, {
-"height": 5.0,
-"width": 4.0,
-"x": 4.0,
-"y": -1.0
-}, {
-"height": 5.0,
-"width": 4.0,
-"x": 2.0,
-"y": -1.0
-}])
-roads = Array[Dictionary]([{
-"height": 1.0,
-"width": 5.0,
-"x": 2.0,
-"y": 2.0
-}, {
-"height": 2.0,
-"width": 1.0,
-"x": 2.0,
-"y": 3.0
-}, {
-"height": 2.0,
-"width": 1.0,
-"x": 6.0,
-"y": 3.0
-}, {
-"height": 1.0,
-"width": 7.0,
-"x": 1.0,
-"y": 5.0
-}, {
-"height": 5.0,
-"width": 1.0,
-"x": 1.0,
-"y": 6.0
-}, {
-"height": 5.0,
-"width": 1.0,
-"x": 7.0,
-"y": 6.0
-}, {
-"height": 1.0,
-"width": 7.0,
-"x": 1.0,
-"y": 11.0
-}, {
-"height": 2.0,
-"width": 1.0,
-"x": 4.0,
-"y": 9.0
-}, {
-"height": 2.0,
-"width": 1.0,
-"x": 2.0,
-"y": 12.0
-}, {
-"height": 2.0,
-"width": 1.0,
-"x": 6.0,
-"y": 12.0
-}, {
-"height": 1.0,
-"width": 5.0,
-"x": 2.0,
-"y": 14.0
-}, {
-"height": 1.0,
-"width": 5.0,
-"x": 2.0,
-"y": 16.0
-}])
-entities = Array[Dictionary]([{
-"cell_x": 4,
-"cell_y": 11,
-"type": "player"
-}, {
-"cell_x": 4,
-"cell_y": 8,
-"type": "box"
-}, {
-"cell_x": 2,
-"cell_y": 3,
-"type": "apple_red"
-}, {
-"cell_x": 2,
-"cell_y": 2,
-"type": "apple_red"
-}, {
-"cell_x": 3,
-"cell_y": 2,
-"type": "apple_red"
-}, {
-"cell_x": 4,
-"cell_y": 2,
-"type": "apple_red"
-}, {
-"cell_x": 5,
-"cell_y": 2,
-"type": "apple_red"
-}, {
-"cell_x": 6,
-"cell_y": 2,
-"type": "apple_red"
-}, {
-"cell_x": 6,
-"cell_y": 3,
-"type": "apple_red"
-}, {
-"cell_x": 2,
-"cell_y": 5,
-"type": "apple_red"
-}, {
-"cell_x": 3,
-"cell_y": 5,
-"type": "apple_red"
-}, {
-"cell_x": 4,
-"cell_y": 5,
-"type": "apple_red"
-}, {
-"cell_x": 5,
-"cell_y": 5,
-"type": "apple_red"
-}, {
-"cell_x": 6,
-"cell_y": 5,
-"type": "apple_red"
-}, {
-"cell_x": 1,
-"cell_y": 5,
-"type": "blueberry"
-}, {
-"cell_x": 1,
-"cell_y": 6,
-"type": "blueberry"
-}, {
-"cell_x": 1,
-"cell_y": 7,
-"type": "blueberry"
-}, {
-"cell_x": 1,
-"cell_y": 8,
-"type": "blueberry"
-}, {
-"cell_x": 1,
-"cell_y": 9,
-"type": "blueberry"
-}, {
-"cell_x": 1,
-"cell_y": 10,
-"type": "blueberry"
-}, {
-"cell_x": 1,
-"cell_y": 11,
-"type": "blueberry"
-}, {
-"cell_x": 2,
-"cell_y": 11,
-"type": "blueberry"
-}, {
-"cell_x": 3,
-"cell_y": 11,
-"type": "blueberry"
-}, {
-"cell_x": 2,
-"cell_y": 12,
-"type": "apple_green"
-}, {
-"cell_x": 2,
-"cell_y": 13,
-"type": "apple_green"
-}, {
-"cell_x": 2,
-"cell_y": 14,
-"type": "apple_green"
-}, {
-"cell_x": 3,
-"cell_y": 14,
-"type": "apple_green"
-}, {
-"cell_x": 4,
-"cell_y": 14,
-"type": "apple_green"
-}, {
-"cell_x": 5,
-"cell_y": 14,
-"type": "apple_green"
-}, {
-"cell_x": 6,
-"cell_y": 14,
-"type": "apple_green"
-}, {
-"cell_x": 6,
-"cell_y": 13,
-"type": "apple_green"
-}, {
-"cell_x": 6,
-"cell_y": 12,
-"type": "apple_green"
-}])
+grid_columns = 7
+grid_rows = 7
 
 [node name="Level" type="Node2D" unique_id=277332672]
 script = ExtResource("1_y377r")
 road_texture = ExtResource("2_f8oq8")
-island_texture_9slice = ExtResource("3_sx23n")
-slot_texture_9slice = ExtResource("4_xg4dn")
 entity_sprites = {
 "apple_green": ExtResource("7_nt7o6"),
 "apple_red": ExtResource("6_2thkr"),
 "blueberry": ExtResource("8_14ect"),
 "box": ExtResource("10_0ajou"),
 "peach": ExtResource("9_rx7q2"),
-"player": ExtResource("5_5pxw1")
+"player": ExtResource("5_5pxw1"),
+"rock": ExtResource("9_y377r")
 }
 target_level_resource = SubResource("Resource_sx23n")
 level_file_path = "res://levels/level_example.tres"
+grid_width = 5
+grid_height = 5
 add_road_rect = Rect2i(2, 16, 5, 1)
-add_island_rect = Rect2i(3, 7, 3, 3)
-add_slot_rect = Rect2i(3, 7, 3, 3)
-entity_grid_pos = Vector2i(6, 12)
-selected_entity_type = "apple_green"
+entity_grid_pos = Vector2i(2, 2)
+selected_entity_type = "rock"
 
 [node name="Background" type="Node2D" parent="." unique_id=488870481]
 
@@ -287,6 +43,22 @@ z_index = 10
 
 [node name="Entities" type="Node2D" parent="." unique_id=118385481]
 z_index = 40
+
+[node name="Entity_rock_6_12" type="Sprite2D" parent="Entities" unique_id=574838546]
+position = Vector2(416, 800)
+scale = Vector2(0.128, 0.128)
+texture = ExtResource("9_y377r")
+metadata/grid_x = 6
+metadata/grid_y = 12
+metadata/type = "rock"
+
+[node name="Entity_rock_2_2" type="Sprite2D" parent="Entities" unique_id=2084066686]
+position = Vector2(160, 160)
+scale = Vector2(0.128, 0.128)
+texture = ExtResource("9_y377r")
+metadata/grid_x = 2
+metadata/grid_y = 2
+metadata/type = "rock"
 
 [node name="Slots" type="Node2D" parent="." unique_id=2120537480]
 z_index = 30

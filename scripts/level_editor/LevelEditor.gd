@@ -3,15 +3,14 @@ class_name LevelEditor extends Node2D
 
 @export_group("Textures")
 @export var road_texture: Texture2D
-@export var island_texture_9slice: Texture2D
-@export var slot_texture_9slice: Texture2D
 @export var entity_sprites: Dictionary = {
 	"player": null,
 	"apple_red": null,
 	"apple_green": null,
 	"blueberry": null,
 	"peach": null,
-	"box": null
+	"box": null,
+	"rock": load("res://Sprites/rock.png")
 }:
 	set(value):
 		entity_sprites = value
@@ -22,8 +21,6 @@ class_name LevelEditor extends Node2D
 @export var level_file_path: String = "res://levels/level_01.tres"
 @export var grid_width: int = 9
 @export var grid_height: int = 17
-@export var island_patch_margin: int = 32
-@export var slot_patch_margin: int = 40
 @export var texture_overlap: int = 0
 
 @export var add_road_rect: Rect2i = Rect2i(0, 0, 9, 17)
@@ -33,20 +30,6 @@ class_name LevelEditor extends Node2D
 			_add_road()
 		add_road_button = false
 
-@export var add_island_rect: Rect2i = Rect2i(0, 0, 3, 3)
-@export var add_island_button: bool = false:
-	set(value):
-		if value:
-			_add_island()
-		add_island_button = false
-		
-@export var add_slot_rect: Rect2i = Rect2i(0, 0, 1, 3)
-@export var add_slot_button: bool = false:
-	set(value):
-		if value:
-			_add_slot()
-		add_slot_button = false
-		
 var selected_entity_type: String = "player"
 @export var entity_grid_pos: Vector2i = Vector2i(0, 0)
 @export var place_entity_button: bool = false:
@@ -79,8 +62,6 @@ var cell_size: Vector2 = Vector2(64, 64)
 # Container nodes for organization
 var bg_node: Node2D
 var roads_node: Node2D
-var islands_node: Node2D
-var slots_node: Node2D
 var entities_node: Node2D
 
 func _get_property_list() -> Array:
@@ -110,15 +91,6 @@ func _ensure_containers():
 		bg_node = get_node("Background")
 	bg_node.z_index = 0
 		
-	if not has_node("Islands"):
-		islands_node = Node2D.new()
-		islands_node.name = "Islands"
-		add_child(islands_node)
-		_set_owner_recursive(islands_node)
-	else:
-		islands_node = get_node("Islands")
-	islands_node.z_index = 10
-		
 	if not has_node("Roads"):
 		roads_node = Node2D.new()
 		roads_node.name = "Roads"
@@ -127,15 +99,6 @@ func _ensure_containers():
 	else:
 		roads_node = get_node("Roads")
 	roads_node.z_index = 20
-		
-	if not has_node("Slots"):
-		slots_node = Node2D.new()
-		slots_node.name = "Slots"
-		add_child(slots_node)
-		_set_owner_recursive(slots_node)
-	else:
-		slots_node = get_node("Slots")
-	slots_node.z_index = 30
 		
 	if not has_node("Entities"):
 		entities_node = Node2D.new()
@@ -205,75 +168,6 @@ func _add_road():
 	queue_redraw()
 	print("Added road at ", rect)
 
-func _add_island():
-	_ensure_containers()
-	var rect = add_island_rect
-	
-	var island = NinePatchRect.new()
-	island.name = "Island_" + str(rect.position.x) + "_" + str(rect.position.y)
-	island.texture = island_texture_9slice
-	var overlap = 0
-	if typeof(texture_overlap) == TYPE_INT or typeof(texture_overlap) == TYPE_FLOAT:
-		overlap = int(texture_overlap)
-	island.position = Vector2(rect.position.x * cell_size.x - overlap, rect.position.y * cell_size.y - overlap)
-	island.size = Vector2(rect.size.x * cell_size.x + overlap * 2, rect.size.y * cell_size.y + overlap * 2)
-	
-	var imargin = 32
-	if typeof(island_patch_margin) == TYPE_INT or typeof(island_patch_margin) == TYPE_FLOAT:
-		imargin = int(island_patch_margin)
-	island.patch_margin_left = imargin
-	island.patch_margin_top = imargin
-	island.patch_margin_right = imargin
-	island.patch_margin_bottom = imargin
-	island.axis_stretch_horizontal = NinePatchRect.AXIS_STRETCH_MODE_TILE
-	island.axis_stretch_vertical = NinePatchRect.AXIS_STRETCH_MODE_TILE
-	
-	islands_node.add_child(island)
-	_set_owner_recursive(island)
-	
-	island.set_meta("grid_x", rect.position.x)
-	island.set_meta("grid_y", rect.position.y)
-	island.set_meta("grid_w", rect.size.x)
-	island.set_meta("grid_h", rect.size.y)
-	
-	queue_redraw()
-	print("Added island at ", rect)
-
-func _add_slot():
-	_ensure_containers()
-	var rect = add_slot_rect
-	
-	var slot = NinePatchRect.new()
-	slot.name = "Slot_" + str(rect.position.x) + "_" + str(rect.position.y)
-	slot.texture = slot_texture_9slice
-	
-	var overlap = 0
-	if typeof(texture_overlap) == TYPE_INT or typeof(texture_overlap) == TYPE_FLOAT:
-		overlap = int(texture_overlap)
-	slot.position = Vector2(rect.position.x * cell_size.x - overlap, rect.position.y * cell_size.y - overlap)
-	slot.size = Vector2(rect.size.x * cell_size.x + overlap * 2, rect.size.y * cell_size.y + overlap * 2)
-	
-	var smargin = 40
-	if typeof(slot_patch_margin) == TYPE_INT or typeof(slot_patch_margin) == TYPE_FLOAT:
-		smargin = int(slot_patch_margin)
-	slot.patch_margin_left = smargin
-	slot.patch_margin_top = smargin
-	slot.patch_margin_right = smargin
-	slot.patch_margin_bottom = smargin
-	slot.axis_stretch_horizontal = NinePatchRect.AXIS_STRETCH_MODE_STRETCH
-	slot.axis_stretch_vertical = NinePatchRect.AXIS_STRETCH_MODE_STRETCH
-	
-	slots_node.add_child(slot)
-	_set_owner_recursive(slot)
-	
-	slot.set_meta("grid_x", rect.position.x)
-	slot.set_meta("grid_y", rect.position.y)
-	slot.set_meta("grid_w", rect.size.x)
-	slot.set_meta("grid_h", rect.size.y)
-	
-	queue_redraw()
-	print("Added slot at ", rect)
-
 func _place_entity():
 	_ensure_containers()
 	var pos = entity_grid_pos
@@ -282,6 +176,17 @@ func _place_entity():
 		print("No entity type selected!")
 		return
 	
+	
+	if type_str == "rock":
+		for child in entities_node.get_children():
+			if child.has_meta("grid_x") and child.has_meta("grid_y"):
+				if child.get_meta("grid_x") == pos.x and child.get_meta("grid_y") == pos.y:
+					if child.get_meta("type") == "rock":
+						child.queue_free()
+						queue_redraw()
+						print("Removed rock at ", pos)
+						return
+
 	if type_str == "player":
 		for child in entities_node.get_children():
 			if child.has_meta("type") and child.get_meta("type") == "player":
@@ -315,10 +220,6 @@ func _place_entity():
 func _clear_board():
 	_ensure_containers()
 	for child in roads_node.get_children():
-		child.queue_free()
-	for child in islands_node.get_children():
-		child.queue_free()
-	for child in slots_node.get_children():
 		child.queue_free()
 	for child in entities_node.get_children():
 		child.queue_free()
@@ -366,54 +267,22 @@ func _save_level():
 				})
 	level_data.roads = roads
 	
-	var islands: Array[Dictionary] = []
-	if islands_node:
-		for child in islands_node.get_children():
-			if child is NinePatchRect and child.has_meta("grid_x"):
-				var overlap = 0
-				if typeof(texture_overlap) == TYPE_INT or typeof(texture_overlap) == TYPE_FLOAT:
-					overlap = int(texture_overlap)
-				var g_w = round((child.size.x - overlap * 2) / cell_size.x)
-				var g_h = round((child.size.y - overlap * 2) / cell_size.y)
-				var g_x = round((child.position.x + overlap) / cell_size.x)
-				var g_y = round((child.position.y + overlap) / cell_size.y)
-				islands.append({
-					"x": g_x,
-					"y": g_y,
-					"width": g_w,
-					"height": g_h
-				})
-	level_data.islands = islands
-	
-	var slots: Array[Dictionary] = []
-	if slots_node:
-		for child in slots_node.get_children():
-			if child is NinePatchRect and child.has_meta("grid_x"):
-				var overlap = 0
-				if typeof(texture_overlap) == TYPE_INT or typeof(texture_overlap) == TYPE_FLOAT:
-					overlap = int(texture_overlap)
-				var g_w = round((child.size.x - overlap * 2) / cell_size.x)
-				var g_h = round((child.size.y - overlap * 2) / cell_size.y)
-				var g_x = round((child.position.x + overlap) / cell_size.x)
-				var g_y = round((child.position.y + overlap) / cell_size.y)
-				slots.append({
-					"x": g_x,
-					"y": g_y,
-					"width": g_w,
-					"height": g_h
-				})
-	level_data.slots = slots
-	
 	var entities: Array[Dictionary] = []
+	var obstacles: Array[Vector2i] = []
 	if entities_node:
 		for child in entities_node.get_children():
 			if child.has_meta("grid_x"):
-				entities.append({
-					"cell_x": child.get_meta("grid_x"),
-					"cell_y": child.get_meta("grid_y"),
-					"type": child.get_meta("type")
-				})
+				var t_str = child.get_meta("type")
+				if t_str == "rock":
+					obstacles.append(Vector2i(child.get_meta("grid_x"), child.get_meta("grid_y")))
+				else:
+					entities.append({
+						"cell_x": child.get_meta("grid_x"),
+						"cell_y": child.get_meta("grid_y"),
+						"type": t_str
+					})
 	level_data.entities = entities
+	level_data.obstacles = obstacles
 	
 	var dir = level_file_path.get_base_dir()
 	if not DirAccess.dir_exists_absolute(dir):
@@ -483,56 +352,6 @@ func _load_level():
 		road.set_meta("grid_w", r_data.width)
 		road.set_meta("grid_h", r_data.height)
 	
-	for i_data in res.islands:
-		var island = NinePatchRect.new()
-		island.name = "Island_" + str(i_data.x) + "_" + str(i_data.y)
-		island.texture = island_texture_9slice
-		island.position = Vector2(i_data.x * cell_size.x - overlap, i_data.y * cell_size.y - overlap)
-		island.size = Vector2(i_data.width * cell_size.x + overlap * 2, i_data.height * cell_size.y + overlap * 2)
-		
-		var imargin = 32
-		if typeof(island_patch_margin) == TYPE_INT or typeof(island_patch_margin) == TYPE_FLOAT:
-			imargin = int(island_patch_margin)
-		island.patch_margin_left = imargin
-		island.patch_margin_top = imargin
-		island.patch_margin_right = imargin
-		island.patch_margin_bottom = imargin
-		island.axis_stretch_horizontal = NinePatchRect.AXIS_STRETCH_MODE_TILE
-		island.axis_stretch_vertical = NinePatchRect.AXIS_STRETCH_MODE_TILE
-		
-		islands_node.add_child(island)
-		_set_owner_recursive(island)
-		
-		island.set_meta("grid_x", i_data.x)
-		island.set_meta("grid_y", i_data.y)
-		island.set_meta("grid_w", i_data.width)
-		island.set_meta("grid_h", i_data.height)
-		
-	for s_data in res.slots:
-		var slot = NinePatchRect.new()
-		slot.name = "Slot_" + str(s_data.x) + "_" + str(s_data.y)
-		slot.texture = slot_texture_9slice
-		slot.position = Vector2(s_data.x * cell_size.x - overlap, s_data.y * cell_size.y - overlap)
-		slot.size = Vector2(s_data.width * cell_size.x + overlap * 2, s_data.height * cell_size.y + overlap * 2)
-		
-		var smargin = 40
-		if typeof(slot_patch_margin) == TYPE_INT or typeof(slot_patch_margin) == TYPE_FLOAT:
-			smargin = int(slot_patch_margin)
-		slot.patch_margin_left = smargin
-		slot.patch_margin_top = smargin
-		slot.patch_margin_right = smargin
-		slot.patch_margin_bottom = smargin
-		slot.axis_stretch_horizontal = NinePatchRect.AXIS_STRETCH_MODE_STRETCH
-		slot.axis_stretch_vertical = NinePatchRect.AXIS_STRETCH_MODE_STRETCH
-		
-		slots_node.add_child(slot)
-		_set_owner_recursive(slot)
-		
-		slot.set_meta("grid_x", s_data.x)
-		slot.set_meta("grid_y", s_data.y)
-		slot.set_meta("grid_w", s_data.width)
-		slot.set_meta("grid_h", s_data.height)
-		
 	for e_data in res.entities:
 		var sprite = Sprite2D.new()
 		var t_str = e_data.type
@@ -552,6 +371,25 @@ func _load_level():
 		sprite.set_meta("grid_y", e_data.cell_y)
 		sprite.set_meta("type", t_str)
 		
+	for obs in res.get("obstacles", []):
+		var sprite = Sprite2D.new()
+		var t_str = "rock"
+		sprite.name = "Entity_" + t_str + "_" + str(obs.x) + "_" + str(obs.y)
+		if entity_sprites.has(t_str) and entity_sprites[t_str] != null:
+			sprite.texture = entity_sprites[t_str]
+			var tex_size = sprite.texture.get_size()
+			if tex_size.x > 0 and tex_size.y > 0:
+				var scale_factor = min(cell_size.x / tex_size.x, cell_size.y / tex_size.y)
+				sprite.scale = Vector2(scale_factor, scale_factor)
+		sprite.position = Vector2(obs.x * cell_size.x + cell_size.x / 2.0, obs.y * cell_size.y + cell_size.y / 2.0)
+		
+		entities_node.add_child(sprite)
+		_set_owner_recursive(sprite)
+		
+		sprite.set_meta("grid_x", obs.x)
+		sprite.set_meta("grid_y", obs.y)
+		sprite.set_meta("type", t_str)
+
 	queue_redraw()
 	print("Loaded level successfully from ", level_file_path)
 

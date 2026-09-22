@@ -25,39 +25,22 @@ func build(data: LevelData, grid: GridManager, game_manager: Node2D) -> Dictiona
 				road_cells.append(Vector2i(r.x + x, r.y + y))
 				
 	var blocked_cells: Array[Vector2i] = []
+	if data.get("obstacles"):
+		blocked_cells.append_array(data.obstacles)
 	grid.setup_level(data.grid_columns, data.grid_rows, int(data.cell_size.x), road_cells, blocked_cells)
 	
 	var offset_x = (1080 - (data.grid_columns * data.cell_size.x)) / 2.0
 	var offset_y = (1920 - (data.grid_rows * data.cell_size.y)) / 2.0
 	
-	var island_texture = null
 	var road_texture = null
 	
 	var editor_scene = load("res://scenes/editor/level.tscn")
 	var entity_sprites = {}
 	if editor_scene:
 		var editor = editor_scene.instantiate()
-		island_texture = editor.island_texture_9slice
 		road_texture = editor.road_texture
 		entity_sprites = editor.entity_sprites.duplicate()
 		editor.queue_free()
-	
-	# Create Islands
-	var islands_node = Node2D.new()
-	islands_node.position = Vector2(offset_x, offset_y)
-	walls_container.add_child(islands_node)
-	for i_data in data.islands:
-		var island = NinePatchRect.new()
-		island.texture = island_texture
-		island.position = Vector2(i_data.x * data.cell_size.x, i_data.y * data.cell_size.y)
-		island.size = Vector2(i_data.width * data.cell_size.x, i_data.height * data.cell_size.y)
-		island.patch_margin_left = 32
-		island.patch_margin_top = 32
-		island.patch_margin_right = 32
-		island.patch_margin_bottom = 32
-		island.axis_stretch_horizontal = NinePatchRect.AXIS_STRETCH_MODE_TILE
-		island.axis_stretch_vertical = NinePatchRect.AXIS_STRETCH_MODE_TILE
-		islands_node.add_child(island)
 
 	# Create Roads
 	var roads_node = Node2D.new()
@@ -90,6 +73,17 @@ func build(data: LevelData, grid: GridManager, game_manager: Node2D) -> Dictiona
 	var truck_scene := load("res://scenes/Truck.tscn")
 	var trucks: Array[Truck] = []
 	
+	for obs in data.get("obstacles", []):
+		var sprite = Sprite2D.new()
+		sprite.texture = entity_sprites.get("rock", null)
+		if sprite.texture:
+			var tex_size = sprite.texture.get_size()
+			if tex_size.x > 0 and tex_size.y > 0:
+				var scale_factor = min(data.cell_size.x / tex_size.x, data.cell_size.y / tex_size.y)
+				sprite.scale = Vector2(scale_factor, scale_factor)
+		sprite.position = Vector2(offset_x + obs.x * data.cell_size.x + data.cell_size.x / 2.0, offset_y + obs.y * data.cell_size.y + data.cell_size.y / 2.0)
+		walls_container.add_child(sprite)
+
 	for e in data.entities:
 		var tex = entity_sprites.get(e.type, null)
 		if e.type == "player":
