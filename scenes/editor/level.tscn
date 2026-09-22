@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://b7sx6sish47ox"]
 
 [ext_resource type="Script" uid="uid://bhm7hfqpslvn1" path="res://scripts/level_editor/LevelEditor.gd" id="1_y377r"]
-[ext_resource type="Texture2D" uid="uid://d0jn2tsckbqyr" path="res://assets/textures/road.png" id="2_f8oq8"]
 [ext_resource type="Texture2D" uid="uid://b5vq32cfp8iv2" path="res://Sprites/Gemini_Generated_Image_parwvbparwvbparw-removebg-preview.png" id="5_5pxw1"]
 [ext_resource type="Texture2D" uid="uid://bx6gxvtnqmvfu" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_17_51_AM-removebg-preview.png" id="6_2thkr"]
 [ext_resource type="Texture2D" uid="uid://clgvkh7hw62su" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_19_30_AM-removebg-preview.png" id="7_nt7o6"]
@@ -10,16 +9,26 @@
 [ext_resource type="Texture2D" uid="uid://do3s3efjsirmk" path="res://Sprites/ChatGPT_Image_Sep_22__2026__05_16_44_PM-removebg-preview.png" id="9_y377r"]
 [ext_resource type="Texture2D" uid="uid://hhbhne1038q0" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_26_19_AM-removebg-preview.png" id="10_0ajou"]
 [ext_resource type="Script" uid="uid://bdxfhemocm2r1" path="res://scripts/level_editor/LevelData.gd" id="11_f8oq8"]
+[ext_resource type="Texture2D" uid="uid://6l1jfk88d0ua" path="res://Sprites/Gemini_Generated_Image_231skr231skr231s-removebg-preview.png" id="11_sx23n"]
 
 [sub_resource type="Resource" id="Resource_sx23n"]
 script = ExtResource("11_f8oq8")
 grid_columns = 5
 grid_rows = 5
-obstacles = Array[Vector2i]([Vector2i(6, 12), Vector2i(2, 2)])
+entities = Array[Dictionary]([{
+"cell_x": 4.0,
+"cell_y": 4.0,
+"type": "player"
+}, {
+"cell_x": 1.0,
+"cell_y": 2.0,
+"type": "apple_red"
+}])
+obstacles = Array[Vector2i]([Vector2i(2, 2), Vector2i(2, 4), Vector2i(2, 4)])
 
 [node name="Level" type="Node2D" unique_id=277332672]
 script = ExtResource("1_y377r")
-road_texture = ExtResource("2_f8oq8")
+road_texture = ExtResource("11_sx23n")
 entity_sprites = {
 "apple_green": ExtResource("7_nt7o6"),
 "apple_red": ExtResource("6_2thkr"),
@@ -30,10 +39,10 @@ entity_sprites = {
 "rock": ExtResource("9_y377r")
 }
 target_level_resource = SubResource("Resource_sx23n")
-level_file_path = "res://levels/level_example1.tres"
+level_file_path = "res://levels_scenes/level_example1.tres"
 grid_width = 5
 grid_height = 5
-add_road_rect = Rect2i(2, 16, 5, 1)
+add_road_rect = Rect2i(3, 1, 3, 4)
 entity_grid_pos = Vector2i(2, 2)
 selected_entity_type = "rock"
 
@@ -45,21 +54,37 @@ z_index = 10
 [node name="Entities" type="Node2D" parent="." unique_id=118385481]
 z_index = 40
 
-[node name="Entity_rock_6_12" type="Sprite2D" parent="Entities" unique_id=574838546]
-position = Vector2(416, 800)
-scale = Vector2(0.128, 0.128)
+[node name="Entity_rock_1_0_3_0" type="Sprite2D" parent="Entities" unique_id=1565463372]
+position = Vector2(224, 289)
+scale = Vector2(0.12399998, 0.12399997)
 texture = ExtResource("9_y377r")
-metadata/grid_x = 6
-metadata/grid_y = 12
+metadata/grid_x = 1.0
+metadata/grid_y = 3.0
 metadata/type = "rock"
 
-[node name="Entity_rock_2_2" type="Sprite2D" parent="Entities" unique_id=2084066686]
-position = Vector2(160, 160)
-scale = Vector2(0.128, 0.128)
+[node name="Entity_rock_1_0_3_1" type="Sprite2D" parent="Entities" unique_id=1818100665]
+position = Vector2(95.999985, 289)
+scale = Vector2(0.12399998, 0.12399997)
 texture = ExtResource("9_y377r")
-metadata/grid_x = 2
-metadata/grid_y = 2
+metadata/grid_x = 1.0
+metadata/grid_y = 3.0
 metadata/type = "rock"
+
+[node name="Entity_rock_1_0_3_2" type="Sprite2D" parent="Entities" unique_id=449896757]
+position = Vector2(161, 289)
+scale = Vector2(0.12399998, 0.12399997)
+texture = ExtResource("9_y377r")
+metadata/grid_x = 1.0
+metadata/grid_y = 3.0
+metadata/type = "rock"
+
+[node name="Entity_apple_red_1_0_1_0" type="Sprite2D" parent="Entities" unique_id=1024784948]
+position = Vector2(288, 160)
+scale = Vector2(0.124, 0.124000005)
+texture = ExtResource("6_2thkr")
+metadata/grid_x = 1.0
+metadata/grid_y = 1.0
+metadata/type = "apple_red"
 
 [node name="Slots" type="Node2D" parent="." unique_id=2120537480]
 z_index = 30

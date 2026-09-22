@@ -80,6 +80,80 @@ func _ready():
 	_ensure_containers()
 	if Engine.is_editor_hint():
 		queue_redraw()
+		if not child_entered_tree.is_connected(_on_child_entered_tree):
+			child_entered_tree.connect(_on_child_entered_tree)
+
+func _on_child_entered_tree(node: Node):
+	if Engine.is_editor_hint() and node is Sprite2D:
+		call_deferred("_assimilate_dragged_sprite", node)
+
+func _assimilate_dragged_sprite(sprite: Sprite2D):
+	if not is_instance_valid(sprite) or sprite.get_parent() != self:
+		return
+		
+	var tex = sprite.texture
+	if tex == null:
+		return
+		
+	# Handle road
+	if tex == road_texture:
+		var size_px = sprite.scale * tex.get_size()
+		var top_left_px = sprite.position
+		if sprite.centered:
+			top_left_px -= size_px / 2.0
+			
+		var grid_x = round(top_left_px.x / cell_size.x)
+		var grid_y = round(top_left_px.y / cell_size.y)
+		var grid_w = max(1, round(size_px.x / cell_size.x))
+		var grid_h = max(1, round(size_px.y / cell_size.y))
+		
+		# Prevent placing outside grid bounds
+		if grid_x < 0 or grid_x >= grid_width or grid_y < 0 or grid_y >= grid_height:
+			sprite.queue_free()
+			return
+			
+		add_road_rect = Rect2i(grid_x, grid_y, grid_w, grid_h)
+		_add_road()
+		sprite.queue_free()
+		print("Assimilated dragged object as road at ", add_road_rect)
+		return
+		
+	var matched_type = ""
+	for type in entity_sprites.keys():
+		if entity_sprites[type] == tex:
+			matched_type = type
+			break
+			
+	if matched_type != "":
+		# Calculate grid position
+		var grid_x = floor(sprite.position.x / cell_size.x)
+		var grid_y = floor(sprite.position.y / cell_size.y)
+		
+		if grid_x < 0 or grid_x >= grid_width or grid_y < 0 or grid_y >= grid_height:
+			return
+		
+		# Reparent to entities_node first so local coordinates are correct
+		sprite.reparent(entities_node)
+		
+		# Snap position
+		sprite.position = Vector2(grid_x * cell_size.x + cell_size.x / 2.0, grid_y * cell_size.y + cell_size.y / 2.0)
+		
+		# Add metadata
+		sprite.set_meta("grid_x", grid_x)
+		sprite.set_meta("grid_y", grid_y)
+		sprite.set_meta("type", matched_type)
+		sprite.name = "Entity_" + matched_type + "_" + str(grid_x) + "_" + str(grid_y)
+		
+		_set_owner_recursive(sprite)
+		
+		# Remove any existing entity at this position (unless it's the same sprite)
+		for child in entities_node.get_children():
+			if child != sprite and child.has_meta("grid_x") and child.has_meta("grid_y"):
+				if child.get_meta("grid_x") == grid_x and child.get_meta("grid_y") == grid_y:
+					child.queue_free()
+					
+		print("Assimilated dragged object as ", matched_type, " at ", Vector2i(grid_x, grid_y))
+		queue_redraw()
 
 func _ensure_containers():
 	if not has_node("Background"):
