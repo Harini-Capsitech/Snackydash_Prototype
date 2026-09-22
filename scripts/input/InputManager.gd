@@ -1,42 +1,54 @@
 extends Node
 
-signal swipe_detected(direction)
+signal aim_direction_changed(direction)
+signal drag_released()
 
-var touch_start_pos: Vector2
-var is_touching := false
-var swipe_threshold := 50.0
+var is_dragging := false
+var drag_start_pos := Vector2.ZERO
+var drag_threshold := 20.0
 
-func _input(event):
-    if event.is_action_pressed("ui_up"):
-        emit_signal("swipe_detected", Vector2i.UP)
-    elif event.is_action_pressed("ui_down"):
-        emit_signal("swipe_detected", Vector2i.DOWN)
-    elif event.is_action_pressed("ui_left"):
-        emit_signal("swipe_detected", Vector2i.LEFT)
-    elif event.is_action_pressed("ui_right"):
-        emit_signal("swipe_detected", Vector2i.RIGHT)
-
-    if event is InputEventScreenTouch or (event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT):
-        if event.pressed:
-            touch_start_pos = event.position
-            is_touching = true
-        else:
-            if is_touching:
-                _check_swipe(event.position)
-            is_touching = false
+func _unhandled_input(event: InputEvent) -> void:
+    if event is InputEventMouseButton:
+        if event.button_index == MOUSE_BUTTON_LEFT:
+            if event.pressed:
+                is_dragging = true
+                drag_start_pos = event.position
+            else:
+                if is_dragging:
+                    is_dragging = false
+                    emit_signal("drag_released")
+    elif event is InputEventMouseMotion and is_dragging:
+        var delta = event.position - drag_start_pos
+        if delta.length() > drag_threshold:
+            var dir = _calculate_cardinal_dir(delta)
+            emit_signal("aim_direction_changed", dir)
             
-func _check_swipe(touch_end_pos: Vector2):
-    var diff = touch_end_pos - touch_start_pos
-    if diff.length() < swipe_threshold:
-        return
+    elif event is InputEventScreenTouch:
+        if event.pressed:
+            is_dragging = true
+            drag_start_pos = event.position
+        else:
+            is_dragging = false
+            emit_signal("drag_released")
+    elif event is InputEventScreenDrag and is_dragging:
+        var delta = event.position - drag_start_pos
+        if delta.length() > drag_threshold:
+            var dir = _calculate_cardinal_dir(delta)
+            emit_signal("aim_direction_changed", dir)
+
+    if event is InputEventKey and event.is_pressed():
+        var dir = Vector2i.ZERO
+        if event.keycode in [KEY_UP, KEY_W]: dir = Vector2i(0, -1)
+        elif event.keycode in [KEY_DOWN, KEY_S]: dir = Vector2i(0, 1)
+        elif event.keycode in [KEY_LEFT, KEY_A]: dir = Vector2i(-1, 0)
+        elif event.keycode in [KEY_RIGHT, KEY_D]: dir = Vector2i(1, 0)
         
-    if abs(diff.x) > abs(diff.y):
-        if diff.x > 0:
-            emit_signal("swipe_detected", Vector2i.RIGHT)
-        else:
-            emit_signal("swipe_detected", Vector2i.LEFT)
+        if dir != Vector2i.ZERO:
+            emit_signal("aim_direction_changed", dir)
+            emit_signal("drag_released")
+
+func _calculate_cardinal_dir(delta: Vector2) -> Vector2i:
+    if abs(delta.x) > abs(delta.y):
+        return Vector2i(1, 0) if delta.x > 0 else Vector2i(-1, 0)
     else:
-        if diff.y > 0:
-            emit_signal("swipe_detected", Vector2i.DOWN)
-        else:
-            emit_signal("swipe_detected", Vector2i.UP)
+        return Vector2i(0, 1) if delta.y > 0 else Vector2i(0, -1)

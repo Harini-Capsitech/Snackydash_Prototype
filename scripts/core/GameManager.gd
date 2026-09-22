@@ -23,7 +23,8 @@ var solver_result: Dictionary = {}
 func _ready():
 	level_complete_label.visible = false
 	_load_level()
-	input_manager.connect("swipe_detected", Callable(self, "_on_swipe_detected"))
+	input_manager.connect("aim_direction_changed", Callable(self, "_on_aim_direction_changed"))
+	input_manager.connect("drag_released", Callable(self, "_on_drag_released"))
 
 func _unhandled_input(event: InputEvent):
 	if event.is_action_pressed("ui_cancel") and has_node("/root/LevelSession"):
@@ -42,9 +43,9 @@ func _load_level():
 	fruits = built["fruits"]
 	trucks = built["trucks"]
 	
-	player.movement.connect("move_started", Callable(self, "_on_player_move_started"))
+	player.movement.connect("dash_started", Callable(self, "_on_player_dash_started"))
 	player.movement.connect("cell_crossed", Callable(self, "_on_cell_crossed"))
-	player.movement.connect("move_finished", Callable(self, "_on_player_move_finished"))
+	player.movement.connect("dash_finished", Callable(self, "_on_player_dash_finished"))
 	player.movement.connect("hit_obstacle", Callable(self, "_on_player_hit_obstacle"))
 	
 	solver_result = LevelSolver.solve(level_data)
@@ -60,11 +61,15 @@ func _load_level_data() -> LevelData:
 		return loaded as LevelData
 	return LevelData.new()
 
-func _on_swipe_detected(direction: Vector2i):
+func _on_aim_direction_changed(direction: Vector2i):
 	if state == GameState.PLAYING:
-		player.movement.try_move(direction)
+		player.movement.set_aim(direction)
 
-func _on_player_move_started():
+func _on_drag_released():
+	if state == GameState.PLAYING:
+		player.movement.confirm_dash()
+
+func _on_player_dash_started():
 	state = GameState.MOVING
 
 func _on_cell_crossed(old_cell: Vector2i, new_cell: Vector2i):
@@ -95,7 +100,7 @@ func _on_player_hit_obstacle(cell: Vector2i):
 				_check_win_condition()
 				_update_debug()
 
-func _on_player_move_finished():
+func _on_player_dash_finished():
 	state = GameState.PLAYING
 	_update_debug()
 

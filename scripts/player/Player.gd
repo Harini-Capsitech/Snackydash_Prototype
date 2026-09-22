@@ -41,17 +41,37 @@ func remove_fruit(type: String, amount: int):
         return
     inventory[type] = max(0, inventory[type] - amount)
     
-    # Remove matching fruit segments starting from the back
-    var removed = 0
-    var i = tail_segments.size() - 1
-    while i >= 0 and removed < amount:
-        if tail_segments[i]["type"] == type:
-            var segment = tail_segments[i]
-            segment["node"].queue_free()
-            tail_segments.remove_at(i)
-            tail_cells.remove_at(i)
-            removed += 1
-        i -= 1
+    for _step in range(amount):
+        var matching_idx = -1
+        for i in range(tail_segments.size()):
+            if tail_segments[i]["type"] == type:
+                matching_idx = i
+                break
+                
+        if matching_idx != -1:
+            var carried_types = []
+            for i in range(tail_segments.size()):
+                carried_types.append(tail_segments[i]["type"])
+                
+            carried_types.remove_at(matching_idx)
+            
+            var last_seg = tail_segments.pop_back()
+            if last_seg and last_seg.has("node") and is_instance_valid(last_seg["node"]):
+                last_seg["node"].queue_free()
+                
+            if tail_cells.size() > tail_segments.size():
+                tail_cells.pop_back()
+                
+            for i in range(carried_types.size()):
+                tail_segments[i]["type"] = carried_types[i]
+                var tex = entity_sprites.get(carried_types[i])
+                var sprite = tail_segments[i]["node"].get_child(0) as Sprite2D
+                if sprite and tex:
+                    sprite.texture = tex
+                    var tex_size = tex.get_size()
+                    if tex_size.x > 0 and tex_size.y > 0:
+                        var scale_factor = min(movement.grid_manager.cell_size / float(tex_size.x), movement.grid_manager.cell_size / float(tex_size.y))
+                        sprite.scale = Vector2(scale_factor, scale_factor)
 
 func grow_tail(type: String):
     pending_growth_types.append(type)

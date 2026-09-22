@@ -62,3 +62,59 @@ func get_cells_along_path(start_cell: Vector2i, direction: Vector2i) -> Array[Ve
         path.append(current)
         current += direction
     return path
+
+func get_neighbors(cell: Vector2i) -> Array[Vector2i]:
+    var result: Array[Vector2i] = []
+    for d in [Vector2i(0, -1), Vector2i(0, 1), Vector2i(-1, 0), Vector2i(1, 0)]:
+        var np = cell + d
+        if is_walkable(np): result.append(np)
+    return result
+
+func is_junction(cell: Vector2i) -> bool:
+    if not is_walkable(cell): return false
+    var neighbors = get_neighbors(cell)
+    if neighbors.size() >= 3: return true
+    if neighbors.size() == 1: return true
+    return false
+
+func trace_path_to_junction(start_cell: Vector2i, initial_dir: Vector2i) -> Array[Vector2i]:
+    var path: Array[Vector2i] = []
+    if initial_dir == Vector2i.ZERO: return path
+    
+    var curr = start_cell
+    var current_dir = initial_dir
+    var max_steps = 200
+    
+    var next_tile = curr + current_dir
+    if not is_walkable(next_tile): return path
+    
+    path.append(next_tile)
+    curr = next_tile
+    
+    if is_junction(curr): return path
+    
+    while max_steps > 0:
+        max_steps -= 1
+        if is_junction(curr): break
+        
+        var neighbors = get_neighbors(curr)
+        var straight_tile = curr + current_dir
+        if straight_tile in neighbors:
+            path.append(straight_tile)
+            curr = straight_tile
+            continue
+            
+        var prev_tile = path[path.size() - 2] if path.size() >= 2 else start_cell
+        var valid_turns: Array[Vector2i] = []
+        for n in neighbors:
+            if n != prev_tile: valid_turns.append(n)
+            
+        if valid_turns.size() == 1:
+            var turn_tile = valid_turns[0]
+            current_dir = turn_tile - curr
+            path.append(turn_tile)
+            curr = turn_tile
+        else:
+            break
+            
+    return path
