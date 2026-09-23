@@ -3,6 +3,10 @@ extends Resource
 
 @export var position: Vector2i = Vector2i.ZERO
 @export var obstacle_type: String = "barrier"
+@export var visual_pos: Vector2 = Vector2.ZERO
+@export var visual_scale: Vector2 = Vector2.ONE
+@export var visual_rot: float = 0.0
+@export var texture_path: String = ""
 
 func to_dict() -> Dictionary:
 	return {

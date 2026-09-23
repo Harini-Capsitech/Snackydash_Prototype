@@ -12,6 +12,8 @@
 [ext_resource type="Texture2D" uid="uid://bo0cgqfdcihr8" path="res://level_creation_tool/sprites/original-image (4)-512x512.png" id="11_5hysy"]
 [ext_resource type="Texture2D" uid="uid://hhbhne1038q0" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_26_19_AM-removebg-preview.png" id="12_cxf42"]
 [ext_resource type="Texture2D" uid="uid://bx6gxvtnqmvfu" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_17_51_AM-removebg-preview.png" id="12_gyeaq"]
+[ext_resource type="Texture2D" uid="uid://do3s3efjsirmk" path="res://Sprites/ChatGPT_Image_Sep_22__2026__05_16_44_PM-removebg-preview.png" id="12_nisoc"]
+[ext_resource type="Texture2D" uid="uid://cnknd1cyr4vmr" path="res://level_creation_tool/sprites/ChatGPT_Image_Sep_23__2026__05_16_24_PM-removebg-preview.png" id="13_o788v"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bg18p"]
 texture = ExtResource("6_f1ljc")
@@ -186,7 +188,7 @@ texture_region_size = Vector2i(64, 64)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_drphe"]
 texture = ExtResource("8_cxf42")
-texture_region_size = Vector2i(64, 64)
+texture_region_size = Vector2i(100, 100)
 0:0/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_drphe"]
@@ -202,17 +204,18 @@ sources/6 = SubResource("TileSetAtlasSource_drphe")
 [node name="LevelEditor" type="Node2D" unique_id=477386705]
 position = Vector2(700, 500)
 script = ExtResource("1_xxx")
+level_id = "Level_003"
 grid_width = 64
 grid_height = 64
 
 [node name="TileMap" type="TileMap" parent="." unique_id=201090079]
 tile_set = SubResource("TileSet_drphe")
 format = 2
-layer_0/tile_data = PackedInt32Array(65531, 6, 0, 65532, 6, 0, 65533, 6, 0, 65534, 6, 0, 65535, 6, 0, 0, 6, 0, 1, 6, 0, 65537, 6, 0, 131073, 6, 0, 196609, 6, 0, 262145, 6, 0, 327681, 6, 0, 393217, 6, 0, 458753, 6, 0, 458752, 6, 0, 524287, 6, 0, 524286, 6, 0, 524283, 6, 0, 524282, 6, 0, 524284, 6, 0, 524285, 6, 0, 458746, 6, 0, 393210, 6, 0, 262138, 6, 0, 196602, 6, 0, 131066, 6, 0, 65530, 6, 0, 327674, 6, 0, 458750, 6, 0)
+layer_0/tile_data = PackedInt32Array(458753, 6, 0, 393217, 6, 0, 327681, 6, 0, 262145, 6, 0, 196609, 6, 0, 131073, 6, 0, 65537, 6, 0, 1, 6, 0, 0, 6, 0, 65535, 6, 0, 65534, 6, 0, 65533, 6, 0, 65532, 6, 0, 65531, 6, 0, 65530, 6, 0, 131069, 6, 0, 196605, 6, 0, 262141, 6, 0, 262140, 6, 0, 262139, 6, 0, 262138, 6, 0, 131066, 6, 0, 196602, 6, 0, 327674, 6, 0, 393210, 6, 0, 393211, 6, 0, 393212, 6, 0, 393213, 6, 0, 458746, 6, 0, 524282, 6, 0, 589818, 6, 0, 589819, 6, 0, 589820, 6, 0, 589821, 6, 0, 589822, 6, 0, 589823, 6, 0, 524287, 6, 0, 458751, 6, 0, 393215, 6, 0, 524289, 6, 0)
 
 [node name="Train" type="Sprite2D" parent="." unique_id=451579433]
-position = Vector2(149.99998, 646.49994)
-scale = Vector2(0.26367185, 0.37695313)
+position = Vector2(150, 820)
+scale = Vector2(0.18, 0.3)
 texture = ExtResource("11_5hysy")
 script = ExtResource("9_twmqk")
 type = 0
@@ -272,6 +275,39 @@ position = Vector2(149.99998, 150.00003)
 scale = Vector2(0.1279999, 0.12800002)
 texture = ExtResource("12_gyeaq")
 script = ExtResource("9_twmqk")
+
+[node name="Food11" type="Sprite2D" parent="." unique_id=1384747042]
+position = Vector2(-450, 350.00003)
+scale = Vector2(0.1279999, 0.12800002)
+texture = ExtResource("12_nisoc")
+script = ExtResource("9_twmqk")
+type = 3
+subtype_id = "rock"
+
+[node name="Food12" type="Sprite2D" parent="." unique_id=1967608038]
+position = Vector2(-350.00003, 350.00003)
+scale = Vector2(0.1279999, 0.12800002)
+texture = ExtResource("12_nisoc")
+script = ExtResource("9_twmqk")
+type = 3
+subtype_id = "rock"
+
+[node name="Rock" type="Sprite2D" parent="." unique_id=682163638]
+position = Vector2(-250.00003, 350.00003)
+scale = Vector2(0.1279999, 0.12800002)
+texture = ExtResource("12_nisoc")
+script = ExtResource("9_twmqk")
+type = 3
+subtype_id = "rock"
+
+[node name="Blockedtrack" type="Sprite2D" parent="." unique_id=1543301223]
+position = Vector2(-427.27274, 849.5454)
+rotation = 1.5707964
+scale = Vector2(0.18933287, 0.24953622)
+texture = ExtResource("13_o788v")
+script = ExtResource("9_twmqk")
+type = 3
+subtype_id = "blocked_track"
 
 [node name="Station" type="Sprite2D" parent="." unique_id=670610999]
 position = Vector2(-150, 550)

@@ -1,7 +1,7 @@
 class_name LevelLoader
 extends Node2D
 
-@export var level_file: String = "res://level_creation_tool/Level_001.tres"
+@export var level_file: String = "res://level_creation_tool/Level_003.tres"
 @export var track_config: TrackVisualConfig
 @export var train_config: TrainVisualConfig
 @export var food_config: FoodVisualConfig
@@ -10,6 +10,7 @@ extends Node2D
 var track_dict: Dictionary = {}
 var foods_dict: Dictionary = {}
 var stations_dict: Dictionary = {}
+var obstacles_dict: Dictionary = {}
 
 func _ready() -> void:
 	if ResourceLoader.exists(level_file):
@@ -70,6 +71,18 @@ func _spawn_level(data: RailwayLevelData) -> void:
 		add_child(sprite)
 		stations_dict[s.position] = {"data": s, "node": sprite}
 		
+	# 3.5 Spawn Obstacles
+	for o in data.obstacles:
+		var sprite = Sprite2D.new()
+		var tex = load(o.texture_path) if o.texture_path != "" else null
+		if tex:
+			sprite.texture = tex
+		sprite.position = o.visual_pos
+		sprite.scale = o.visual_scale
+		sprite.rotation = o.visual_rot
+		add_child(sprite)
+		obstacles_dict[o.position] = {"data": o, "node": sprite}
+		
 	# 4. Spawn Train
 	if data.train_spawn:
 		var train = TrainController.new()
@@ -86,4 +99,4 @@ func _spawn_level(data: RailwayLevelData) -> void:
 		train.position = data.train_spawn.visual_pos
 		train.add_child(sprite)
 		add_child(train)
-		train.setup(data, track_dict, foods_dict, stations_dict, self, car_tex)
+		train.setup(data, track_dict, foods_dict, stations_dict, obstacles_dict, self, car_tex)

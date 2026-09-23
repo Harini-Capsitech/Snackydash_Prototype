@@ -121,6 +121,10 @@ func _extract_objects(data: RailwayLevelData, tm: TileMap) -> void:
 					var obs = ObstacleData.new()
 					obs.position = pos
 					obs.obstacle_type = child.subtype_id
+					obs.visual_pos = child.position
+					obs.visual_scale = child.scale
+					obs.visual_rot = child.rotation
+					if child is Sprite2D and child.texture: obs.texture_path = child.texture.resource_path
 					data.obstacles.append(obs)
 
 func _get_configuration_warnings() -> PackedStringArray:

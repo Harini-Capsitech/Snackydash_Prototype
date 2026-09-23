@@ -1,0 +1,643 @@
+[gd_resource type="Resource" script_class="RailwayLevelData" format=3 uid="uid://igianbmxeiro"]
+
+[ext_resource type="Script" uid="uid://7rh87yojc636" path="res://level_creation_tool/data/FoodData.gd" id="1_j0fhs"]
+[ext_resource type="Script" uid="uid://e57aijfflw1v" path="res://level_creation_tool/data/ObstacleData.gd" id="2_pxvmo"]
+[ext_resource type="Script" uid="uid://b7jguth00tdlp" path="res://level_creation_tool/data/LevelData.gd" id="3_3yu31"]
+[ext_resource type="Script" uid="uid://bb63khel0gcl0" path="res://level_creation_tool/data/StationData.gd" id="4_mpllp"]
+[ext_resource type="Texture2D" uid="uid://cmwyowci0fdw3" path="res://level_creation_tool/sprites/Gemini_Generated_Image_7ltq737ltq737ltq-removebg-preview.png" id="5_gpatp"]
+[ext_resource type="Texture2D" uid="uid://vajxm65tthmu" path="res://level_creation_tool/sprites/Gemini_Generated_Image_qn9043qn9043qn90-removebg-preview.png" id="6_tu07l"]
+[ext_resource type="Texture2D" uid="uid://bvd3f1jjr5ouc" path="res://level_creation_tool/sprites/original-image (1)-512x512.png" id="7_ropuo"]
+[ext_resource type="Texture2D" uid="uid://dm1t4rko5j23r" path="res://level_creation_tool/sprites/original-image (2)-512x512.png" id="8_g5aeb"]
+[ext_resource type="Texture2D" uid="uid://e8kqm3osywvd" path="res://level_creation_tool/sprites/original-image (3)-512x512.png" id="9_hrvuy"]
+[ext_resource type="Texture2D" uid="uid://br2rfpup055wb" path="res://level_creation_tool/sprites/original-image-512x512-removebg-preview.png" id="10_6va14"]
+[ext_resource type="Texture2D" uid="uid://cvn4xdleur3fp" path="res://level_creation_tool/Rectangle 3469102.png" id="11_43hbl"]
+[ext_resource type="Script" uid="uid://dtdil4f0ikvis" path="res://level_creation_tool/data/TrackCellData.gd" id="12_gvyov"]
+[ext_resource type="Script" uid="uid://7dm8s2pwci3c" path="res://level_creation_tool/data/TrainSpawnData.gd" id="13_vqial"]
+
+[sub_resource type="Resource" id="Resource_j0fhs"]
+script = ExtResource("1_j0fhs")
+position = Vector2i(1, 0)
+visual_pos = Vector2(149.99998, 50.00003)
+visual_scale = Vector2(0.1279999, 0.12800002)
+texture_path = "res://Sprites/ChatGPT_Image_Sep_22__2026__11_17_51_AM-removebg-preview.png"
+
+[sub_resource type="Resource" id="Resource_pxvmo"]
+script = ExtResource("1_j0fhs")
+visual_pos = Vector2(49.999992, 50.00003)
+visual_scale = Vector2(0.1279999, 0.12800002)
+texture_path = "res://Sprites/ChatGPT_Image_Sep_22__2026__11_17_51_AM-removebg-preview.png"
+
+[sub_resource type="Resource" id="Resource_3yu31"]
+script = ExtResource("1_j0fhs")
+position = Vector2i(-3, 0)
+visual_pos = Vector2(-249.99997, 50.00003)
+visual_scale = Vector2(0.1279999, 0.12800002)
+texture_path = "res://Sprites/ChatGPT_Image_Sep_22__2026__11_17_51_AM-removebg-preview.png"
+
+[sub_resource type="Resource" id="Resource_mpllp"]
+script = ExtResource("1_j0fhs")
+position = Vector2i(-2, 0)
+visual_pos = Vector2(-150, 50.00003)
+visual_scale = Vector2(0.1279999, 0.12800002)
+texture_path = "res://Sprites/ChatGPT_Image_Sep_22__2026__11_17_51_AM-removebg-preview.png"
+
+[sub_resource type="Resource" id="Resource_gpatp"]
+script = ExtResource("1_j0fhs")
+position = Vector2i(-1, 0)
+visual_pos = Vector2(-50, 50.00003)
+visual_scale = Vector2(0.1279999, 0.12800002)
+texture_path = "res://Sprites/ChatGPT_Image_Sep_22__2026__11_17_51_AM-removebg-preview.png"
+
+[sub_resource type="Resource" id="Resource_tu07l"]
+script = ExtResource("1_j0fhs")
+position = Vector2i(-4, 0)
+visual_pos = Vector2(-349.99997, 50.00003)
+visual_scale = Vector2(0.1279999, 0.12800002)
+texture_path = "res://Sprites/ChatGPT_Image_Sep_22__2026__11_17_51_AM-removebg-preview.png"
+
+[sub_resource type="Resource" id="Resource_ropuo"]
+script = ExtResource("1_j0fhs")
+position = Vector2i(1, 3)
+visual_pos = Vector2(149.99998, 350.00003)
+visual_scale = Vector2(0.1279999, 0.12800002)
+texture_path = "res://Sprites/ChatGPT_Image_Sep_22__2026__11_17_51_AM-removebg-preview.png"
+
+[sub_resource type="Resource" id="Resource_g5aeb"]
+script = ExtResource("1_j0fhs")
+position = Vector2i(1, 2)
+visual_pos = Vector2(149.99998, 250.00003)
+visual_scale = Vector2(0.1279999, 0.12800002)
+texture_path = "res://Sprites/ChatGPT_Image_Sep_22__2026__11_17_51_AM-removebg-preview.png"
+
+[sub_resource type="Resource" id="Resource_hrvuy"]
+script = ExtResource("1_j0fhs")
+position = Vector2i(1, 1)
+visual_pos = Vector2(149.99998, 150.00003)
+visual_scale = Vector2(0.1279999, 0.12800002)
+texture_path = "res://Sprites/ChatGPT_Image_Sep_22__2026__11_17_51_AM-removebg-preview.png"
+
+[sub_resource type="Resource" id="Resource_6va14"]
+script = ExtResource("2_pxvmo")
+position = Vector2i(-5, 3)
+obstacle_type = "rock"
+visual_pos = Vector2(-450, 350.00003)
+visual_scale = Vector2(0.1279999, 0.12800002)
+texture_path = "res://Sprites/ChatGPT_Image_Sep_22__2026__05_16_44_PM-removebg-preview.png"
+
+[sub_resource type="Resource" id="Resource_43hbl"]
+script = ExtResource("2_pxvmo")
+position = Vector2i(-4, 3)
+obstacle_type = "rock"
+visual_pos = Vector2(-350.00003, 350.00003)
+visual_scale = Vector2(0.1279999, 0.12800002)
+texture_path = "res://Sprites/ChatGPT_Image_Sep_22__2026__05_16_44_PM-removebg-preview.png"
+
+[sub_resource type="Resource" id="Resource_gvyov"]
+script = ExtResource("2_pxvmo")
+position = Vector2i(-3, 3)
+obstacle_type = "rock"
+visual_pos = Vector2(-250.00003, 350.00003)
+visual_scale = Vector2(0.1279999, 0.12800002)
+texture_path = "res://Sprites/ChatGPT_Image_Sep_22__2026__05_16_44_PM-removebg-preview.png"
+
+[sub_resource type="Resource" id="Resource_vqial"]
+script = ExtResource("2_pxvmo")
+position = Vector2i(-5, 8)
+obstacle_type = "blocked_track"
+visual_pos = Vector2(-427.27274, 849.5454)
+visual_scale = Vector2(0.18933287, 0.24953622)
+visual_rot = 1.5707964
+texture_path = "res://level_creation_tool/sprites/ChatGPT_Image_Sep_23__2026__05_16_24_PM-removebg-preview.png"
+
+[sub_resource type="Resource" id="Resource_7caot"]
+script = ExtResource("4_mpllp")
+position = Vector2i(-2, 5)
+visual_pos = Vector2(-150, 550)
+visual_scale = Vector2(0.35812497, 0.35543758)
+texture_path = "res://Sprites/ChatGPT_Image_Sep_22__2026__11_26_19_AM-removebg-preview.png"
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bg18p"]
+texture = ExtResource("5_gpatp")
+texture_region_size = Vector2i(64, 64)
+1:2/0 = 0
+2:2/0 = 0
+2:3/0 = 0
+1:3/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cxf42"]
+texture = ExtResource("6_tu07l")
+texture_region_size = Vector2i(64, 64)
+6:0/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+6:4/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nisoc"]
+texture = ExtResource("7_ropuo")
+texture_region_size = Vector2i(64, 64)
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+7:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+6:4/0 = 0
+7:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+2:6/0 = 0
+3:6/0 = 0
+4:6/0 = 0
+5:6/0 = 0
+2:7/0 = 0
+3:7/0 = 0
+4:7/0 = 0
+5:7/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o788v"]
+texture = ExtResource("8_g5aeb")
+texture_region_size = Vector2i(64, 64)
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+7:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+6:4/0 = 0
+7:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+2:6/0 = 0
+3:6/0 = 0
+4:6/0 = 0
+5:6/0 = 0
+2:7/0 = 0
+3:7/0 = 0
+4:7/0 = 0
+5:7/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lo4r0"]
+texture = ExtResource("9_hrvuy")
+texture_region_size = Vector2i(64, 64)
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+5:5/0 = 0
+2:6/0 = 0
+3:6/0 = 0
+4:6/0 = 0
+5:6/0 = 0
+2:7/0 = 0
+3:7/0 = 0
+4:7/0 = 0
+5:7/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p6gqy"]
+texture = ExtResource("10_6va14")
+texture_region_size = Vector2i(64, 64)
+6:2/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+6:4/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+2:6/0 = 0
+3:6/0 = 0
+4:6/0 = 0
+5:6/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_drphe"]
+texture = ExtResource("11_43hbl")
+texture_region_size = Vector2i(100, 100)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_drphe"]
+tile_size = Vector2i(100, 100)
+sources/0 = SubResource("TileSetAtlasSource_bg18p")
+sources/1 = SubResource("TileSetAtlasSource_cxf42")
+sources/2 = SubResource("TileSetAtlasSource_nisoc")
+sources/3 = SubResource("TileSetAtlasSource_o788v")
+sources/4 = SubResource("TileSetAtlasSource_lo4r0")
+sources/5 = SubResource("TileSetAtlasSource_p6gqy")
+sources/6 = SubResource("TileSetAtlasSource_drphe")
+
+[sub_resource type="Resource" id="Resource_8wl3v"]
+script = ExtResource("12_gvyov")
+position = Vector2i(1, 7)
+source_id = 6
+connect_up = true
+connect_down = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_egk2b"]
+script = ExtResource("12_gvyov")
+position = Vector2i(1, 6)
+source_id = 6
+connect_up = true
+connect_down = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_v8o6l"]
+script = ExtResource("12_gvyov")
+position = Vector2i(1, 5)
+source_id = 6
+connect_up = true
+connect_down = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_25pv6"]
+script = ExtResource("12_gvyov")
+position = Vector2i(1, 4)
+source_id = 6
+connect_up = true
+connect_down = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_m7rax"]
+script = ExtResource("12_gvyov")
+position = Vector2i(1, 3)
+source_id = 6
+connect_up = true
+connect_down = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_v748w"]
+script = ExtResource("12_gvyov")
+position = Vector2i(1, 2)
+source_id = 6
+connect_up = true
+connect_down = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_20c4h"]
+script = ExtResource("12_gvyov")
+position = Vector2i(1, 1)
+source_id = 6
+connect_up = true
+connect_down = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_jm47f"]
+script = ExtResource("12_gvyov")
+position = Vector2i(1, 0)
+source_id = 6
+connect_down = true
+connect_left = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_cieey"]
+script = ExtResource("12_gvyov")
+source_id = 6
+connect_left = true
+connect_right = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_a0b7u"]
+script = ExtResource("12_gvyov")
+position = Vector2i(-1, 0)
+source_id = 6
+connect_left = true
+connect_right = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_46kqc"]
+script = ExtResource("12_gvyov")
+position = Vector2i(-2, 0)
+source_id = 6
+connect_left = true
+connect_right = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_hvxsj"]
+script = ExtResource("12_gvyov")
+position = Vector2i(-3, 0)
+source_id = 6
+connect_down = true
+connect_left = true
+connect_right = true
+track_type_id = "connections_3"
+
+[sub_resource type="Resource" id="Resource_m01ap"]
+script = ExtResource("12_gvyov")
+position = Vector2i(-4, 0)
+source_id = 6
+connect_left = true
+connect_right = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_koon4"]
+script = ExtResource("12_gvyov")
+position = Vector2i(-5, 0)
+source_id = 6
+connect_left = true
+connect_right = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_5j5g7"]
+script = ExtResource("12_gvyov")
+position = Vector2i(-6, 0)
+source_id = 6
+connect_down = true
+connect_right = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_txany"]
+script = ExtResource("12_gvyov")
+position = Vector2i(-3, 1)
+source_id = 6
+connect_up = true
+connect_down = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_k5xnj"]
+script = ExtResource("12_gvyov")
+position = Vector2i(-3, 2)
+source_id = 6
+connect_up = true
+connect_down = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_xi0jw"]
+script = ExtResource("12_gvyov")
+position = Vector2i(-3, 3)
+source_id = 6
+connect_up = true
+connect_left = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_ackit"]
+script = ExtResource("12_gvyov")
+position = Vector2i(-4, 3)
+source_id = 6
+connect_left = true
+connect_right = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_8oy5b"]
+script = ExtResource("12_gvyov")
+position = Vector2i(-5, 3)
+source_id = 6
+connect_left = true
+connect_right = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_hwbqa"]
+script = ExtResource("12_gvyov")
+position = Vector2i(-6, 3)
+source_id = 6
+connect_up = true
+connect_down = true
+connect_right = true
+track_type_id = "connections_3"
+
+[sub_resource type="Resource" id="Resource_n7x7m"]
+script = ExtResource("12_gvyov")
+position = Vector2i(-6, 1)
+source_id = 6
+connect_up = true
+connect_down = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_0qg8l"]
+script = ExtResource("12_gvyov")
+position = Vector2i(-6, 2)
+source_id = 6
+connect_up = true
+connect_down = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_q11nl"]
+script = ExtResource("12_gvyov")
+position = Vector2i(-6, 4)
+source_id = 6
+connect_up = true
+connect_down = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_ftqog"]
+script = ExtResource("12_gvyov")
+position = Vector2i(-6, 5)
+source_id = 6
+connect_up = true
+connect_down = true
+connect_right = true
+track_type_id = "connections_3"
+
+[sub_resource type="Resource" id="Resource_if2et"]
+script = ExtResource("12_gvyov")
+position = Vector2i(-5, 5)
+source_id = 6
+connect_left = true
+connect_right = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_pkrk1"]
+script = ExtResource("12_gvyov")
+position = Vector2i(-4, 5)
+source_id = 6
+connect_left = true
+connect_right = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_v5omr"]
+script = ExtResource("12_gvyov")
+position = Vector2i(-3, 5)
+source_id = 6
+connect_left = true
+track_type_id = "connections_1"
+
+[sub_resource type="Resource" id="Resource_wv04v"]
+script = ExtResource("12_gvyov")
+position = Vector2i(-6, 6)
+source_id = 6
+connect_up = true
+connect_down = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_t8xhb"]
+script = ExtResource("12_gvyov")
+position = Vector2i(-6, 7)
+source_id = 6
+connect_up = true
+connect_down = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_je12h"]
+script = ExtResource("12_gvyov")
+position = Vector2i(-6, 8)
+source_id = 6
+connect_up = true
+connect_right = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_1av1y"]
+script = ExtResource("12_gvyov")
+position = Vector2i(-5, 8)
+source_id = 6
+connect_left = true
+connect_right = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_nwelb"]
+script = ExtResource("12_gvyov")
+position = Vector2i(-4, 8)
+source_id = 6
+connect_left = true
+connect_right = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_d6lrk"]
+script = ExtResource("12_gvyov")
+position = Vector2i(-3, 8)
+source_id = 6
+connect_left = true
+connect_right = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_hgl2q"]
+script = ExtResource("12_gvyov")
+position = Vector2i(-2, 8)
+source_id = 6
+connect_left = true
+connect_right = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_8a0eq"]
+script = ExtResource("12_gvyov")
+position = Vector2i(-1, 8)
+source_id = 6
+connect_up = true
+connect_left = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_ixisg"]
+script = ExtResource("12_gvyov")
+position = Vector2i(-1, 7)
+source_id = 6
+connect_up = true
+connect_down = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_taln6"]
+script = ExtResource("12_gvyov")
+position = Vector2i(-1, 6)
+source_id = 6
+connect_up = true
+connect_down = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_plu58"]
+script = ExtResource("12_gvyov")
+position = Vector2i(-1, 5)
+source_id = 6
+connect_down = true
+track_type_id = "connections_1"
+
+[sub_resource type="Resource" id="Resource_klqni"]
+script = ExtResource("12_gvyov")
+position = Vector2i(1, 8)
+source_id = 6
+connect_up = true
+track_type_id = "connections_1"
+
+[sub_resource type="Resource" id="Resource_fqlfa"]
+script = ExtResource("13_vqial")
+position = Vector2i(1, 8)
+facing_direction = Vector2i(0, -1)
+visual_pos = Vector2(150, 820)
+visual_scale = Vector2(0.18, 0.3)
+texture_path = "res://level_creation_tool/sprites/original-image (4)-512x512.png"
+
+[resource]
+script = ExtResource("3_3yu31")
+level_id = "Level_003"
+grid_width = 64
+grid_height = 64
+level_offset = Vector2(700, 500)
+tile_set = SubResource("TileSet_drphe")
+tracks = Array[ExtResource("12_gvyov")]([SubResource("Resource_8wl3v"), SubResource("Resource_egk2b"), SubResource("Resource_v8o6l"), SubResource("Resource_25pv6"), SubResource("Resource_m7rax"), SubResource("Resource_v748w"), SubResource("Resource_20c4h"), SubResource("Resource_jm47f"), SubResource("Resource_cieey"), SubResource("Resource_a0b7u"), SubResource("Resource_46kqc"), SubResource("Resource_hvxsj"), SubResource("Resource_m01ap"), SubResource("Resource_koon4"), SubResource("Resource_5j5g7"), SubResource("Resource_txany"), SubResource("Resource_k5xnj"), SubResource("Resource_xi0jw"), SubResource("Resource_ackit"), SubResource("Resource_8oy5b"), SubResource("Resource_hwbqa"), SubResource("Resource_n7x7m"), SubResource("Resource_0qg8l"), SubResource("Resource_q11nl"), SubResource("Resource_ftqog"), SubResource("Resource_if2et"), SubResource("Resource_pkrk1"), SubResource("Resource_v5omr"), SubResource("Resource_wv04v"), SubResource("Resource_t8xhb"), SubResource("Resource_je12h"), SubResource("Resource_1av1y"), SubResource("Resource_nwelb"), SubResource("Resource_d6lrk"), SubResource("Resource_hgl2q"), SubResource("Resource_8a0eq"), SubResource("Resource_ixisg"), SubResource("Resource_taln6"), SubResource("Resource_plu58"), SubResource("Resource_klqni")])
+train_spawn = SubResource("Resource_fqlfa")
+foods = Array[ExtResource("1_j0fhs")]([SubResource("Resource_j0fhs"), SubResource("Resource_pxvmo"), SubResource("Resource_3yu31"), SubResource("Resource_mpllp"), SubResource("Resource_gpatp"), SubResource("Resource_tu07l"), SubResource("Resource_ropuo"), SubResource("Resource_g5aeb"), SubResource("Resource_hrvuy")])
+stations = Array[ExtResource("4_mpllp")]([SubResource("Resource_7caot")])
+obstacles = Array[ExtResource("2_pxvmo")]([SubResource("Resource_6va14"), SubResource("Resource_43hbl"), SubResource("Resource_gvyov"), SubResource("Resource_vqial")])

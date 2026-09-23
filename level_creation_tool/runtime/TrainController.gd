@@ -20,6 +20,7 @@ var cell_size: int = 64
 
 var foods_dict: Dictionary = {}
 var stations_dict: Dictionary = {}
+var obstacles_dict: Dictionary = {}
 
 var carriages: Array[String] = [] # stores food_ids of collected food
 var carriage_sprites: Array[Sprite2D] = []
@@ -33,13 +34,15 @@ var tile_map: TileMap = null # for exact coordinate mapping
 
 signal on_food_collected(food_id: String)
 signal on_food_delivered(station_id: String, food_id: String)
+signal on_crashed()
 signal level_completed()
 
-func setup(p_level_data: RailwayLevelData, p_track_dict: Dictionary, p_foods: Dictionary, p_stations: Dictionary, loader, p_carriage_tex: Texture2D) -> void:
+func setup(p_level_data: RailwayLevelData, p_track_dict: Dictionary, p_foods: Dictionary, p_stations: Dictionary, p_obstacles: Dictionary, loader, p_carriage_tex: Texture2D) -> void:
 	level_data = p_level_data
 	track_dict = p_track_dict
 	foods_dict = p_foods
 	stations_dict = p_stations
+	obstacles_dict = p_obstacles
 	level_loader = loader
 	carriage_texture = p_carriage_tex
 	cell_size = level_data.cell_size
@@ -141,6 +144,20 @@ func _unhandled_input(event: InputEvent) -> void:
 				current_state = State.MOVING
 
 func _handle_grid_arrival() -> void:
+	# Check for obstacle collision
+	if obstacles_dict.has(current_grid_pos):
+		current_state = State.STOPPED
+		on_crashed.emit()
+		print("CRASHED into an obstacle!")
+		
+		# Optional: add visual shake or explosion here
+		var tween = create_tween()
+		tween.tween_property(self, "position", position + Vector2(10, 0), 0.05)
+		tween.tween_property(self, "position", position - Vector2(10, 0), 0.05)
+		tween.tween_property(self, "position", position + Vector2(5, 0), 0.05)
+		tween.tween_property(self, "position", position, 0.05)
+		return
+		
 	# Check for food
 	if foods_dict.has(current_grid_pos):
 		var food_data = foods_dict[current_grid_pos]
@@ -162,6 +179,10 @@ func _handle_grid_arrival() -> void:
 		food_sprite.texture = food_data.node.texture
 		food_sprite.scale = food_data.node.scale / sprite.scale # adjust relative scale
 		sprite.add_child(food_sprite)
+		
+		# Set initial position so it doesn't flash at (0,0)
+		if tile_map:
+			sprite.position = tile_map.map_to_local(current_grid_pos)
 		
 		carriage_sprites.append(sprite)
 		
@@ -262,6 +283,14 @@ func _handle_grid_arrival() -> void:
 		if current_dir != Vector2i(1, 0) and track_dict.has(current_grid_pos + Vector2i(-1, 0)): valid_exits.append(Vector2i(-1, 0))
 		if current_dir != Vector2i(-1, 0) and track_dict.has(current_grid_pos + Vector2i(1, 0)): valid_exits.append(Vector2i(1, 0))
 	
+	# Filter out any exits that contain obstacles so we don't pass through them
+	var safe_exits = []
+	for ex in valid_exits:
+		if not obstacles_dict.has(current_grid_pos + ex):
+			safe_exits.append(ex)
+			
+	valid_exits = safe_exits
+	
 	if valid_exits.size() == 0:
 		# Dead end
 		current_state = State.STOPPED
@@ -293,6 +322,9 @@ func _get_angle_for_dir(dir: Vector2i) -> float:
 	return 0.0
 
 func _is_valid_move(pos: Vector2i, dir: Vector2i) -> bool:
+	# Immediately reject if the target cell has an obstacle
+	if obstacles_dict.has(pos + dir): return false
+	
 	var track: TrackCellData = track_dict.get(pos, null)
 	if not track: return false
 	
