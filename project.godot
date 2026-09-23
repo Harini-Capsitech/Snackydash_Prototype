@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="SnackyDash Prototype"
-run/main_scene="res://scenes/Game.tscn"
+run/main_scene="res://level_creation_tool/runtime/LevelPlayer.tscn"
 config/features=PackedStringArray("4.7", "Forward Plus")
 
 [autoload]
