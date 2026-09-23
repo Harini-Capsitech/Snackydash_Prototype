@@ -8,11 +8,12 @@
 [ext_resource type="Texture2D" uid="uid://vajxm65tthmu" path="res://level_creation_tool/sprites/Gemini_Generated_Image_qn9043qn9043qn90-removebg-preview.png" id="7_a4rk8"]
 [ext_resource type="Texture2D" uid="uid://cvn4xdleur3fp" path="res://level_creation_tool/Rectangle 3469102.png" id="8_cxf42"]
 [ext_resource type="Texture2D" uid="uid://bvd3f1jjr5ouc" path="res://level_creation_tool/sprites/original-image (1)-512x512.png" id="8_t31eh"]
+[ext_resource type="Texture2D" uid="uid://clgvkh7hw62su" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_19_30_AM-removebg-preview.png" id="9_bg18p"]
 [ext_resource type="Script" uid="uid://ddbfji7a0gmdk" path="res://level_creation_tool/core/LevelObject.gd" id="9_twmqk"]
 [ext_resource type="Texture2D" uid="uid://bo0cgqfdcihr8" path="res://level_creation_tool/sprites/original-image (4)-512x512.png" id="11_5hysy"]
 [ext_resource type="Texture2D" uid="uid://hhbhne1038q0" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_26_19_AM-removebg-preview.png" id="12_cxf42"]
-[ext_resource type="Texture2D" uid="uid://bx6gxvtnqmvfu" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_17_51_AM-removebg-preview.png" id="12_gyeaq"]
-[ext_resource type="Texture2D" uid="uid://dqk7gej4x36q0" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_20_36_AM-removebg-preview.png" id="13_nisoc"]
+[ext_resource type="Texture2D" uid="uid://cnknd1cyr4vmr" path="res://level_creation_tool/sprites/ChatGPT_Image_Sep_23__2026__05_16_24_PM-removebg-preview.png" id="13_o788v"]
+[ext_resource type="Texture2D" uid="uid://cw7ydxxwffijc" path="res://level_creation_tool/sprites/ChatGPT_Image_Sep_23__2026__05_42_53_PM-removebg-preview (1).png" id="15_lo4r0"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bg18p"]
 texture = ExtResource("6_f1ljc")
@@ -203,143 +204,111 @@ sources/6 = SubResource("TileSetAtlasSource_drphe")
 [node name="LevelEditor" type="Node2D" unique_id=477386705]
 position = Vector2(700, 500)
 script = ExtResource("1_xxx")
+level_id = "Level_004"
 grid_width = 64
 grid_height = 64
 
 [node name="TileMap" type="TileMap" parent="." unique_id=201090079]
 tile_set = SubResource("TileSet_drphe")
 format = 2
-layer_0/tile_data = PackedInt32Array(65535, 6, 0, 65534, 6, 0, 65533, 6, 0, 65532, 6, 0, 65531, 6, 0, 0, 6, 0, 1, 6, 0, 65537, 6, 0, 131073, 6, 0, 196609, 6, 0, 262145, 6, 0, 327681, 6, 0, 393217, 6, 0, 458753, 6, 0, 524287, 6, 0, 524282, 6, 0, 458746, 6, 0, 393210, 6, 0, 262138, 6, 0, 196602, 6, 0, 131066, 6, 0, 65530, 6, 0, 327674, 6, 0, 458752, 6, 0, 524286, 6, 0, 524283, 6, 0, 524284, 6, 0, 524285, 6, 0, 458750, 6, 0)
+layer_0/tile_data = PackedInt32Array(65535, 6, 0, 65534, 6, 0, 65533, 6, 0, 65532, 6, 0, 65531, 6, 0, 0, 6, 0, 1, 6, 0, 65537, 6, 0, 131073, 6, 0, 196609, 6, 0, 262145, 6, 0, 327681, 6, 0, 393217, 6, 0, 458753, 6, 0, 524282, 6, 0, 458746, 6, 0, 393210, 6, 0, 262138, 6, 0, 196602, 6, 0, 131066, 6, 0, 65530, 6, 0, 327674, 6, 0, 131069, 6, 0, 196605, 6, 0, 262141, 6, 0, 262140, 6, 0, 262139, 6, 0, 393211, 6, 0, 393212, 6, 0, 393213, 6, 0, 589818, 6, 0, 589819, 6, 0, 589820, 6, 0, 589821, 6, 0, 589822, 6, 0, 589823, 6, 0, 524289, 6, 0)
 
-[node name="@Sprite2D@123449" type="Sprite2D" parent="." unique_id=1460415932]
-position = Vector2(149.99998, 646.49994)
-scale = Vector2(0.26367185, 0.37695313)
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=698444386]
+position = Vector2(150, 650)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("9_bg18p")
+script = ExtResource("9_twmqk")
+subtype_id = "pizza"
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=1248477101]
+position = Vector2(150, 550)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("9_bg18p")
+script = ExtResource("9_twmqk")
+subtype_id = "pizza"
+
+[node name="Sprite2D3" type="Sprite2D" parent="." unique_id=1632989736]
+position = Vector2(150, 450)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("9_bg18p")
+script = ExtResource("9_twmqk")
+subtype_id = "pizza"
+
+[node name="Sprite2D4" type="Sprite2D" parent="." unique_id=1599302224]
+position = Vector2(150, 350)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("9_bg18p")
+script = ExtResource("9_twmqk")
+subtype_id = "pizza"
+
+[node name="Sprite2D5" type="Sprite2D" parent="." unique_id=1505214130]
+position = Vector2(150, 250)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("9_bg18p")
+script = ExtResource("9_twmqk")
+subtype_id = "pizza"
+
+[node name="Sprite2D6" type="Sprite2D" parent="." unique_id=114395562]
+position = Vector2(-49.999985, 50.000015)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("9_bg18p")
+script = ExtResource("9_twmqk")
+subtype_id = "pizza"
+
+[node name="Sprite2D7" type="Sprite2D" parent="." unique_id=1197896600]
+position = Vector2(-149.99997, 50.000015)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("9_bg18p")
+script = ExtResource("9_twmqk")
+subtype_id = "pizza"
+
+[node name="Sprite2D8" type="Sprite2D" parent="." unique_id=1831726280]
+position = Vector2(-249.99997, 50.000015)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("9_bg18p")
+script = ExtResource("9_twmqk")
+subtype_id = "pizza"
+
+[node name="Sprite2D12" type="Sprite2D" parent="." unique_id=1618347758]
+position = Vector2(-350.00003, 50.000015)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("9_bg18p")
+script = ExtResource("9_twmqk")
+subtype_id = "pizza"
+
+[node name="Sprite2D9" type="Sprite2D" parent="." unique_id=1842601288]
+position = Vector2(149.99994, 849.99994)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("11_5hysy")
 script = ExtResource("9_twmqk")
 type = 0
-subtype_id = "train"
+subtype_id = "train_01"
 train_facing = Vector2i(0, -1)
 
-[node name="@Sprite2D@123450" type="Sprite2D" parent="." unique_id=1767249339]
-position = Vector2(149.99998, 50.00003)
-scale = Vector2(0.1279999, 0.12800002)
-texture = ExtResource("12_gyeaq")
-script = ExtResource("9_twmqk")
-
-[node name="@Sprite2D@123451" type="Sprite2D" parent="." unique_id=1556267798]
-position = Vector2(49.999992, 50.00003)
-scale = Vector2(0.1279999, 0.12800002)
-texture = ExtResource("12_gyeaq")
-script = ExtResource("9_twmqk")
-
-[node name="@Sprite2D@123452" type="Sprite2D" parent="." unique_id=1461662696]
-position = Vector2(-249.99997, 50.00003)
-scale = Vector2(0.1279999, 0.12800002)
-texture = ExtResource("12_gyeaq")
-script = ExtResource("9_twmqk")
-
-[node name="@Sprite2D@123453" type="Sprite2D" parent="." unique_id=622790420]
-position = Vector2(-150, 50.00003)
-scale = Vector2(0.1279999, 0.12800002)
-texture = ExtResource("12_gyeaq")
-script = ExtResource("9_twmqk")
-
-[node name="@Sprite2D@123454" type="Sprite2D" parent="." unique_id=457609615]
-position = Vector2(-50, 50.00003)
-scale = Vector2(0.1279999, 0.12800002)
-texture = ExtResource("12_gyeaq")
-script = ExtResource("9_twmqk")
-
-[node name="@Sprite2D@123455" type="Sprite2D" parent="." unique_id=1068084297]
-position = Vector2(-349.99997, 50.00003)
-scale = Vector2(0.1279999, 0.12800002)
-texture = ExtResource("12_gyeaq")
-script = ExtResource("9_twmqk")
-
-[node name="@Sprite2D@123456" type="Sprite2D" parent="." unique_id=1504318385]
-position = Vector2(149.99998, 350.00003)
-scale = Vector2(0.1279999, 0.12800002)
-texture = ExtResource("12_gyeaq")
-script = ExtResource("9_twmqk")
-
-[node name="@Sprite2D@123457" type="Sprite2D" parent="." unique_id=1634522986]
-position = Vector2(149.99998, 250.00003)
-scale = Vector2(0.1279999, 0.12800002)
-texture = ExtResource("12_gyeaq")
-script = ExtResource("9_twmqk")
-
-[node name="@Sprite2D@123458" type="Sprite2D" parent="." unique_id=422142607]
-position = Vector2(149.99998, 150.00003)
-scale = Vector2(0.1279999, 0.12800002)
-texture = ExtResource("12_gyeaq")
-script = ExtResource("9_twmqk")
-
-[node name="@Sprite2D@123459" type="Sprite2D" parent="." unique_id=1071142587]
-position = Vector2(-450, 50.000015)
-scale = Vector2(0.125, 0.125)
-texture = ExtResource("13_nisoc")
-script = ExtResource("9_twmqk")
-subtype_id = "pizza"
-
-[node name="@Sprite2D@123460" type="Sprite2D" parent="." unique_id=866910974]
-position = Vector2(-550, 50.000015)
-scale = Vector2(0.125, 0.125)
-texture = ExtResource("13_nisoc")
-script = ExtResource("9_twmqk")
-subtype_id = "pizza"
-
-[node name="@Sprite2D@123461" type="Sprite2D" parent="." unique_id=2026597619]
-position = Vector2(-550, 150.00002)
-scale = Vector2(0.125, 0.125)
-texture = ExtResource("13_nisoc")
-script = ExtResource("9_twmqk")
-subtype_id = "pizza"
-
-[node name="@Sprite2D@123462" type="Sprite2D" parent="." unique_id=1810501980]
-position = Vector2(-550, 250.00002)
-scale = Vector2(0.125, 0.125)
-texture = ExtResource("13_nisoc")
-script = ExtResource("9_twmqk")
-subtype_id = "pizza"
-
-[node name="@Sprite2D@123463" type="Sprite2D" parent="." unique_id=2045495906]
-position = Vector2(-550, 350)
-scale = Vector2(0.125, 0.125)
-texture = ExtResource("13_nisoc")
-script = ExtResource("9_twmqk")
-subtype_id = "pizza"
-
-[node name="@Sprite2D@123464" type="Sprite2D" parent="." unique_id=1824747954]
-position = Vector2(-550, 450)
-scale = Vector2(0.125, 0.125)
-texture = ExtResource("13_nisoc")
-script = ExtResource("9_twmqk")
-subtype_id = "pizza"
-
-[node name="@Sprite2D@123465" type="Sprite2D" parent="." unique_id=40511398]
-position = Vector2(-550, 550)
-scale = Vector2(0.125, 0.125)
-texture = ExtResource("13_nisoc")
-script = ExtResource("9_twmqk")
-subtype_id = "pizza"
-
-[node name="@Sprite2D@123466" type="Sprite2D" parent="." unique_id=959834648]
-position = Vector2(-550, 650)
-scale = Vector2(0.125, 0.125)
-texture = ExtResource("13_nisoc")
-script = ExtResource("9_twmqk")
-subtype_id = "pizza"
-
-[node name="@Sprite2D@123467" type="Sprite2D" parent="." unique_id=1459952797]
-position = Vector2(-550, 750)
-scale = Vector2(0.125, 0.125)
-texture = ExtResource("13_nisoc")
-script = ExtResource("9_twmqk")
-subtype_id = "pizza"
-
-[node name="@Sprite2D@123468" type="Sprite2D" parent="." unique_id=1413236290]
-position = Vector2(-150, 550)
-scale = Vector2(0.35812497, 0.35543758)
+[node name="Sprite2D10" type="Sprite2D" parent="." unique_id=1632640445]
+position = Vector2(-149.99997, 550)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("12_cxf42")
 script = ExtResource("9_twmqk")
 type = 2
+subtype_id = "station_2"
+train_facing = Vector2i(0, -1)
+
+[node name="Sprite2D11" type="Sprite2D" parent="." unique_id=1887470184]
+position = Vector2(-37.115894, 848.3895)
+rotation = 1.5707964
+scale = Vector2(0.23865241, 0.14846367)
+texture = ExtResource("15_lo4r0")
+script = ExtResource("9_twmqk")
+type = 3
+subtype_id = "dead_end"
+train_facing = Vector2i(0, -1)
+
+[node name="Sprite2D13" type="Sprite2D" parent="." unique_id=1000475833]
+position = Vector2(-249.99998, 250)
+scale = Vector2(0.20958816, 0.14846367)
+texture = ExtResource("13_o788v")
+script = ExtResource("9_twmqk")
+type = 3
+subtype_id = "blocked_track"
+train_facing = Vector2i(0, -1)

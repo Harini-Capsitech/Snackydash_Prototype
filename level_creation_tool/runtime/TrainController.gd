@@ -47,6 +47,9 @@ func setup(p_level_data: RailwayLevelData, p_track_dict: Dictionary, p_foods: Di
 	carriage_texture = p_carriage_tex
 	cell_size = level_data.cell_size
 	
+	# Make sure the train engine always draws ON TOP of the carriages!
+	self.z_index = 10
+	
 	if level_data.train_spawn:
 		current_grid_pos = level_data.train_spawn.position
 		current_dir = level_data.train_spawn.facing_direction
@@ -138,10 +141,15 @@ func _unhandled_input(event: InputEvent) -> void:
 		
 		if dir != Vector2i.ZERO:
 			if _is_valid_move(current_grid_pos, dir):
-				current_dir = dir
-				# Do NOT change initial_dir here, so the visual rotation stays relative to the original editor orientation
-				_calculate_next_target()
-				current_state = State.MOVING
+				if carriages.size() > 0 and dir == -current_dir:
+					# Cannot U-turn if you have carriages!
+					print("Cannot reverse with carriages attached!")
+					pass
+				else:
+					current_dir = dir
+					# Do NOT change initial_dir here, so the visual rotation stays relative to the original editor orientation
+					_calculate_next_target()
+					current_state = State.MOVING
 
 func _handle_grid_arrival() -> void:
 	# Check for obstacle collision
@@ -177,7 +185,11 @@ func _handle_grid_arrival() -> void:
 		# Add food sprite inside the carriage
 		var food_sprite = Sprite2D.new()
 		food_sprite.texture = food_data.node.texture
-		food_sprite.scale = food_data.node.scale / sprite.scale # adjust relative scale
+		
+		# Make the food slightly smaller than the carriage so you can see the carriage underneath!
+		# Also raise it up a bit so it sits "inside" the cart.
+		food_sprite.scale = Vector2(0.6, 0.6) 
+		food_sprite.position = Vector2(0, -80)
 		sprite.add_child(food_sprite)
 		
 		# Set initial position so it doesn't flash at (0,0)
@@ -333,6 +345,9 @@ func _handle_grid_arrival() -> void:
 	if valid_exits.size() == 0:
 		# Dead end
 		current_state = State.STOPPED
+		if carriages.size() > 0:
+			on_crashed.emit()
+			print("GAME OVER! Stuck at dead end with carriages!")
 	elif valid_exits.size() == 1:
 		# Forced path
 		current_dir = valid_exits[0]

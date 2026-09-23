@@ -1,7 +1,7 @@
 class_name LevelLoader
 extends Node2D
 
-@export var level_file: String = "res://level_creation_tool/Level_001.tres"
+@export var level_file: String = "res://level_creation_tool/Level_004.tres"
 @export var track_config: TrackVisualConfig
 @export var train_config: TrainVisualConfig
 @export var food_config: FoodVisualConfig
@@ -80,6 +80,9 @@ func _spawn_level(data: RailwayLevelData) -> void:
 		if not eng_tex and train_config: eng_tex = train_config.train_engine
 		var car_tex = train_config.food_carriage if train_config else null
 		
+		print("DEBUG: train_config is: ", train_config)
+		print("DEBUG: car_tex is: ", car_tex)
+		
 		var sprite = Sprite2D.new()
 		sprite.texture = eng_tex
 		sprite.scale = data.train_spawn.visual_scale
@@ -89,3 +92,44 @@ func _spawn_level(data: RailwayLevelData) -> void:
 		train.add_child(sprite)
 		add_child(train)
 		train.setup(data, track_dict, foods_dict, stations_dict, obstacles_dict, self, car_tex)
+		
+		# Connect game state signals
+		train.on_crashed.connect(func(): _show_end_screen("GAME OVER!"))
+		train.level_completed.connect(func(): _show_end_screen("LEVEL COMPLETE!"))
+
+func _show_end_screen(title_text: String) -> void:
+	var canvas = CanvasLayer.new()
+	var panel = PanelContainer.new()
+	panel.set_anchors_preset(Control.PRESET_FULL_RECT)
+	
+	var style = StyleBoxFlat.new()
+	style.bg_color = Color(0, 0, 0, 0.7)
+	panel.add_theme_stylebox_override("panel", style)
+	
+	var vbox = VBoxContainer.new()
+	vbox.set_anchors_preset(Control.PRESET_CENTER)
+	vbox.alignment = BoxContainer.ALIGNMENT_CENTER
+	
+	var title = Label.new()
+	title.text = title_text
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.add_theme_font_size_override("font_size", 64)
+	if title_text == "GAME OVER!":
+		title.add_theme_color_override("font_color", Color.RED)
+	else:
+		title.add_theme_color_override("font_color", Color.GREEN)
+	vbox.add_child(title)
+	
+	var margin = Control.new()
+	margin.custom_minimum_size = Vector2(0, 30)
+	vbox.add_child(margin)
+	
+	var btn = Button.new()
+	btn.text = "Restart Level"
+	btn.add_theme_font_size_override("font_size", 32)
+	btn.pressed.connect(func(): get_tree().reload_current_scene())
+	vbox.add_child(btn)
+	
+	panel.add_child(vbox)
+	canvas.add_child(panel)
+	add_child(canvas)
