@@ -32,6 +32,7 @@ class_name LevelEditor extends Node2D
 
 var selected_entity_type: String = "player"
 @export var entity_grid_pos: Vector2i = Vector2i(0, 0)
+@export var entity_size: Vector2i = Vector2i(1, 1)
 @export var place_entity_button: bool = false:
 	set(value):
 		if value:
@@ -139,8 +140,12 @@ func _assimilate_dragged_sprite(sprite: Sprite2D):
 		sprite.position = Vector2(grid_x * cell_size.x + cell_size.x / 2.0, grid_y * cell_size.y + cell_size.y / 2.0)
 		
 		# Add metadata
+		var g_w = int(sprite.get_meta("grid_w")) if sprite.has_meta("grid_w") else 1
+		var g_h = int(sprite.get_meta("grid_h")) if sprite.has_meta("grid_h") else 1
 		sprite.set_meta("grid_x", grid_x)
 		sprite.set_meta("grid_y", grid_y)
+		sprite.set_meta("grid_w", g_w)
+		sprite.set_meta("grid_h", g_h)
 		sprite.set_meta("type", matched_type)
 		sprite.name = "Entity_" + matched_type + "_" + str(grid_x) + "_" + str(grid_y)
 		
@@ -271,25 +276,30 @@ func _place_entity():
 			if child.get_meta("grid_x") == pos.x and child.get_meta("grid_y") == pos.y:
 				child.queue_free()
 				
+	var size = entity_size if entity_size.x > 0 and entity_size.y > 0 else Vector2i(1, 1)
 	var sprite = Sprite2D.new()
 	sprite.name = "Entity_" + type_str + "_" + str(pos.x) + "_" + str(pos.y)
 	if entity_sprites.has(type_str) and entity_sprites[type_str] != null:
 		sprite.texture = entity_sprites[type_str]
 		var tex_size = sprite.texture.get_size()
 		if tex_size.x > 0 and tex_size.y > 0:
-			var scale_factor = min(cell_size.x / tex_size.x, cell_size.y / tex_size.y)
+			var target_w = size.x * cell_size.x
+			var target_h = size.y * cell_size.y
+			var scale_factor = min(target_w / float(tex_size.x), target_h / float(tex_size.y))
 			sprite.scale = Vector2(scale_factor, scale_factor)
-	sprite.position = Vector2(pos.x * cell_size.x + cell_size.x / 2.0, pos.y * cell_size.y + cell_size.y / 2.0)
+	sprite.position = Vector2((pos.x + size.x / 2.0) * cell_size.x, (pos.y + size.y / 2.0) * cell_size.y)
 	
 	entities_node.add_child(sprite)
 	_set_owner_recursive(sprite)
 	
 	sprite.set_meta("grid_x", pos.x)
 	sprite.set_meta("grid_y", pos.y)
+	sprite.set_meta("grid_w", size.x)
+	sprite.set_meta("grid_h", size.y)
 	sprite.set_meta("type", type_str)
 	
 	queue_redraw()
-	print("Placed entity ", type_str, " at ", pos)
+	print("Placed entity ", type_str, " at ", pos, " with size ", size)
 
 func _clear_board():
 	_ensure_containers()
@@ -348,27 +358,36 @@ func _save_level():
 			if child.has_meta("type"):
 				var t_str = child.get_meta("type")
 				
+				var g_w = int(child.get_meta("grid_w")) if child.has_meta("grid_w") else 1
+				var g_h = int(child.get_meta("grid_h")) if child.has_meta("grid_h") else 1
+				
 				# Recalculate based on current visual position in case user dragged it around
-				var g_x = int(floor(child.position.x / cell_size.x))
-				var g_y = int(floor(child.position.y / cell_size.y))
+				var g_x = int(round((child.position.x - (g_w * cell_size.x / 2.0)) / cell_size.x))
+				var g_y = int(round((child.position.y - (g_h * cell_size.y / 2.0)) / cell_size.y))
 				
 				if g_x < 0 or g_x >= grid_width or g_y < 0 or g_y >= grid_height:
 					continue
 					
 				# Visually snap it to guarantee it aligns with the saved data
-				child.position = Vector2(g_x * cell_size.x + cell_size.x / 2.0, g_y * cell_size.y + cell_size.y / 2.0)
+				child.position = Vector2((g_x + g_w / 2.0) * cell_size.x, (g_y + g_h / 2.0) * cell_size.y)
 				child.name = "Entity_" + t_str + "_" + str(g_x) + "_" + str(g_y)
 				child.set_meta("grid_x", g_x)
 				child.set_meta("grid_y", g_y)
+				child.set_meta("grid_w", g_w)
+				child.set_meta("grid_h", g_h)
 				
 				if t_str == "rock":
 					obstacles.append(Vector2i(g_x, g_y))
 				else:
-					entities.append({
+					var ent_dict = {
 						"cell_x": g_x,
 						"cell_y": g_y,
 						"type": t_str
-					})
+					}
+					if g_w > 1 or g_h > 1:
+						ent_dict["width"] = g_w
+						ent_dict["height"] = g_h
+					entities.append(ent_dict)
 	level_data.entities = entities
 	level_data.obstacles = obstacles
 	
@@ -444,20 +463,26 @@ func _load_level():
 	for e_data in res.entities:
 		var sprite = Sprite2D.new()
 		var t_str = e_data.type
+		var g_w = int(e_data.get("width", 1))
+		var g_h = int(e_data.get("height", 1))
 		sprite.name = "Entity_" + t_str + "_" + str(e_data.cell_x) + "_" + str(e_data.cell_y)
 		if entity_sprites.has(t_str) and entity_sprites[t_str] != null:
 			sprite.texture = entity_sprites[t_str]
 			var tex_size = sprite.texture.get_size()
 			if tex_size.x > 0 and tex_size.y > 0:
-				var scale_factor = min(cell_size.x / tex_size.x, cell_size.y / tex_size.y)
+				var target_w = g_w * cell_size.x
+				var target_h = g_h * cell_size.y
+				var scale_factor = min(target_w / float(tex_size.x), target_h / float(tex_size.y))
 				sprite.scale = Vector2(scale_factor, scale_factor)
-		sprite.position = Vector2(e_data.cell_x * cell_size.x + cell_size.x / 2.0, e_data.cell_y * cell_size.y + cell_size.y / 2.0)
+		sprite.position = Vector2((e_data.cell_x + g_w / 2.0) * cell_size.x, (e_data.cell_y + g_h / 2.0) * cell_size.y)
 		
 		entities_node.add_child(sprite)
 		_set_owner_recursive(sprite)
 		
 		sprite.set_meta("grid_x", e_data.cell_x)
 		sprite.set_meta("grid_y", e_data.cell_y)
+		sprite.set_meta("grid_w", g_w)
+		sprite.set_meta("grid_h", g_h)
 		sprite.set_meta("type", t_str)
 		
 	var obstacles_list = res.obstacles if res.obstacles != null else []

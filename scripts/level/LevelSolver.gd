@@ -23,7 +23,13 @@ static func solve(data: LevelData, node_limit: int = 50000, depth_limit: int = 2
 		if e.type == "player":
 			player_start = Vector2i(e.cell_x, e.cell_y)
 		elif e.type == "box":
-			trucks.append({"position": Vector2i(e.cell_x, e.cell_y), "type": "apple_red", "required": 5})
+			trucks.append({
+				"position": Vector2i(e.cell_x, e.cell_y),
+				"width": int(e.get("width", 1)),
+				"height": int(e.get("height", 1)),
+				"type": "apple_red",
+				"required": 5
+			})
 		else:
 			fruits.append({"position": Vector2i(e.cell_x, e.cell_y), "type": e.type})
 
@@ -68,7 +74,12 @@ static func _advance_state(state: Dictionary, destination: Vector2i, crossed: Ar
 			collected.append(index)
 	var progress: Array = state["progress"].duplicate()
 	for truck_index in range(trucks.size()):
-		if trucks[truck_index].get("position") == destination:
+		var t_pos: Vector2i = trucks[truck_index].get("position")
+		var t_w: int = int(trucks[truck_index].get("width", 1))
+		var t_h: int = int(trucks[truck_index].get("height", 1))
+		var at_truck = destination.x >= t_pos.x and destination.x < t_pos.x + t_w and \
+					   destination.y >= t_pos.y and destination.y < t_pos.y + t_h
+		if at_truck:
 			var truck_type: String = trucks[truck_index].get("type", "")
 			var available := 0
 			for fruit_index in collected:

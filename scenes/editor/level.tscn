@@ -1,48 +1,115 @@
 [gd_scene format=3 uid="uid://b7sx6sish47ox"]
 
 [ext_resource type="Script" uid="uid://bhm7hfqpslvn1" path="res://scripts/level_editor/LevelEditor.gd" id="1_y377r"]
-[ext_resource type="Texture2D" uid="uid://b5vq32cfp8iv2" path="res://Sprites/Gemini_Generated_Image_parwvbparwvbparw-removebg-preview.png" id="5_5pxw1"]
+[ext_resource type="Texture2D" uid="uid://bcnu6cqrtt34m" path="res://Sprites/Rectangle 1 (2).png" id="2_y377r"]
 [ext_resource type="Texture2D" uid="uid://bx6gxvtnqmvfu" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_17_51_AM-removebg-preview.png" id="6_2thkr"]
 [ext_resource type="Texture2D" uid="uid://clgvkh7hw62su" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_19_30_AM-removebg-preview.png" id="7_nt7o6"]
 [ext_resource type="Texture2D" uid="uid://dqk7gej4x36q0" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_20_36_AM-removebg-preview.png" id="8_14ect"]
 [ext_resource type="Texture2D" uid="uid://cdansxnsw3he2" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_21_19_AM-removebg-preview.png" id="9_rx7q2"]
 [ext_resource type="Texture2D" uid="uid://do3s3efjsirmk" path="res://Sprites/ChatGPT_Image_Sep_22__2026__05_16_44_PM-removebg-preview.png" id="9_y377r"]
-[ext_resource type="Texture2D" uid="uid://hhbhne1038q0" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_26_19_AM-removebg-preview.png" id="10_0ajou"]
+[ext_resource type="Texture2D" uid="uid://hhbhne1038q0" path="res://Sprites/tray.png" id="10_0ajou"]
 [ext_resource type="Script" uid="uid://bdxfhemocm2r1" path="res://scripts/level_editor/LevelData.gd" id="11_f8oq8"]
-[ext_resource type="Texture2D" uid="uid://6l1jfk88d0ua" path="res://Sprites/Gemini_Generated_Image_231skr231skr231s-removebg-preview.png" id="11_sx23n"]
+[ext_resource type="Texture2D" uid="uid://bq3ciir48uxkr" path="res://Sprites/snake.png" id="11_sx23n"]
 
 [sub_resource type="Resource" id="Resource_sx23n"]
 script = ExtResource("11_f8oq8")
-grid_columns = 5
-grid_rows = 5
-entities = Array[Dictionary]([{
-"cell_x": 4.0,
-"cell_y": 4.0,
-"type": "player"
+grid_columns = 7
+grid_rows = 7
+roads = Array[Dictionary]([{
+"height": 1.0,
+"width": 7.0,
+"x": 0.0,
+"y": 0.0
 }, {
-"cell_x": 1.0,
-"cell_y": 2.0,
-"type": "apple_red"
+"height": 7.0,
+"width": 1.0,
+"x": 0.0,
+"y": 0.0
+}, {
+"height": 1.0,
+"width": 7.0,
+"x": 0.0,
+"y": 6.0
+}, {
+"height": 7.0,
+"width": 1.0,
+"x": 6.0,
+"y": 0.0
+}, {
+"height": 1.0,
+"width": 1.0,
+"x": 3.0,
+"y": 5.0
 }])
-obstacles = Array[Vector2i]([Vector2i(2, 2), Vector2i(2, 4), Vector2i(2, 4)])
+entities = Array[Dictionary]([{
+"cell_x": 2,
+"cell_y": 3,
+"height": 3,
+"type": "box",
+"width": 3
+}, {
+"cell_x": 0,
+"cell_y": 2,
+"type": "apple_red"
+}, {
+"cell_x": 0,
+"cell_y": 4,
+"type": "apple_red"
+}, {
+"cell_x": 0,
+"cell_y": 5,
+"type": "apple_red"
+}, {
+"cell_x": 0,
+"cell_y": 1,
+"type": "apple_red"
+}, {
+"cell_x": 0,
+"cell_y": 0,
+"type": "apple_red"
+}, {
+"cell_x": 1,
+"cell_y": 0,
+"type": "apple_red"
+}, {
+"cell_x": 2,
+"cell_y": 0,
+"type": "apple_red"
+}, {
+"cell_x": 3,
+"cell_y": 0,
+"type": "apple_red"
+}, {
+"cell_x": 4,
+"cell_y": 0,
+"type": "apple_red"
+}, {
+"cell_x": 0,
+"cell_y": 3,
+"type": "apple_red"
+}, {
+"cell_x": 6,
+"cell_y": 5,
+"type": "player"
+}])
 
 [node name="Level" type="Node2D" unique_id=277332672]
 script = ExtResource("1_y377r")
-road_texture = ExtResource("11_sx23n")
+road_texture = ExtResource("2_y377r")
 entity_sprites = {
 "apple_green": ExtResource("7_nt7o6"),
 "apple_red": ExtResource("6_2thkr"),
 "blueberry": ExtResource("8_14ect"),
 "box": ExtResource("10_0ajou"),
 "peach": ExtResource("9_rx7q2"),
-"player": ExtResource("5_5pxw1"),
+"player": ExtResource("11_sx23n"),
 "rock": ExtResource("9_y377r")
 }
 target_level_resource = SubResource("Resource_sx23n")
 level_file_path = "res://levels_scenes/level_example1.tres"
-grid_width = 5
-grid_height = 5
-add_road_rect = Rect2i(3, 1, 3, 4)
+grid_width = 7
+grid_height = 7
+add_road_rect = Rect2i(3, 5, 1, 1)
 entity_grid_pos = Vector2i(2, 2)
 selected_entity_type = "rock"
 
@@ -54,40 +121,190 @@ z_index = 10
 [node name="Entities" type="Node2D" parent="." unique_id=118385481]
 z_index = 40
 
-[node name="Entity_rock_1_0_3_0" type="Sprite2D" parent="Entities" unique_id=1565463372]
-position = Vector2(224, 289)
-scale = Vector2(0.12399998, 0.12399997)
-texture = ExtResource("9_y377r")
-metadata/grid_x = 1.0
-metadata/grid_y = 3.0
-metadata/type = "rock"
+[node name="Entity_box_2_3" type="Sprite2D" parent="Entities" unique_id=223066638]
+position = Vector2(224, 288)
+scale = Vector2(0.384, 0.384)
+texture = ExtResource("10_0ajou")
+metadata/grid_x = 2
+metadata/grid_y = 3
+metadata/grid_w = 3
+metadata/grid_h = 3
+metadata/type = "box"
 
-[node name="Entity_rock_1_0_3_1" type="Sprite2D" parent="Entities" unique_id=1818100665]
-position = Vector2(95.999985, 289)
-scale = Vector2(0.12399998, 0.12399997)
-texture = ExtResource("9_y377r")
-metadata/grid_x = 1.0
-metadata/grid_y = 3.0
-metadata/type = "rock"
-
-[node name="Entity_rock_1_0_3_2" type="Sprite2D" parent="Entities" unique_id=449896757]
-position = Vector2(161, 289)
-scale = Vector2(0.12399998, 0.12399997)
-texture = ExtResource("9_y377r")
-metadata/grid_x = 1.0
-metadata/grid_y = 3.0
-metadata/type = "rock"
-
-[node name="Entity_apple_red_1_0_1_0" type="Sprite2D" parent="Entities" unique_id=1024784948]
-position = Vector2(288, 160)
-scale = Vector2(0.124, 0.124000005)
+[node name="Entity_apple_red_0_2" type="Sprite2D" parent="Entities" unique_id=2016447812]
+position = Vector2(32, 160)
+scale = Vector2(0.132, 0.12399999)
 texture = ExtResource("6_2thkr")
-metadata/grid_x = 1.0
-metadata/grid_y = 1.0
+metadata/grid_x = 0
+metadata/grid_y = 2
+metadata/grid_w = 1
+metadata/grid_h = 1
 metadata/type = "apple_red"
+
+[node name="Entity_apple_red_0_4" type="Sprite2D" parent="Entities" unique_id=1332371283]
+position = Vector2(32, 288)
+scale = Vector2(0.132, 0.12399999)
+texture = ExtResource("6_2thkr")
+metadata/grid_x = 0
+metadata/grid_y = 4
+metadata/grid_w = 1
+metadata/grid_h = 1
+metadata/type = "apple_red"
+
+[node name="Entity_apple_red_0_5" type="Sprite2D" parent="Entities" unique_id=1113154649]
+position = Vector2(32, 352)
+scale = Vector2(0.132, 0.12399999)
+texture = ExtResource("6_2thkr")
+metadata/grid_x = 0
+metadata/grid_y = 5
+metadata/grid_w = 1
+metadata/grid_h = 1
+metadata/type = "apple_red"
+
+[node name="Entity_apple_red_0_1" type="Sprite2D" parent="Entities" unique_id=555000455]
+position = Vector2(32, 96)
+scale = Vector2(0.132, 0.12399999)
+texture = ExtResource("6_2thkr")
+metadata/grid_x = 0
+metadata/grid_y = 1
+metadata/grid_w = 1
+metadata/grid_h = 1
+metadata/type = "apple_red"
+
+[node name="Entity_apple_red_0_0" type="Sprite2D" parent="Entities" unique_id=303545520]
+position = Vector2(32, 32)
+scale = Vector2(0.132, 0.12399999)
+texture = ExtResource("6_2thkr")
+metadata/grid_x = 0
+metadata/grid_y = 0
+metadata/grid_w = 1
+metadata/grid_h = 1
+metadata/type = "apple_red"
+
+[node name="Entity_apple_red_1_0" type="Sprite2D" parent="Entities" unique_id=1505893359]
+position = Vector2(96, 32)
+scale = Vector2(0.132, 0.12399999)
+texture = ExtResource("6_2thkr")
+metadata/grid_x = 1
+metadata/grid_y = 0
+metadata/grid_w = 1
+metadata/grid_h = 1
+metadata/type = "apple_red"
+
+[node name="Entity_apple_red_2_0" type="Sprite2D" parent="Entities" unique_id=433790600]
+position = Vector2(160, 32)
+scale = Vector2(0.132, 0.12399999)
+texture = ExtResource("6_2thkr")
+metadata/grid_x = 2
+metadata/grid_y = 0
+metadata/grid_w = 1
+metadata/grid_h = 1
+metadata/type = "apple_red"
+
+[node name="Entity_apple_red_3_0" type="Sprite2D" parent="Entities" unique_id=1507411958]
+position = Vector2(224, 32)
+scale = Vector2(0.132, 0.12399999)
+texture = ExtResource("6_2thkr")
+metadata/grid_x = 3
+metadata/grid_y = 0
+metadata/grid_w = 1
+metadata/grid_h = 1
+metadata/type = "apple_red"
+
+[node name="Entity_apple_red_4_0" type="Sprite2D" parent="Entities" unique_id=309943324]
+position = Vector2(288, 32)
+scale = Vector2(0.132, 0.12399999)
+texture = ExtResource("6_2thkr")
+metadata/grid_x = 4
+metadata/grid_y = 0
+metadata/grid_w = 1
+metadata/grid_h = 1
+metadata/type = "apple_red"
+
+[node name="Entity_apple_red_0_3" type="Sprite2D" parent="Entities" unique_id=1959950545]
+position = Vector2(32, 224)
+scale = Vector2(0.132, 0.12399999)
+texture = ExtResource("6_2thkr")
+metadata/grid_x = 0
+metadata/grid_y = 3
+metadata/grid_w = 1
+metadata/grid_h = 1
+metadata/type = "apple_red"
+
+[node name="Entity_player_6_5" type="Sprite2D" parent="Entities" unique_id=1921807341]
+position = Vector2(416, 352)
+scale = Vector2(0.25409833, 0.247012)
+texture = ExtResource("11_sx23n")
+metadata/grid_x = 6
+metadata/grid_y = 5
+metadata/grid_w = 1
+metadata/grid_h = 1
+metadata/type = "player"
 
 [node name="Slots" type="Node2D" parent="." unique_id=2120537480]
 z_index = 30
 
 [node name="Roads" type="Node2D" parent="." unique_id=754576442]
 z_index = 20
+
+[node name="Road_0_0" type="NinePatchRect" parent="Roads" unique_id=1699185151]
+offset_right = 448.0
+offset_bottom = 64.0
+texture = ExtResource("2_y377r")
+region_rect = Rect2(0, 0, 348, 331)
+axis_stretch_horizontal = 1
+metadata/grid_x = 0
+metadata/grid_y = 0
+metadata/grid_w = 7
+metadata/grid_h = 1
+
+[node name="@NinePatchRect@68482" type="NinePatchRect" parent="Roads" unique_id=316662242]
+offset_left = 64.0
+offset_right = 512.0
+offset_bottom = 64.0
+rotation = 1.5707964
+texture = ExtResource("2_y377r")
+region_rect = Rect2(0, 0, 348, 331)
+axis_stretch_horizontal = 1
+metadata/grid_x = 0
+metadata/grid_y = 0
+metadata/grid_w = 1
+metadata/grid_h = 7
+
+[node name="Road_0_6" type="NinePatchRect" parent="Roads" unique_id=331725788]
+offset_top = 384.0
+offset_right = 448.0
+offset_bottom = 448.0
+texture = ExtResource("2_y377r")
+region_rect = Rect2(0, 0, 348, 331)
+axis_stretch_horizontal = 1
+metadata/grid_x = 0
+metadata/grid_y = 6
+metadata/grid_w = 7
+metadata/grid_h = 1
+
+[node name="Road_6_0" type="NinePatchRect" parent="Roads" unique_id=1665107818]
+offset_left = 448.0
+offset_right = 896.0
+offset_bottom = 64.0
+rotation = 1.5707964
+texture = ExtResource("2_y377r")
+region_rect = Rect2(0, 0, 348, 331)
+axis_stretch_horizontal = 1
+metadata/grid_x = 6
+metadata/grid_y = 0
+metadata/grid_w = 1
+metadata/grid_h = 7
+
+[node name="Road_3_5" type="NinePatchRect" parent="Roads" unique_id=1594470224]
+offset_left = 192.0
+offset_top = 320.0
+offset_right = 256.0
+offset_bottom = 384.0
+texture = ExtResource("2_y377r")
+region_rect = Rect2(0, 0, 348, 331)
+axis_stretch_horizontal = 1
+metadata/grid_x = 3
+metadata/grid_y = 5
+metadata/grid_w = 1
+metadata/grid_h = 1

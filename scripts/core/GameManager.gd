@@ -52,7 +52,7 @@ func _load_level():
 	_update_debug()
 
 func _load_level_data() -> LevelData:
-	var requested_path := "res://levels/level_example1.tres"
+	var requested_path := "res://levels_scenes/level_example1.tres"
 	var session := get_node_or_null("/root/LevelSession")
 	if session != null and session.get("level_path") != "":
 		requested_path = session.get("level_path")
@@ -94,7 +94,7 @@ func _on_cell_crossed(old_cell: Vector2i, new_cell: Vector2i):
 func _on_player_hit_obstacle(cell: Vector2i):
 	# Check trucks at the obstacle cell
 	for t in trucks:
-		if t.grid_cell == cell:
+		if t.occupies_cell(cell):
 			if t.can_deliver(player):
 				t.deliver(player)
 				_check_win_condition()

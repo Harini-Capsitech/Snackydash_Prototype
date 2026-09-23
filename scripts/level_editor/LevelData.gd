@@ -9,7 +9,7 @@ class_name LevelData extends Resource
 # Array of Dictionary storing rect bounds: x, y, width, height
 @export var roads: Array[Dictionary] = []
 
-# Array of Dictionary storing cell_x, cell_y, type
+# Array of Dictionary storing cell_x, cell_y, type, and optional width, height (default 1)
 @export var entities: Array[Dictionary] = []
 
 # Array of Vector2i storing grid cell positions of rock obstacles

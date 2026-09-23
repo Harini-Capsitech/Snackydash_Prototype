@@ -1,0 +1,85 @@
+[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://damljxesdapf3"]
+
+[ext_resource type="Script" uid="uid://bdxfhemocm2r1" path="res://scripts/level_editor/LevelData.gd" id="1_or5lt"]
+
+[resource]
+script = ExtResource("1_or5lt")
+grid_columns = 7
+grid_rows = 7
+roads = Array[Dictionary]([{
+"height": 1.0,
+"width": 7.0,
+"x": 0.0,
+"y": 0.0
+}, {
+"height": 7.0,
+"width": 1.0,
+"x": 0.0,
+"y": 0.0
+}, {
+"height": 1.0,
+"width": 7.0,
+"x": 0.0,
+"y": 6.0
+}, {
+"height": 7.0,
+"width": 1.0,
+"x": 6.0,
+"y": 0.0
+}, {
+"height": 1.0,
+"width": 1.0,
+"x": 3.0,
+"y": 5.0
+}])
+entities = Array[Dictionary]([{
+"cell_x": 2,
+"cell_y": 3,
+"height": 3,
+"type": "box",
+"width": 3
+}, {
+"cell_x": 0,
+"cell_y": 2,
+"type": "apple_red"
+}, {
+"cell_x": 0,
+"cell_y": 4,
+"type": "apple_red"
+}, {
+"cell_x": 0,
+"cell_y": 5,
+"type": "apple_red"
+}, {
+"cell_x": 0,
+"cell_y": 1,
+"type": "apple_red"
+}, {
+"cell_x": 0,
+"cell_y": 0,
+"type": "apple_red"
+}, {
+"cell_x": 1,
+"cell_y": 0,
+"type": "apple_red"
+}, {
+"cell_x": 2,
+"cell_y": 0,
+"type": "apple_red"
+}, {
+"cell_x": 3,
+"cell_y": 0,
+"type": "apple_red"
+}, {
+"cell_x": 4,
+"cell_y": 0,
+"type": "apple_red"
+}, {
+"cell_x": 0,
+"cell_y": 3,
+"type": "apple_red"
+}, {
+"cell_x": 6,
+"cell_y": 5,
+"type": "player"
+}])

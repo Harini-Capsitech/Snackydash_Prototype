@@ -87,12 +87,14 @@ func build(data: LevelData, grid: GridManager, game_manager: Node2D) -> Dictiona
 
 	for e in data.entities:
 		var tex = entity_sprites.get(e.type, null)
+		var e_w = int(e.get("width", 1))
+		var e_h = int(e.get("height", 1))
 		if e.type == "player":
 			player.setup(Vector2i(e.cell_x, e.cell_y), grid, entity_sprites)
 		elif e.type == "box":
 			var truck: Truck = truck_scene.instantiate()
 			trucks_container.add_child(truck)
-			truck.setup(Vector2i(e.cell_x, e.cell_y), "", 0, grid, tex, entity_sprites)
+			truck.setup(Vector2i(e.cell_x, e.cell_y), "", 0, grid, tex, entity_sprites, Vector2i(e_w, e_h))
 			
 			var fruit_counts = {}
 			for f_data in data.entities:

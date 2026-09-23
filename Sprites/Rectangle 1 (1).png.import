@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://hhbhne1038q0"
-path="res://.godot/imported/ChatGPT_Image_Sep_22__2026__11_26_19_AM-removebg-preview.png-eb65a957e10377632afe848cbffaaf80.ctex"
+uid="uid://6ab5va0je1ex"
+path="res://.godot/imported/Rectangle 1 (1).png-297f93821d8757552bbc037fd634d338.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/ChatGPT_Image_Sep_22__2026__11_26_19_AM-removebg-preview.png"
-dest_files=["res://.godot/imported/ChatGPT_Image_Sep_22__2026__11_26_19_AM-removebg-preview.png-eb65a957e10377632afe848cbffaaf80.ctex"]
+source_file="res://Sprites/Rectangle 1 (1).png"
+dest_files=["res://.godot/imported/Rectangle 1 (1).png-297f93821d8757552bbc037fd634d338.ctex"]
 
 [params]
 
