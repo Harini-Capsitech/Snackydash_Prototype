@@ -20,6 +20,76 @@ extends Node2D
 		else:
 			compile_and_save = value
 
+@export var load_from_tres: bool = false:
+	set(value):
+		if not Engine.is_editor_hint(): return
+		if value == true:
+			_load_level_from_tres()
+			load_from_tres = false
+		else:
+			load_from_tres = value
+
+func _load_level_from_tres() -> void:
+	var full_path = save_path.path_join(level_id + ".tres")
+	if not ResourceLoader.exists(full_path):
+		printerr("Cannot load level: File not found at ", full_path)
+		return
+		
+	var level_data = ResourceLoader.load(full_path) as RailwayLevelData
+	if not level_data:
+		printerr("Cannot load level: Invalid resource type")
+		return
+		
+	print("Loading level: ", level_id, " ...")
+	grid_width = level_data.grid_width
+	grid_height = level_data.grid_height
+	self.position = level_data.level_offset
+	
+	var tm: TileMap = null
+	# Remove old LevelObjects and find TileMap
+	for child in get_children():
+		if child is LevelObject:
+			child.queue_free()
+		elif child is TileMap:
+			tm = child
+			
+	if tm:
+		tm.clear()
+		for t in level_data.tracks:
+			tm.set_cell(0, t.position, t.source_id, t.atlas_coords)
+			
+	# Reconstruct Train
+	if level_data.train_spawn:
+		_spawn_level_object(LevelObject.ObjectType.TRAIN, level_data.train_spawn.subtype_id if "subtype_id" in level_data.train_spawn else "train", level_data.train_spawn.visual_pos, level_data.train_spawn.visual_scale, level_data.train_spawn.visual_rot, level_data.train_spawn.texture_path, level_data.train_spawn.facing_direction)
+
+	# Reconstruct Foods
+	for f in level_data.foods:
+		_spawn_level_object(LevelObject.ObjectType.FOOD, f.food_id, f.visual_pos, f.visual_scale, f.visual_rot, f.texture_path)
+
+	# Reconstruct Stations
+	for s in level_data.stations:
+		_spawn_level_object(LevelObject.ObjectType.STATION, s.required_food_id, s.visual_pos, s.visual_scale, s.visual_rot, s.texture_path)
+
+	# Reconstruct Obstacles
+	for o in level_data.obstacles:
+		_spawn_level_object(LevelObject.ObjectType.OBSTACLE, o.obstacle_type, o.visual_pos, o.visual_scale, o.visual_rot, o.texture_path)
+		
+	print("Level loaded successfully!")
+
+func _spawn_level_object(type: LevelObject.ObjectType, subtype: String, v_pos: Vector2, v_scale: Vector2, v_rot: float, tex_path: String, facing: Vector2i = Vector2i.RIGHT) -> void:
+	var obj = LevelObject.new()
+	obj.type = type
+	obj.subtype_id = subtype
+	obj.position = v_pos
+	obj.scale = v_scale
+	obj.rotation = v_rot
+	obj.train_facing = facing
+	if tex_path != "":
+		var tex = load(tex_path)
+		if tex: obj.texture = tex
+	add_child(obj)
+	obj.owner = get_tree().edited_scene_root
+
 func _extract_and_save() -> void:
 	var level_data = RailwayLevelData.new()
 	level_data.level_id = level_id
