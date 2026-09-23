@@ -52,10 +52,17 @@ station_id = "station_1"
 visual = ExtResource("12_3xarr")
 metadata/_custom_type_script = "uid://dbjt61wpkqpfy"
 
+[sub_resource type="Resource" id="Resource_tewwp"]
+script = ExtResource("19_v4tvw")
+station_id = "station_2"
+required_food_type = "pizza"
+visual = ExtResource("15_ahaj4")
+metadata/_custom_type_script = "uid://dbjt61wpkqpfy"
+
 [sub_resource type="Resource" id="Resource_s1mdw"]
 script = ExtResource("17_m7q6f")
 station_base = ExtResource("18_tewwp")
-station_variants = Array[ExtResource("19_v4tvw")]([SubResource("Resource_ovvv0")])
+station_variants = Array[ExtResource("19_v4tvw")]([SubResource("Resource_ovvv0"), SubResource("Resource_tewwp")])
 metadata/_custom_type_script = "uid://bx000fchw6cq4"
 
 [node name="LevelPlayer" type="Node2D" unique_id=1091414117]
