@@ -1,7 +1,7 @@
 class_name LevelLoader
 extends Node2D
 
-@export var level_file: String = "res://level_creation_tool/Level_003.tres"
+@export var level_file: String = "res://level_creation_tool/Level_001.tres"
 @export var track_config: TrackVisualConfig
 @export var train_config: TrainVisualConfig
 @export var food_config: FoodVisualConfig
@@ -54,22 +54,11 @@ func _spawn_level(data: RailwayLevelData) -> void:
 
 	# 3. Spawn Stations
 	for s in data.stations:
-		var sprite = Sprite2D.new()
-		var tex = load(s.texture_path) if s.texture_path != "" else null
-		
-		if not tex:
-			var variant = station_config.get_variant_by_food_id(s.required_food_id) if station_config else null
-			if variant and variant.visual:
-				tex = variant.visual
-			elif station_config and station_config.station_base:
-				tex = station_config.station_base
-		
-		sprite.texture = tex
-		sprite.position = s.visual_pos
-		sprite.scale = s.visual_scale
-		sprite.rotation = s.visual_rot
-		add_child(sprite)
-		stations_dict[s.position] = {"data": s, "node": sprite}
+		var stack = TrayStack.new()
+		stack.name = "Station_" + str(s.position.x) + "_" + str(s.position.y)
+		add_child(stack)
+		stack.setup(s, station_config)
+		stations_dict[s.position] = {"data": s, "node": stack, "tray_stack": stack}
 		
 	# 3.5 Spawn Obstacles
 	for o in data.obstacles:

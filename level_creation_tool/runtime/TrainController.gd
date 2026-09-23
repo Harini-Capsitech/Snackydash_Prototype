@@ -200,58 +200,97 @@ func _handle_grid_arrival() -> void:
 	if found_station_info:
 		var station = found_station_info.data
 		var station_node = found_station_info.node
+		var tray_stack: TrayStack = found_station_info.get("tray_stack", null)
 		var delivered_something = false
-		
-		if not found_station_info.has("received_count"): found_station_info["received_count"] = 0
-		
 		var delivery_idx = 0
-		# Deliver all carriages at this station
-		while carriages.size() > 0:
-			carriages.pop_front()
-			var c = carriage_sprites.pop_front()
-			
-			# Extract the food sprite and animate it into the station
-			var food_sprite = null
-			for child in c.get_children():
-				if child is Sprite2D:
-					food_sprite = child
+		
+		if tray_stack and tray_stack.has_active_tray():
+			while carriages.size() > 0 and tray_stack.has_active_tray():
+				var active_food = tray_stack.get_active_food_id()
+				var match_idx = -1
+				for i in range(carriages.size()):
+					if carriages[i].to_lower().replace(" ", "_") == active_food.to_lower().replace(" ", "_"):
+						match_idx = i
+						break
+						
+				if match_idx == -1:
 					break
 					
-			if food_sprite:
-				var global_pos = food_sprite.global_position
-				var global_scale = food_sprite.global_scale
+				var delivered_food_id = carriages[match_idx]
+				carriages.remove_at(match_idx)
+				var c = carriage_sprites[match_idx]
+				carriage_sprites.remove_at(match_idx)
 				
-				c.remove_child(food_sprite)
-				station_node.add_child(food_sprite)
+				var food_sprite: Sprite2D = null
+				for child in c.get_children():
+					if child is Sprite2D:
+						food_sprite = child
+						break
+						
+				var active_tray_node = tray_stack.get_active_tray_node()
+				if food_sprite and active_tray_node:
+					var global_pos = food_sprite.global_position
+					var global_scale = food_sprite.global_scale
+					
+					c.remove_child(food_sprite)
+					active_tray_node.add_child(food_sprite)
+					food_sprite.global_position = global_pos
+					food_sprite.global_scale = global_scale
+					
+					var slot_pos = tray_stack.get_next_slot_position()
+					var count = tray_stack.get_received_count()
+					food_sprite.z_index = 10 + count
+					
+					var tween = create_tween()
+					tween.set_parallel(true)
+					var delay = delivery_idx * 0.12
+					tween.tween_property(food_sprite, "position", slot_pos, 0.3).set_ease(Tween.EASE_OUT).set_delay(delay)
+					tween.tween_property(food_sprite, "scale", Vector2(0.24, 0.24), 0.3).set_delay(delay)
+					
+					tray_stack.add_food_to_active_tray(food_sprite)
+					
+				c.queue_free()
+				delivery_idx += 1
+				delivered_something = true
 				
-				# Preserve global transform so it doesn't pop instantly when reparented
-				food_sprite.global_position = global_pos
-				food_sprite.global_scale = global_scale
-				
-				var count = found_station_info["received_count"]
-				var row = count / 3
-				var col = count % 3
-				
-				# The station might be scaled (e.g. 0.5), so local offsets need to be larger to be visible.
-				var offset_x = (col - 1) * 60.0
-				var offset_y = (row - 1) * 60.0
-				
-				# Make sure z-index is set so they don't draw under the station
-				food_sprite.z_index = 10 + count
-				
-				var tween = create_tween()
-				tween.set_parallel(true)
-				var delay = delivery_idx * 0.15
-				tween.tween_property(food_sprite, "position", Vector2(offset_x, offset_y), 0.3).set_ease(Tween.EASE_OUT).set_delay(delay)
-				
-				# Target a specific local scale so they are uniform inside the tray
-				tween.tween_property(food_sprite, "scale", Vector2(0.24, 0.24), 0.3).set_delay(delay)
-				
-				found_station_info["received_count"] += 1
-				
-			c.queue_free()
-			delivery_idx += 1
-			delivered_something = true
+				if tray_stack.is_active_tray_full():
+					var wait_delay = delivery_idx * 0.12 + 0.35
+					get_tree().create_timer(wait_delay).timeout.connect(func():
+						tray_stack.pop_active_tray()
+					)
+		else:
+			# Fallback if no TrayStack
+			if not found_station_info.has("received_count"): found_station_info["received_count"] = 0
+			while carriages.size() > 0:
+				carriages.pop_front()
+				var c = carriage_sprites.pop_front()
+				var food_sprite = null
+				for child in c.get_children():
+					if child is Sprite2D:
+						food_sprite = child
+						break
+				if food_sprite:
+					var global_pos = food_sprite.global_position
+					var global_scale = food_sprite.global_scale
+					c.remove_child(food_sprite)
+					station_node.add_child(food_sprite)
+					food_sprite.global_position = global_pos
+					food_sprite.global_scale = global_scale
+					var count = found_station_info["received_count"]
+					var row = count / 3
+					var col = count % 3
+					var offset_x = (col - 1) * 60.0
+					var offset_y = (row - 1) * 60.0
+					food_sprite.z_index = 10 + count
+					var tween = create_tween()
+					tween.set_parallel(true)
+					var delay = delivery_idx * 0.15
+					tween.tween_property(food_sprite, "position", Vector2(offset_x, offset_y), 0.3).set_ease(Tween.EASE_OUT).set_delay(delay)
+					tween.tween_property(food_sprite, "scale", Vector2(0.24, 0.24), 0.3).set_delay(delay)
+					found_station_info["received_count"] += 1
+				c.queue_free()
+				delivery_idx += 1
+				delivered_something = true
 			
 		if delivered_something:
 			on_food_delivered.emit(station.required_food_id, station.required_food_id)

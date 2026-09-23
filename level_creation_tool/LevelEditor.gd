@@ -68,7 +68,7 @@ func _load_level_from_tres() -> void:
 
 	# Reconstruct Stations
 	for s in level_data.stations:
-		_spawn_level_object(LevelObject.ObjectType.STATION, s.required_food_id, s.visual_pos, s.visual_scale, s.visual_rot, s.texture_path)
+		_spawn_level_object(LevelObject.ObjectType.STATION, s.required_food_id, s.visual_pos, s.visual_scale, s.visual_rot, s.texture_path, Vector2i.RIGHT, s.tray_food_ids)
 
 	# Reconstruct Obstacles
 	for o in level_data.obstacles:
@@ -76,7 +76,7 @@ func _load_level_from_tres() -> void:
 		
 	print("Level loaded successfully!")
 
-func _spawn_level_object(type: LevelObject.ObjectType, subtype: String, v_pos: Vector2, v_scale: Vector2, v_rot: float, tex_path: String, facing: Vector2i = Vector2i.RIGHT) -> void:
+func _spawn_level_object(type: LevelObject.ObjectType, subtype: String, v_pos: Vector2, v_scale: Vector2, v_rot: float, tex_path: String, facing: Vector2i = Vector2i.RIGHT, tray_foods: Array[String] = []) -> void:
 	var obj = LevelObject.new()
 	obj.type = type
 	obj.subtype_id = subtype
@@ -84,6 +84,8 @@ func _spawn_level_object(type: LevelObject.ObjectType, subtype: String, v_pos: V
 	obj.scale = v_scale
 	obj.rotation = v_rot
 	obj.train_facing = facing
+	if tray_foods.size() > 0:
+		obj.station_tray_foods = tray_foods.duplicate()
 	if tex_path != "":
 		var tex = load(tex_path)
 		if tex: obj.texture = tex
@@ -181,7 +183,8 @@ func _extract_objects(data: RailwayLevelData, tm: TileMap) -> void:
 				LevelObject.ObjectType.STATION:
 					var station = StationData.new()
 					station.position = pos
-					station.required_food_id = child.subtype_id
+					station.tray_food_ids = child.station_tray_foods.duplicate() if child.station_tray_foods.size() > 0 else [child.subtype_id]
+					station.required_food_id = station.tray_food_ids[0]
 					station.visual_pos = child.position
 					station.visual_scale = child.scale
 					station.visual_rot = child.rotation

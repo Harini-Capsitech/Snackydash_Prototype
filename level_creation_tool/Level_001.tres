@@ -77,8 +77,81 @@ visual_scale = Vector2(0.1279999, 0.12800002)
 texture_path = "res://Sprites/ChatGPT_Image_Sep_22__2026__11_17_51_AM-removebg-preview.png"
 
 [sub_resource type="Resource" id="Resource_g4dun"]
+script = ExtResource("1_xslrw")
+position = Vector2i(-5, 0)
+food_id = "pizza"
+visual_pos = Vector2(-450, 50.000015)
+visual_scale = Vector2(0.125, 0.125)
+texture_path = "res://Sprites/ChatGPT_Image_Sep_22__2026__11_20_36_AM-removebg-preview.png"
+
+[sub_resource type="Resource" id="Resource_u81xi"]
+script = ExtResource("1_xslrw")
+position = Vector2i(-6, 0)
+food_id = "pizza"
+visual_pos = Vector2(-550, 50.000015)
+visual_scale = Vector2(0.125, 0.125)
+texture_path = "res://Sprites/ChatGPT_Image_Sep_22__2026__11_20_36_AM-removebg-preview.png"
+
+[sub_resource type="Resource" id="Resource_yyrmt"]
+script = ExtResource("1_xslrw")
+position = Vector2i(-6, 1)
+food_id = "pizza"
+visual_pos = Vector2(-550, 150.00002)
+visual_scale = Vector2(0.125, 0.125)
+texture_path = "res://Sprites/ChatGPT_Image_Sep_22__2026__11_20_36_AM-removebg-preview.png"
+
+[sub_resource type="Resource" id="Resource_37qot"]
+script = ExtResource("1_xslrw")
+position = Vector2i(-6, 2)
+food_id = "pizza"
+visual_pos = Vector2(-550, 250.00002)
+visual_scale = Vector2(0.125, 0.125)
+texture_path = "res://Sprites/ChatGPT_Image_Sep_22__2026__11_20_36_AM-removebg-preview.png"
+
+[sub_resource type="Resource" id="Resource_2np4w"]
+script = ExtResource("1_xslrw")
+position = Vector2i(-6, 3)
+food_id = "pizza"
+visual_pos = Vector2(-550, 350)
+visual_scale = Vector2(0.125, 0.125)
+texture_path = "res://Sprites/ChatGPT_Image_Sep_22__2026__11_20_36_AM-removebg-preview.png"
+
+[sub_resource type="Resource" id="Resource_whhma"]
+script = ExtResource("1_xslrw")
+position = Vector2i(-6, 4)
+food_id = "pizza"
+visual_pos = Vector2(-550, 450)
+visual_scale = Vector2(0.125, 0.125)
+texture_path = "res://Sprites/ChatGPT_Image_Sep_22__2026__11_20_36_AM-removebg-preview.png"
+
+[sub_resource type="Resource" id="Resource_8qeuo"]
+script = ExtResource("1_xslrw")
+position = Vector2i(-6, 5)
+food_id = "pizza"
+visual_pos = Vector2(-550, 550)
+visual_scale = Vector2(0.125, 0.125)
+texture_path = "res://Sprites/ChatGPT_Image_Sep_22__2026__11_20_36_AM-removebg-preview.png"
+
+[sub_resource type="Resource" id="Resource_di4fi"]
+script = ExtResource("1_xslrw")
+position = Vector2i(-6, 6)
+food_id = "pizza"
+visual_pos = Vector2(-550, 650)
+visual_scale = Vector2(0.125, 0.125)
+texture_path = "res://Sprites/ChatGPT_Image_Sep_22__2026__11_20_36_AM-removebg-preview.png"
+
+[sub_resource type="Resource" id="Resource_nva6c"]
+script = ExtResource("1_xslrw")
+position = Vector2i(-6, 7)
+food_id = "pizza"
+visual_pos = Vector2(-550, 750)
+visual_scale = Vector2(0.125, 0.125)
+texture_path = "res://Sprites/ChatGPT_Image_Sep_22__2026__11_20_36_AM-removebg-preview.png"
+
+[sub_resource type="Resource" id="Resource_50aqk"]
 script = ExtResource("4_w864w")
 position = Vector2i(-2, 5)
+tray_food_ids = Array[String](["burger", "pizza"])
 visual_pos = Vector2(-150, 550)
 visual_scale = Vector2(0.35812497, 0.35543758)
 texture_path = "res://Sprites/ChatGPT_Image_Sep_22__2026__11_26_19_AM-removebg-preview.png"
@@ -256,7 +329,7 @@ texture_region_size = Vector2i(64, 64)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_drphe"]
 texture = ExtResource("11_u81xi")
-texture_region_size = Vector2i(64, 64)
+texture_region_size = Vector2i(100, 100)
 0:0/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_drphe"]
@@ -269,39 +342,7 @@ sources/4 = SubResource("TileSetAtlasSource_lo4r0")
 sources/5 = SubResource("TileSetAtlasSource_p6gqy")
 sources/6 = SubResource("TileSetAtlasSource_drphe")
 
-[sub_resource type="Resource" id="Resource_u81xi"]
-script = ExtResource("12_yyrmt")
-position = Vector2i(-5, 0)
-source_id = 6
-connect_left = true
-connect_right = true
-track_type_id = "connections_2"
-
-[sub_resource type="Resource" id="Resource_yyrmt"]
-script = ExtResource("12_yyrmt")
-position = Vector2i(-4, 0)
-source_id = 6
-connect_left = true
-connect_right = true
-track_type_id = "connections_2"
-
-[sub_resource type="Resource" id="Resource_37qot"]
-script = ExtResource("12_yyrmt")
-position = Vector2i(-3, 0)
-source_id = 6
-connect_left = true
-connect_right = true
-track_type_id = "connections_2"
-
-[sub_resource type="Resource" id="Resource_2np4w"]
-script = ExtResource("12_yyrmt")
-position = Vector2i(-2, 0)
-source_id = 6
-connect_left = true
-connect_right = true
-track_type_id = "connections_2"
-
-[sub_resource type="Resource" id="Resource_whhma"]
+[sub_resource type="Resource" id="Resource_alumc"]
 script = ExtResource("12_yyrmt")
 position = Vector2i(-1, 0)
 source_id = 6
@@ -309,80 +350,40 @@ connect_left = true
 connect_right = true
 track_type_id = "connections_2"
 
-[sub_resource type="Resource" id="Resource_8qeuo"]
+[sub_resource type="Resource" id="Resource_asbhp"]
 script = ExtResource("12_yyrmt")
+position = Vector2i(-2, 0)
 source_id = 6
 connect_left = true
 connect_right = true
 track_type_id = "connections_2"
 
-[sub_resource type="Resource" id="Resource_di4fi"]
-script = ExtResource("12_yyrmt")
-position = Vector2i(1, 0)
-source_id = 6
-connect_down = true
-connect_left = true
-track_type_id = "connections_2"
-
-[sub_resource type="Resource" id="Resource_nva6c"]
-script = ExtResource("12_yyrmt")
-position = Vector2i(1, 1)
-source_id = 6
-connect_up = true
-connect_down = true
-track_type_id = "connections_2"
-
-[sub_resource type="Resource" id="Resource_50aqk"]
-script = ExtResource("12_yyrmt")
-position = Vector2i(1, 2)
-source_id = 6
-connect_up = true
-connect_down = true
-track_type_id = "connections_2"
-
-[sub_resource type="Resource" id="Resource_alumc"]
-script = ExtResource("12_yyrmt")
-position = Vector2i(1, 3)
-source_id = 6
-connect_up = true
-connect_down = true
-track_type_id = "connections_2"
-
-[sub_resource type="Resource" id="Resource_asbhp"]
-script = ExtResource("12_yyrmt")
-position = Vector2i(1, 4)
-source_id = 6
-connect_up = true
-connect_down = true
-track_type_id = "connections_2"
-
 [sub_resource type="Resource" id="Resource_5ejwx"]
 script = ExtResource("12_yyrmt")
-position = Vector2i(1, 5)
+position = Vector2i(-3, 0)
 source_id = 6
-connect_up = true
-connect_down = true
+connect_left = true
+connect_right = true
 track_type_id = "connections_2"
 
 [sub_resource type="Resource" id="Resource_4lx53"]
 script = ExtResource("12_yyrmt")
-position = Vector2i(1, 6)
+position = Vector2i(-4, 0)
 source_id = 6
-connect_up = true
-connect_down = true
+connect_left = true
+connect_right = true
 track_type_id = "connections_2"
 
 [sub_resource type="Resource" id="Resource_a7jfl"]
 script = ExtResource("12_yyrmt")
-position = Vector2i(1, 7)
+position = Vector2i(-5, 0)
 source_id = 6
-connect_up = true
 connect_left = true
+connect_right = true
 track_type_id = "connections_2"
 
 [sub_resource type="Resource" id="Resource_41ivt"]
 script = ExtResource("12_yyrmt")
-position = Vector2i(0, 7)
 source_id = 6
 connect_left = true
 connect_right = true
@@ -390,13 +391,149 @@ track_type_id = "connections_2"
 
 [sub_resource type="Resource" id="Resource_8nhcv"]
 script = ExtResource("12_yyrmt")
+position = Vector2i(1, 0)
+source_id = 6
+connect_down = true
+connect_left = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_jmtdy"]
+script = ExtResource("12_yyrmt")
+position = Vector2i(1, 1)
+source_id = 6
+connect_up = true
+connect_down = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_8x3mn"]
+script = ExtResource("12_yyrmt")
+position = Vector2i(1, 2)
+source_id = 6
+connect_up = true
+connect_down = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_xmkb8"]
+script = ExtResource("12_yyrmt")
+position = Vector2i(1, 3)
+source_id = 6
+connect_up = true
+connect_down = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_af5fm"]
+script = ExtResource("12_yyrmt")
+position = Vector2i(1, 4)
+source_id = 6
+connect_up = true
+connect_down = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_u5m6t"]
+script = ExtResource("12_yyrmt")
+position = Vector2i(1, 5)
+source_id = 6
+connect_up = true
+connect_down = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_vcs68"]
+script = ExtResource("12_yyrmt")
+position = Vector2i(1, 6)
+source_id = 6
+connect_up = true
+connect_down = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_2tfau"]
+script = ExtResource("12_yyrmt")
+position = Vector2i(1, 7)
+source_id = 6
+connect_up = true
+connect_left = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_xeqpd"]
+script = ExtResource("12_yyrmt")
 position = Vector2i(-1, 7)
 source_id = 6
 connect_left = true
 connect_right = true
 track_type_id = "connections_2"
 
-[sub_resource type="Resource" id="Resource_jmtdy"]
+[sub_resource type="Resource" id="Resource_iidhg"]
+script = ExtResource("12_yyrmt")
+position = Vector2i(-6, 7)
+source_id = 6
+connect_up = true
+connect_right = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_jmagt"]
+script = ExtResource("12_yyrmt")
+position = Vector2i(-6, 6)
+source_id = 6
+connect_up = true
+connect_down = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_8vnfp"]
+script = ExtResource("12_yyrmt")
+position = Vector2i(-6, 5)
+source_id = 6
+connect_up = true
+connect_down = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_slvkb"]
+script = ExtResource("12_yyrmt")
+position = Vector2i(-6, 3)
+source_id = 6
+connect_up = true
+connect_down = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_six0d"]
+script = ExtResource("12_yyrmt")
+position = Vector2i(-6, 2)
+source_id = 6
+connect_up = true
+connect_down = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_0y44e"]
+script = ExtResource("12_yyrmt")
+position = Vector2i(-6, 1)
+source_id = 6
+connect_up = true
+connect_down = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_sns1w"]
+script = ExtResource("12_yyrmt")
+position = Vector2i(-6, 0)
+source_id = 6
+connect_down = true
+connect_right = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_brtxa"]
+script = ExtResource("12_yyrmt")
+position = Vector2i(-6, 4)
+source_id = 6
+connect_up = true
+connect_down = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_jh0ju"]
+script = ExtResource("12_yyrmt")
+position = Vector2i(0, 7)
+source_id = 6
+connect_left = true
+connect_right = true
+track_type_id = "connections_2"
+
+[sub_resource type="Resource" id="Resource_ggfgb"]
 script = ExtResource("12_yyrmt")
 position = Vector2i(-2, 7)
 source_id = 6
@@ -405,7 +542,7 @@ connect_left = true
 connect_right = true
 track_type_id = "connections_3"
 
-[sub_resource type="Resource" id="Resource_8x3mn"]
+[sub_resource type="Resource" id="Resource_yv41b"]
 script = ExtResource("12_yyrmt")
 position = Vector2i(-5, 7)
 source_id = 6
@@ -413,15 +550,7 @@ connect_left = true
 connect_right = true
 track_type_id = "connections_2"
 
-[sub_resource type="Resource" id="Resource_xmkb8"]
-script = ExtResource("12_yyrmt")
-position = Vector2i(-6, 7)
-source_id = 6
-connect_up = true
-connect_right = true
-track_type_id = "connections_2"
-
-[sub_resource type="Resource" id="Resource_af5fm"]
+[sub_resource type="Resource" id="Resource_rwry7"]
 script = ExtResource("12_yyrmt")
 position = Vector2i(-4, 7)
 source_id = 6
@@ -429,7 +558,7 @@ connect_left = true
 connect_right = true
 track_type_id = "connections_2"
 
-[sub_resource type="Resource" id="Resource_u5m6t"]
+[sub_resource type="Resource" id="Resource_roixt"]
 script = ExtResource("12_yyrmt")
 position = Vector2i(-3, 7)
 source_id = 6
@@ -437,70 +566,14 @@ connect_left = true
 connect_right = true
 track_type_id = "connections_2"
 
-[sub_resource type="Resource" id="Resource_vcs68"]
-script = ExtResource("12_yyrmt")
-position = Vector2i(-6, 6)
-source_id = 6
-connect_up = true
-connect_down = true
-track_type_id = "connections_2"
-
-[sub_resource type="Resource" id="Resource_2tfau"]
-script = ExtResource("12_yyrmt")
-position = Vector2i(-6, 5)
-source_id = 6
-connect_up = true
-connect_down = true
-track_type_id = "connections_2"
-
-[sub_resource type="Resource" id="Resource_xeqpd"]
-script = ExtResource("12_yyrmt")
-position = Vector2i(-6, 3)
-source_id = 6
-connect_up = true
-connect_down = true
-track_type_id = "connections_2"
-
-[sub_resource type="Resource" id="Resource_iidhg"]
-script = ExtResource("12_yyrmt")
-position = Vector2i(-6, 2)
-source_id = 6
-connect_up = true
-connect_down = true
-track_type_id = "connections_2"
-
-[sub_resource type="Resource" id="Resource_jmagt"]
-script = ExtResource("12_yyrmt")
-position = Vector2i(-6, 1)
-source_id = 6
-connect_up = true
-connect_down = true
-track_type_id = "connections_2"
-
-[sub_resource type="Resource" id="Resource_8vnfp"]
-script = ExtResource("12_yyrmt")
-position = Vector2i(-6, 0)
-source_id = 6
-connect_down = true
-connect_right = true
-track_type_id = "connections_2"
-
-[sub_resource type="Resource" id="Resource_slvkb"]
-script = ExtResource("12_yyrmt")
-position = Vector2i(-6, 4)
-source_id = 6
-connect_up = true
-connect_down = true
-track_type_id = "connections_2"
-
-[sub_resource type="Resource" id="Resource_six0d"]
+[sub_resource type="Resource" id="Resource_v61hr"]
 script = ExtResource("12_yyrmt")
 position = Vector2i(-2, 6)
 source_id = 6
 connect_down = true
 track_type_id = "connections_1"
 
-[sub_resource type="Resource" id="Resource_0y44e"]
+[sub_resource type="Resource" id="Resource_fpgj0"]
 script = ExtResource("13_37qot")
 position = Vector2i(1, 6)
 facing_direction = Vector2i(0, -1)
@@ -514,7 +587,7 @@ grid_width = 64
 grid_height = 64
 level_offset = Vector2(700, 500)
 tile_set = SubResource("TileSet_drphe")
-tracks = Array[ExtResource("12_yyrmt")]([SubResource("Resource_u81xi"), SubResource("Resource_yyrmt"), SubResource("Resource_37qot"), SubResource("Resource_2np4w"), SubResource("Resource_whhma"), SubResource("Resource_8qeuo"), SubResource("Resource_di4fi"), SubResource("Resource_nva6c"), SubResource("Resource_50aqk"), SubResource("Resource_alumc"), SubResource("Resource_asbhp"), SubResource("Resource_5ejwx"), SubResource("Resource_4lx53"), SubResource("Resource_a7jfl"), SubResource("Resource_41ivt"), SubResource("Resource_8nhcv"), SubResource("Resource_jmtdy"), SubResource("Resource_8x3mn"), SubResource("Resource_xmkb8"), SubResource("Resource_af5fm"), SubResource("Resource_u5m6t"), SubResource("Resource_vcs68"), SubResource("Resource_2tfau"), SubResource("Resource_xeqpd"), SubResource("Resource_iidhg"), SubResource("Resource_jmagt"), SubResource("Resource_8vnfp"), SubResource("Resource_slvkb"), SubResource("Resource_six0d")])
-train_spawn = SubResource("Resource_0y44e")
-foods = Array[ExtResource("1_xslrw")]([SubResource("Resource_xslrw"), SubResource("Resource_chyad"), SubResource("Resource_4qdah"), SubResource("Resource_w864w"), SubResource("Resource_7ib6n"), SubResource("Resource_gly0i"), SubResource("Resource_rp2fd"), SubResource("Resource_xcvh2"), SubResource("Resource_u8amf")])
-stations = Array[ExtResource("4_w864w")]([SubResource("Resource_g4dun")])
+tracks = Array[ExtResource("12_yyrmt")]([SubResource("Resource_alumc"), SubResource("Resource_asbhp"), SubResource("Resource_5ejwx"), SubResource("Resource_4lx53"), SubResource("Resource_a7jfl"), SubResource("Resource_41ivt"), SubResource("Resource_8nhcv"), SubResource("Resource_jmtdy"), SubResource("Resource_8x3mn"), SubResource("Resource_xmkb8"), SubResource("Resource_af5fm"), SubResource("Resource_u5m6t"), SubResource("Resource_vcs68"), SubResource("Resource_2tfau"), SubResource("Resource_xeqpd"), SubResource("Resource_iidhg"), SubResource("Resource_jmagt"), SubResource("Resource_8vnfp"), SubResource("Resource_slvkb"), SubResource("Resource_six0d"), SubResource("Resource_0y44e"), SubResource("Resource_sns1w"), SubResource("Resource_brtxa"), SubResource("Resource_jh0ju"), SubResource("Resource_ggfgb"), SubResource("Resource_yv41b"), SubResource("Resource_rwry7"), SubResource("Resource_roixt"), SubResource("Resource_v61hr")])
+train_spawn = SubResource("Resource_fpgj0")
+foods = Array[ExtResource("1_xslrw")]([SubResource("Resource_xslrw"), SubResource("Resource_chyad"), SubResource("Resource_4qdah"), SubResource("Resource_w864w"), SubResource("Resource_7ib6n"), SubResource("Resource_gly0i"), SubResource("Resource_rp2fd"), SubResource("Resource_xcvh2"), SubResource("Resource_u8amf"), SubResource("Resource_g4dun"), SubResource("Resource_u81xi"), SubResource("Resource_yyrmt"), SubResource("Resource_37qot"), SubResource("Resource_2np4w"), SubResource("Resource_whhma"), SubResource("Resource_8qeuo"), SubResource("Resource_di4fi"), SubResource("Resource_nva6c")])
+stations = Array[ExtResource("4_w864w")]([SubResource("Resource_50aqk")])
