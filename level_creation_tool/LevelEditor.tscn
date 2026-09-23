@@ -208,11 +208,11 @@ grid_height = 64
 [node name="TileMap" type="TileMap" parent="." unique_id=201090079]
 tile_set = SubResource("TileSet_drphe")
 format = 2
-layer_0/tile_data = PackedInt32Array(196607, 6, 0, 131071, 6, 0, 65535, 6, 0, -1, 6, 0, -65537, 6, 0, -131073, 6, 0, -196609, 6, 0, -196610, 6, 0, -196611, 6, 0, -196612, 6, 0, -196613, 6, 0, -196614, 6, 0, -196615, 6, 0, -131079, 6, 0, -65543, 6, 0, -7, 6, 0, 65529, 6, 0, 131065, 6, 0, 196601, 6, 0, 262137, 6, 0, 262138, 6, 0, 262139, 6, 0, 262140, 6, 0, 262141, 6, 0, 262142, 6, 0, 262143, 6, 0, 196604, 6, 0)
+layer_0/tile_data = PackedInt32Array(65531, 6, 0, 65532, 6, 0, 65533, 6, 0, 65534, 6, 0, 65535, 6, 0, 0, 6, 0, 1, 6, 0, 65537, 6, 0, 131073, 6, 0, 196609, 6, 0, 262145, 6, 0, 327681, 6, 0, 393217, 6, 0, 458753, 6, 0, 458752, 6, 0, 524287, 6, 0, 524286, 6, 0, 524283, 6, 0, 524282, 6, 0, 524284, 6, 0, 524285, 6, 0, 458746, 6, 0, 393210, 6, 0, 262138, 6, 0, 196602, 6, 0, 131066, 6, 0, 65530, 6, 0, 327674, 6, 0, 458750, 6, 0)
 
 [node name="Train" type="Sprite2D" parent="." unique_id=451579433]
-position = Vector2(-49.500015, 237.00005)
-scale = Vector2(0.26367185, 0.3554688)
+position = Vector2(149.99998, 646.49994)
+scale = Vector2(0.26367185, 0.37695313)
 texture = ExtResource("11_5hysy")
 script = ExtResource("9_twmqk")
 type = 0
@@ -220,26 +220,62 @@ subtype_id = "train_01"
 train_facing = Vector2i(0, -1)
 
 [node name="Food" type="Sprite2D" parent="." unique_id=224014591]
-position = Vector2(-47, 45.645515)
-scale = Vector2(0.144, 0.11058202)
+position = Vector2(149.99998, 50.00003)
+scale = Vector2(0.1279999, 0.12800002)
 texture = ExtResource("12_gyeaq")
 script = ExtResource("9_twmqk")
 
-[node name="Food2" type="Sprite2D" parent="." unique_id=170101734]
-position = Vector2(-44.499966, -52.354485)
-scale = Vector2(0.15800002, 0.114582)
+[node name="Food6" type="Sprite2D" parent="." unique_id=1299371073]
+position = Vector2(49.999992, 50.00003)
+scale = Vector2(0.1279999, 0.12800002)
 texture = ExtResource("12_gyeaq")
 script = ExtResource("9_twmqk")
 
-[node name="Food3" type="Sprite2D" parent="." unique_id=651900372]
-position = Vector2(-51.000023, -152.5)
-scale = Vector2(0.0999999, 0.122)
+[node name="Food10" type="Sprite2D" parent="." unique_id=1701682508]
+position = Vector2(-249.99997, 50.00003)
+scale = Vector2(0.1279999, 0.12800002)
+texture = ExtResource("12_gyeaq")
+script = ExtResource("9_twmqk")
+
+[node name="Food7" type="Sprite2D" parent="." unique_id=1849270444]
+position = Vector2(-150, 50.00003)
+scale = Vector2(0.1279999, 0.12800002)
+texture = ExtResource("12_gyeaq")
+script = ExtResource("9_twmqk")
+
+[node name="Food8" type="Sprite2D" parent="." unique_id=1894538400]
+position = Vector2(-50, 50.00003)
+scale = Vector2(0.1279999, 0.12800002)
+texture = ExtResource("12_gyeaq")
+script = ExtResource("9_twmqk")
+
+[node name="Food9" type="Sprite2D" parent="." unique_id=1618104943]
+position = Vector2(-349.99997, 50.00003)
+scale = Vector2(0.1279999, 0.12800002)
+texture = ExtResource("12_gyeaq")
+script = ExtResource("9_twmqk")
+
+[node name="Food3" type="Sprite2D" parent="." unique_id=954507843]
+position = Vector2(149.99998, 350.00003)
+scale = Vector2(0.1279999, 0.12800002)
+texture = ExtResource("12_gyeaq")
+script = ExtResource("9_twmqk")
+
+[node name="Food4" type="Sprite2D" parent="." unique_id=151269905]
+position = Vector2(149.99998, 250.00003)
+scale = Vector2(0.1279999, 0.12800002)
+texture = ExtResource("12_gyeaq")
+script = ExtResource("9_twmqk")
+
+[node name="Food5" type="Sprite2D" parent="." unique_id=478673213]
+position = Vector2(149.99998, 150.00003)
+scale = Vector2(0.1279999, 0.12800002)
 texture = ExtResource("12_gyeaq")
 script = ExtResource("9_twmqk")
 
 [node name="Station" type="Sprite2D" parent="." unique_id=670610999]
-position = Vector2(-352, 133.99998)
-scale = Vector2(0.46600005, 0.591)
+position = Vector2(-150, 550)
+scale = Vector2(0.35812497, 0.35543758)
 texture = ExtResource("12_cxf42")
 script = ExtResource("9_twmqk")
 type = 2
