@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://b8xaq8y0q4y0"]
+
+[ext_resource type="Script" uid="uid://q5tjiduaav2s" path="res://level_creation_tool/runtime/LevelLoader.gd" id="1_xxx"]
+[ext_resource type="Texture2D" uid="uid://br2rfpup055wb" path="res://level_creation_tool/sprites/original-image-512x512-removebg-preview.png" id="2_tewwp"]
+[ext_resource type="Texture2D" uid="uid://dm1t4rko5j23r" path="res://level_creation_tool/sprites/original-image (2)-512x512.png" id="3_jnty1"]
+[ext_resource type="Texture2D" uid="uid://e8kqm3osywvd" path="res://level_creation_tool/sprites/original-image (3)-512x512.png" id="4_ja7ed"]
+[ext_resource type="Script" uid="uid://bagf7lkd5nxk3" path="res://level_creation_tool/data/TrackVisualConfig.gd" id="5_nnr3n"]
+[ext_resource type="Texture2D" uid="uid://cmwyowci0fdw3" path="res://level_creation_tool/sprites/Gemini_Generated_Image_7ltq737ltq737ltq-removebg-preview.png" id="6_euvcl"]
+[ext_resource type="Texture2D" uid="uid://vajxm65tthmu" path="res://level_creation_tool/sprites/Gemini_Generated_Image_qn9043qn9043qn90-removebg-preview.png" id="7_b0lpj"]
+[ext_resource type="Texture2D" uid="uid://bvd3f1jjr5ouc" path="res://level_creation_tool/sprites/original-image (1)-512x512.png" id="8_54qyj"]
+[ext_resource type="Texture2D" uid="uid://k1chmv67qxed" path="res://level_creation_tool/sprites/original-image (5)-512x512.png" id="9_1ycym"]
+[ext_resource type="Script" uid="uid://b5u32s4a5bdab" path="res://level_creation_tool/data/TrainVisualConfig.gd" id="10_eotug"]
+[ext_resource type="Texture2D" uid="uid://bo0cgqfdcihr8" path="res://level_creation_tool/sprites/original-image (4)-512x512.png" id="11_7con0"]
+[ext_resource type="Texture2D" uid="uid://bx6gxvtnqmvfu" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_17_51_AM-removebg-preview.png" id="12_3xarr"]
+[ext_resource type="Texture2D" uid="uid://dqk7gej4x36q0" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_20_36_AM-removebg-preview.png" id="13_0g7ux"]
+[ext_resource type="Texture2D" uid="uid://cdansxnsw3he2" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_21_19_AM-removebg-preview.png" id="14_20kn7"]
+[ext_resource type="Texture2D" uid="uid://clgvkh7hw62su" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_19_30_AM-removebg-preview.png" id="15_ahaj4"]
+[ext_resource type="Script" uid="uid://ehu1gobf2adh" path="res://level_creation_tool/data/FoodVisualConfig.gd" id="16_rairb"]
+[ext_resource type="Script" uid="uid://bx000fchw6cq4" path="res://level_creation_tool/data/StationVisualConfig.gd" id="17_m7q6f"]
+[ext_resource type="Texture2D" uid="uid://hhbhne1038q0" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_26_19_AM-removebg-preview.png" id="18_tewwp"]
+[ext_resource type="Script" uid="uid://dbjt61wpkqpfy" path="res://level_creation_tool/data/StationVariant.gd" id="19_v4tvw"]
+
+[sub_resource type="Resource" id="Resource_n8x02"]
+script = ExtResource("5_nnr3n")
+straight_horizontal_texture = ExtResource("6_euvcl")
+straight_vertical_texture = ExtResource("7_b0lpj")
+corner_texture = ExtResource("2_tewwp")
+t_junction_texture = ExtResource("8_54qyj")
+cross_junction_texture = ExtResource("3_jnty1")
+dead_end_texture = ExtResource("4_ja7ed")
+metadata/_custom_type_script = "uid://bagf7lkd5nxk3"
+
+[sub_resource type="Resource" id="Resource_xfmm7"]
+script = ExtResource("10_eotug")
+train_engine = ExtResource("11_7con0")
+food_carriage = ExtResource("9_1ycym")
+metadata/_custom_type_script = "uid://b5u32s4a5bdab"
+
+[sub_resource type="Resource" id="Resource_sl75t"]
+script = ExtResource("16_rairb")
+burger = ExtResource("12_3xarr")
+pizza = ExtResource("15_ahaj4")
+donut = ExtResource("13_0g7ux")
+fries = ExtResource("14_20kn7")
+ice_cream = ExtResource("14_20kn7")
+taco = ExtResource("14_20kn7")
+metadata/_custom_type_script = "uid://ehu1gobf2adh"
+
+[sub_resource type="Resource" id="Resource_ovvv0"]
+script = ExtResource("19_v4tvw")
+station_id = "station_1"
+visual = ExtResource("12_3xarr")
+metadata/_custom_type_script = "uid://dbjt61wpkqpfy"
+
+[sub_resource type="Resource" id="Resource_s1mdw"]
+script = ExtResource("17_m7q6f")
+station_base = ExtResource("18_tewwp")
+station_variants = Array[ExtResource("19_v4tvw")]([SubResource("Resource_ovvv0")])
+metadata/_custom_type_script = "uid://bx000fchw6cq4"
+
+[node name="LevelPlayer" type="Node2D" unique_id=1091414117]
+script = ExtResource("1_xxx")
+track_config = SubResource("Resource_n8x02")
+train_config = SubResource("Resource_xfmm7")
+food_config = SubResource("Resource_sl75t")
+station_config = SubResource("Resource_s1mdw")

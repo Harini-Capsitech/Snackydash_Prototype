@@ -1,0 +1,245 @@
+[gd_scene format=3 uid="uid://c4tq0q4y0q4y0"]
+
+[ext_resource type="Script" uid="uid://c4nibd2se40np" path="res://level_creation_tool/LevelEditor.gd" id="1_xxx"]
+[ext_resource type="Texture2D" uid="uid://br2rfpup055wb" path="res://level_creation_tool/sprites/original-image-512x512-removebg-preview.png" id="2_mho87"]
+[ext_resource type="Texture2D" uid="uid://dm1t4rko5j23r" path="res://level_creation_tool/sprites/original-image (2)-512x512.png" id="3_ujcof"]
+[ext_resource type="Texture2D" uid="uid://e8kqm3osywvd" path="res://level_creation_tool/sprites/original-image (3)-512x512.png" id="4_xo87i"]
+[ext_resource type="Texture2D" uid="uid://cmwyowci0fdw3" path="res://level_creation_tool/sprites/Gemini_Generated_Image_7ltq737ltq737ltq-removebg-preview.png" id="6_f1ljc"]
+[ext_resource type="Texture2D" uid="uid://vajxm65tthmu" path="res://level_creation_tool/sprites/Gemini_Generated_Image_qn9043qn9043qn90-removebg-preview.png" id="7_a4rk8"]
+[ext_resource type="Texture2D" uid="uid://cvn4xdleur3fp" path="res://level_creation_tool/Rectangle 3469102.png" id="8_cxf42"]
+[ext_resource type="Texture2D" uid="uid://bvd3f1jjr5ouc" path="res://level_creation_tool/sprites/original-image (1)-512x512.png" id="8_t31eh"]
+[ext_resource type="Script" uid="uid://ddbfji7a0gmdk" path="res://level_creation_tool/core/LevelObject.gd" id="9_twmqk"]
+[ext_resource type="Texture2D" uid="uid://bo0cgqfdcihr8" path="res://level_creation_tool/sprites/original-image (4)-512x512.png" id="11_5hysy"]
+[ext_resource type="Texture2D" uid="uid://hhbhne1038q0" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_26_19_AM-removebg-preview.png" id="12_cxf42"]
+[ext_resource type="Texture2D" uid="uid://bx6gxvtnqmvfu" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_17_51_AM-removebg-preview.png" id="12_gyeaq"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bg18p"]
+texture = ExtResource("6_f1ljc")
+texture_region_size = Vector2i(64, 64)
+1:2/0 = 0
+2:2/0 = 0
+2:3/0 = 0
+1:3/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cxf42"]
+texture = ExtResource("7_a4rk8")
+texture_region_size = Vector2i(64, 64)
+6:0/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+6:4/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nisoc"]
+texture = ExtResource("8_t31eh")
+texture_region_size = Vector2i(64, 64)
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+7:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+6:4/0 = 0
+7:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+2:6/0 = 0
+3:6/0 = 0
+4:6/0 = 0
+5:6/0 = 0
+2:7/0 = 0
+3:7/0 = 0
+4:7/0 = 0
+5:7/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o788v"]
+texture = ExtResource("3_ujcof")
+texture_region_size = Vector2i(64, 64)
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+7:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+6:4/0 = 0
+7:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+2:6/0 = 0
+3:6/0 = 0
+4:6/0 = 0
+5:6/0 = 0
+2:7/0 = 0
+3:7/0 = 0
+4:7/0 = 0
+5:7/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lo4r0"]
+texture = ExtResource("4_xo87i")
+texture_region_size = Vector2i(64, 64)
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+5:5/0 = 0
+2:6/0 = 0
+3:6/0 = 0
+4:6/0 = 0
+5:6/0 = 0
+2:7/0 = 0
+3:7/0 = 0
+4:7/0 = 0
+5:7/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p6gqy"]
+texture = ExtResource("2_mho87")
+texture_region_size = Vector2i(64, 64)
+6:2/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+6:4/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+2:6/0 = 0
+3:6/0 = 0
+4:6/0 = 0
+5:6/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_drphe"]
+texture = ExtResource("8_cxf42")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_drphe"]
+tile_size = Vector2i(100, 100)
+sources/0 = SubResource("TileSetAtlasSource_bg18p")
+sources/1 = SubResource("TileSetAtlasSource_cxf42")
+sources/2 = SubResource("TileSetAtlasSource_nisoc")
+sources/3 = SubResource("TileSetAtlasSource_o788v")
+sources/4 = SubResource("TileSetAtlasSource_lo4r0")
+sources/5 = SubResource("TileSetAtlasSource_p6gqy")
+sources/6 = SubResource("TileSetAtlasSource_drphe")
+
+[node name="LevelEditor" type="Node2D" unique_id=477386705]
+position = Vector2(700, 500)
+script = ExtResource("1_xxx")
+grid_width = 64
+grid_height = 64
+
+[node name="TileMap" type="TileMap" parent="." unique_id=201090079]
+tile_set = SubResource("TileSet_drphe")
+format = 2
+layer_0/tile_data = PackedInt32Array(196607, 6, 0, 131071, 6, 0, 65535, 6, 0, -1, 6, 0, -65537, 6, 0, -131073, 6, 0, -196609, 6, 0, -196610, 6, 0, -196611, 6, 0, -196612, 6, 0, -196613, 6, 0, -196614, 6, 0, -196615, 6, 0, -131079, 6, 0, -65543, 6, 0, -7, 6, 0, 65529, 6, 0, 131065, 6, 0, 196601, 6, 0, 262137, 6, 0, 262138, 6, 0, 262139, 6, 0, 262140, 6, 0, 262141, 6, 0, 262142, 6, 0, 262143, 6, 0, 196604, 6, 0)
+
+[node name="Train" type="Sprite2D" parent="." unique_id=451579433]
+position = Vector2(-49.500015, 237.00005)
+scale = Vector2(0.26367185, 0.3554688)
+texture = ExtResource("11_5hysy")
+script = ExtResource("9_twmqk")
+type = 0
+subtype_id = "train_01"
+train_facing = Vector2i(0, -1)
+
+[node name="Food" type="Sprite2D" parent="." unique_id=224014591]
+position = Vector2(-47, 45.645515)
+scale = Vector2(0.144, 0.11058202)
+texture = ExtResource("12_gyeaq")
+script = ExtResource("9_twmqk")
+
+[node name="Food2" type="Sprite2D" parent="." unique_id=170101734]
+position = Vector2(-44.499966, -52.354485)
+scale = Vector2(0.15800002, 0.114582)
+texture = ExtResource("12_gyeaq")
+script = ExtResource("9_twmqk")
+
+[node name="Food3" type="Sprite2D" parent="." unique_id=651900372]
+position = Vector2(-51.000023, -152.5)
+scale = Vector2(0.0999999, 0.122)
+texture = ExtResource("12_gyeaq")
+script = ExtResource("9_twmqk")
+
+[node name="Station" type="Sprite2D" parent="." unique_id=670610999]
+position = Vector2(-352, 133.99998)
+scale = Vector2(0.46600005, 0.591)
+texture = ExtResource("12_cxf42")
+script = ExtResource("9_twmqk")
+type = 2
