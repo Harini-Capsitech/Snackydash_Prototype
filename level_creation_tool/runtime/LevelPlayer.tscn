@@ -88,7 +88,6 @@ metadata/_custom_type_script = "uid://dbjt61wpkqpfy"
 
 [sub_resource type="Resource" id="Resource_s1mdw"]
 script = ExtResource("17_m7q6f")
-station_base = ExtResource("18_tewwp")
 default_tray_texture = ExtResource("18_tewwp")
 tray_configs = Array[ExtResource("20_traycfg")]([SubResource("Resource_tray_burger"), SubResource("Resource_cxf42"), SubResource("Resource_xslrw")])
 station_variants = Array[ExtResource("19_v4tvw")]([SubResource("Resource_ovvv0"), SubResource("Resource_nisoc"), SubResource("Resource_tewwp")])

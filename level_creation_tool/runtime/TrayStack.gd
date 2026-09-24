@@ -9,6 +9,7 @@ var visual_config: StationVisualConfig
 var tray_layers: Array[Dictionary] = [] # [{"food_id": "burger", "node": Sprite2D, "received_count": 0, "capacity": 9, "food_nodes": []}]
 var layer_y_step: float = 18.0
 var is_animating: bool = false
+var base_sprite: Sprite2D = null
 
 func setup(data: StationData, config: StationVisualConfig, food_counts: Dictionary = {}) -> void:
 	station_data = data
@@ -18,9 +19,9 @@ func setup(data: StationData, config: StationVisualConfig, food_counts: Dictiona
 	scale = data.visual_scale
 	rotation = data.visual_rot
 	
-	# Spawn optional platform base underneath stack
-	if visual_config and visual_config.station_base:
-		var base_sprite = Sprite2D.new()
+	# Spawn optional platform base underneath stack only if distinct from tray textures
+	if visual_config and visual_config.station_base and visual_config.station_base != visual_config.default_tray_texture:
+		base_sprite = Sprite2D.new()
 		base_sprite.texture = visual_config.station_base
 		base_sprite.z_index = -1
 		add_child(base_sprite)
@@ -164,6 +165,10 @@ func pop_active_tray(callback: Callable = Callable()) -> void:
 		is_animating = false
 		tray_completed.emit(finished_food_id)
 		if tray_layers.is_empty():
+			if base_sprite and is_instance_valid(base_sprite):
+				var b_tween = create_tween()
+				b_tween.tween_property(base_sprite, "modulate:a", 0.0, 0.3)
+				b_tween.chain().tween_callback(base_sprite.queue_free)
 			all_trays_completed.emit()
 		if callback.is_valid():
 			callback.call()
