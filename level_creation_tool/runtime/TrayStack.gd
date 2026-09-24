@@ -10,7 +10,7 @@ var tray_layers: Array[Dictionary] = [] # [{"food_id": "burger", "node": Sprite2
 var layer_y_step: float = 18.0
 var is_animating: bool = false
 
-func setup(data: StationData, config: StationVisualConfig) -> void:
+func setup(data: StationData, config: StationVisualConfig, food_counts: Dictionary = {}) -> void:
 	station_data = data
 	visual_config = config
 	
@@ -27,6 +27,15 @@ func setup(data: StationData, config: StationVisualConfig) -> void:
 		
 	var food_ids = data.tray_food_ids if data.tray_food_ids.size() > 0 else [data.required_food_id]
 	
+	# Filter out tray foods that do not exist at all in this level (e.g. burger in Level 1)
+	if not food_counts.is_empty():
+		var filtered_ids: Array[String] = []
+		for fid in food_ids:
+			if food_counts.get(fid, 0) > 0:
+				filtered_ids.append(fid)
+		if filtered_ids.size() > 0:
+			food_ids = filtered_ids
+	
 	# Build stack from bottom to top
 	# Index 0 is the top tray (active). Index 1 is under Index 0, etc.
 	for i in range(food_ids.size()):
@@ -38,11 +47,15 @@ func setup(data: StationData, config: StationVisualConfig) -> void:
 		tray_sprite.z_index = 5 - i
 		add_child(tray_sprite)
 		
+		var cap = 9
+		if not food_counts.is_empty() and food_counts.has(f_id) and food_counts[f_id] > 0:
+			cap = min(9, food_counts[f_id])
+		
 		tray_layers.append({
 			"food_id": f_id,
 			"node": tray_sprite,
 			"received_count": 0,
-			"capacity": 9,
+			"capacity": cap,
 			"food_nodes": []
 		})
 
@@ -104,8 +117,9 @@ func get_capacity() -> int:
 
 func get_next_slot_position() -> Vector2:
 	var count = get_received_count()
-	var row = int(count / 3)
-	var col = count % 3
+	var idx = count % 9
+	var row = int(idx / 3)
+	var col = idx % 3
 	return Vector2((col - 1) * 60.0, (row - 1) * 60.0)
 
 func add_food_to_active_tray(food_sprite: Sprite2D) -> void:

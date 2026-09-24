@@ -53,11 +53,15 @@ func _spawn_level(data: RailwayLevelData) -> void:
 		foods_dict[f.position] = {"food_id": f.food_id, "node": sprite}
 
 	# 3. Spawn Stations
+	var food_counts = {}
+	for f in data.foods:
+		food_counts[f.food_id] = food_counts.get(f.food_id, 0) + 1
+
 	for s in data.stations:
 		var stack = TrayStack.new()
 		stack.name = "Station_" + str(s.position.x) + "_" + str(s.position.y)
 		add_child(stack)
-		stack.setup(s, station_config)
+		stack.setup(s, station_config, food_counts)
 		stations_dict[s.position] = {"data": s, "node": stack, "tray_stack": stack}
 		
 	# 3.5 Spawn Obstacles

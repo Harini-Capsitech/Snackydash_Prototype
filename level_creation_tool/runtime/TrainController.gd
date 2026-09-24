@@ -4,7 +4,8 @@ extends Node2D
 enum State {
 	MOVING,
 	WAITING_AT_JUNCTION,
-	STOPPED
+	STOPPED,
+	DELIVERING
 }
 
 var current_state: State = State.STOPPED
@@ -13,6 +14,12 @@ var current_dir: Vector2i = Vector2i.RIGHT
 var initial_dir: Vector2i
 var target_world_pos: Vector2
 var move_speed: float = 200.0
+
+func _get_cell_world_pos(cell: Vector2i) -> Vector2:
+	if tile_map:
+		return tile_map.map_to_local(cell)
+	else:
+		return Vector2(cell.x * cell_size + cell_size / 2.0, cell.y * cell_size + cell_size / 2.0)
 
 var level_data: RailwayLevelData
 var track_dict: Dictionary = {}
@@ -56,10 +63,7 @@ func setup(p_level_data: RailwayLevelData, p_track_dict: Dictionary, p_foods: Di
 		initial_dir = current_dir
 		
 		# Snap perfectly to the center of the tile to prevent rotation popping
-		if tile_map:
-			position = tile_map.map_to_local(current_grid_pos)
-		else:
-			position = Vector2(current_grid_pos.x * cell_size + cell_size/2.0, current_grid_pos.y * cell_size + cell_size/2.0)
+		position = _get_cell_world_pos(current_grid_pos)
 			
 		# Pre-fill path history backwards so carriages have a path to follow immediately
 		for i in range(100, 0, -1):
@@ -79,30 +83,23 @@ func _process(delta: float) -> void:
 		var t = clamp(1.0 - (dist_current / float(dist_total)), 0.0, 1.0)
 		
 		# Update carriages smoothly along the path history
-		for i in range(carriages.size()):
+		var carriage_count = min(carriages.size(), carriage_sprites.size())
+		for i in range(carriage_count):
 			# i=0 is the first carriage. It moves between path_history[-2] and path_history[-1]
 			var start_idx = path_history.size() - 2 - i
 			var end_idx = path_history.size() - 1 - i
 			
 			if start_idx >= 0 and end_idx < path_history.size():
-				var p_start = Vector2.ZERO
-				var p_end = Vector2.ZERO
-				if tile_map:
-					p_start = tile_map.map_to_local(path_history[start_idx])
-					p_end = tile_map.map_to_local(path_history[end_idx])
-				else:
-					p_start = Vector2(path_history[start_idx].x * cell_size + cell_size/2.0, path_history[start_idx].y * cell_size + cell_size/2.0)
-					p_end = Vector2(path_history[end_idx].x * cell_size + cell_size/2.0, path_history[end_idx].y * cell_size + cell_size/2.0)
+				var p_start = _get_cell_world_pos(path_history[start_idx])
+				var p_end = _get_cell_world_pos(path_history[end_idx])
 				
 				var c_sprite = carriage_sprites[i]
-				c_sprite.position = p_start.lerp(p_end, t)
-				
-				# Rotate carriage visually
-				var dir = path_history[end_idx] - path_history[start_idx]
-				if dir == Vector2i(0, -1): c_sprite.rotation_degrees = 0
-				elif dir == Vector2i(1, 0): c_sprite.rotation_degrees = 90
-				elif dir == Vector2i(0, 1): c_sprite.rotation_degrees = 180
-				elif dir == Vector2i(-1, 0): c_sprite.rotation_degrees = -90
+				if is_instance_valid(c_sprite):
+					c_sprite.position = p_start.lerp(p_end, t)
+					
+					# Rotate carriage visually
+					var dir = path_history[end_idx] - path_history[start_idx]
+					c_sprite.rotation_degrees = _get_angle_for_dir(dir)
 		
 		if dist_current <= step:
 			position = target_world_pos
@@ -210,108 +207,232 @@ func _handle_grid_arrival() -> void:
 			break
 			
 	if found_station_info:
-		var station = found_station_info.data
-		var station_node = found_station_info.node
-		var tray_stack: TrayStack = found_station_info.get("tray_stack", null)
-		var delivered_something = false
-		var delivery_idx = 0
+		await _deliver_at_station(found_station_info)
+		return
 		
-		if tray_stack and tray_stack.has_active_tray():
-			while carriages.size() > 0 and tray_stack.has_active_tray():
-				var active_food = tray_stack.get_active_food_id()
-				var match_idx = -1
-				for i in range(carriages.size()):
-					if carriages[i].to_lower().replace(" ", "_") == active_food.to_lower().replace(" ", "_"):
-						match_idx = i
-						break
-						
-				if match_idx == -1:
+	_resume_after_delivery()
+
+func _can_deliver_to_station(tray_stack: TrayStack) -> bool:
+	if not tray_stack or not tray_stack.has_active_tray():
+		return false
+	var active_food = tray_stack.get_active_food_id()
+	var target = active_food.to_lower().replace(" ", "_")
+	for c in carriages:
+		if c.to_lower().replace(" ", "_") == target:
+			return true
+	if _should_pop_empty_tray(tray_stack):
+		return true
+	return false
+
+func _should_pop_empty_tray(tray_stack: TrayStack) -> bool:
+	if not tray_stack.has_active_tray():
+		return false
+	var active_food = tray_stack.get_active_food_id()
+	var target = active_food.to_lower().replace(" ", "_")
+	
+	# If any carriages have this food, it's not empty
+	for c in carriages:
+		if c.to_lower().replace(" ", "_") == target:
+			return false
+			
+	# If any foods of this type remain on the level, it's not empty
+	for f in foods_dict.values():
+		if f.food_id.to_lower().replace(" ", "_") == target:
+			return false
+			
+	# All foods of this type that exist in the game have already been delivered!
+	return true
+
+func _deliver_at_station(found_station_info: Dictionary) -> void:
+	var station = found_station_info.data
+	var station_node = found_station_info.node
+	var tray_stack: TrayStack = found_station_info.get("tray_stack", null)
+	
+	if tray_stack == null:
+		_fallback_station_delivery(found_station_info)
+		return
+		
+	if not _can_deliver_to_station(tray_stack):
+		_resume_after_delivery()
+		return
+		
+	current_state = State.DELIVERING
+	
+	# Multi-tray cascade loop:
+	# Keep delivering as long as the train has matching items and the station has active trays
+	while carriages.size() > 0 and tray_stack.has_active_tray():
+		# Check if the active tray is empty and has no items in level/carriages
+		if _should_pop_empty_tray(tray_stack):
+			tray_stack.pop_active_tray()
+			await get_tree().create_timer(0.45).timeout
+			continue
+			
+		var active_food = tray_stack.get_active_food_id()
+		var target_food_norm = active_food.to_lower().replace(" ", "_")
+		
+		# Find all carriages in the train matching this active tray
+		var matching_indices: Array[int] = []
+		for i in range(carriages.size()):
+			if carriages[i].to_lower().replace(" ", "_") == target_food_norm:
+				matching_indices.append(i)
+				
+		if matching_indices.is_empty():
+			# No matching carriages for the current active tray
+			break
+			
+		# Limit matching items to active tray remaining capacity
+		var capacity_left = tray_stack.get_capacity() - tray_stack.get_received_count()
+		if capacity_left <= 0:
+			capacity_left = 9
+		if matching_indices.size() > capacity_left:
+			matching_indices = matching_indices.slice(0, capacity_left)
+			
+		var active_tray_node = tray_stack.get_active_tray_node()
+		
+		# 1. Animate food sprites from matching carriages into the active tray
+		for delivery_idx in range(matching_indices.size()):
+			var c_idx = matching_indices[delivery_idx]
+			var c_node = carriage_sprites[c_idx]
+			
+			var food_sprite: Sprite2D = null
+			for child in c_node.get_children():
+				if child is Sprite2D:
+					food_sprite = child
 					break
 					
-				var delivered_food_id = carriages[match_idx]
-				carriages.remove_at(match_idx)
-				var c = carriage_sprites[match_idx]
-				carriage_sprites.remove_at(match_idx)
+			if food_sprite and active_tray_node:
+				var global_pos = food_sprite.global_position
+				var global_scale = food_sprite.global_scale
 				
-				var food_sprite: Sprite2D = null
-				for child in c.get_children():
-					if child is Sprite2D:
-						food_sprite = child
-						break
+				c_node.remove_child(food_sprite)
+				active_tray_node.add_child(food_sprite)
+				food_sprite.global_position = global_pos
+				food_sprite.global_scale = global_scale
+				
+				var slot_pos = tray_stack.get_next_slot_position()
+				var count = tray_stack.get_received_count()
+				food_sprite.z_index = 10 + count
+				
+				var tween = create_tween()
+				tween.set_parallel(true)
+				var delay = delivery_idx * 0.1
+				tween.tween_property(food_sprite, "position", slot_pos, 0.3).set_ease(Tween.EASE_OUT).set_delay(delay)
+				tween.tween_property(food_sprite, "scale", Vector2(0.24, 0.24), 0.3).set_delay(delay)
+				
+				tray_stack.add_food_to_active_tray(food_sprite)
+				
+			# Fade out and shrink empty carriage
+			var c_tween = create_tween()
+			c_tween.set_parallel(true)
+			var c_delay = delivery_idx * 0.1 + 0.05
+			c_tween.tween_property(c_node, "modulate:a", 0.0, 0.2).set_delay(c_delay)
+			c_tween.tween_property(c_node, "scale", c_node.scale * 0.5, 0.2).set_delay(c_delay)
+			c_tween.chain().tween_callback(c_node.queue_free)
+			
+			on_food_delivered.emit(station.required_food_id, active_food)
+			
+		var anim_wait = matching_indices.size() * 0.1 + 0.35
+		await get_tree().create_timer(anim_wait).timeout
+		
+		# 2. Recompact arrays and slide remaining carriages forward along path_history to fill gaps
+		var new_carriages: Array[String] = []
+		var new_sprites: Array[Sprite2D] = []
+		var max_shift_steps: int = 0
+		
+		var new_idx = 0
+		for old_idx in range(carriages.size()):
+			if old_idx in matching_indices:
+				continue
+				
+			var f_id = carriages[old_idx]
+			var sprite = carriage_sprites[old_idx]
+			new_carriages.append(f_id)
+			new_sprites.append(sprite)
+			
+			var orig_path_idx = path_history.size() - 2 - old_idx
+			var target_path_idx = path_history.size() - 2 - new_idx
+			var shift_steps = target_path_idx - orig_path_idx
+			
+			if shift_steps > 0:
+				max_shift_steps = max(max_shift_steps, shift_steps)
+				var shift_tween = create_tween()
+				var step_duration = 0.12
+				for s in range(orig_path_idx + 1, target_path_idx + 1):
+					if s >= 0 and s < path_history.size():
+						var curr_cell = path_history[s]
+						var prev_cell = path_history[s - 1]
+						var target_pos = _get_cell_world_pos(curr_cell)
+						var step_rot = _get_angle_for_dir(curr_cell - prev_cell)
+						shift_tween.tween_property(sprite, "position", target_pos, step_duration).set_ease(Tween.EASE_IN_OUT)
+						shift_tween.parallel().tween_property(sprite, "rotation_degrees", step_rot, step_duration)
 						
-				var active_tray_node = tray_stack.get_active_tray_node()
-				if food_sprite and active_tray_node:
-					var global_pos = food_sprite.global_position
-					var global_scale = food_sprite.global_scale
-					
-					c.remove_child(food_sprite)
-					active_tray_node.add_child(food_sprite)
-					food_sprite.global_position = global_pos
-					food_sprite.global_scale = global_scale
-					
-					var slot_pos = tray_stack.get_next_slot_position()
-					var count = tray_stack.get_received_count()
-					food_sprite.z_index = 10 + count
-					
-					var tween = create_tween()
-					tween.set_parallel(true)
-					var delay = delivery_idx * 0.12
-					tween.tween_property(food_sprite, "position", slot_pos, 0.3).set_ease(Tween.EASE_OUT).set_delay(delay)
-					tween.tween_property(food_sprite, "scale", Vector2(0.24, 0.24), 0.3).set_delay(delay)
-					
-					tray_stack.add_food_to_active_tray(food_sprite)
-					
-				c.queue_free()
-				delivery_idx += 1
-				delivered_something = true
-				
-				if tray_stack.is_active_tray_full():
-					var wait_delay = delivery_idx * 0.12 + 0.35
-					get_tree().create_timer(wait_delay).timeout.connect(func():
-						tray_stack.pop_active_tray()
-					)
-		else:
-			# Fallback if no TrayStack
-			if not found_station_info.has("received_count"): found_station_info["received_count"] = 0
-			while carriages.size() > 0:
-				carriages.pop_front()
-				var c = carriage_sprites.pop_front()
-				var food_sprite = null
-				for child in c.get_children():
-					if child is Sprite2D:
-						food_sprite = child
-						break
-				if food_sprite:
-					var global_pos = food_sprite.global_position
-					var global_scale = food_sprite.global_scale
-					c.remove_child(food_sprite)
-					station_node.add_child(food_sprite)
-					food_sprite.global_position = global_pos
-					food_sprite.global_scale = global_scale
-					var count = found_station_info["received_count"]
-					var row = count / 3
-					var col = count % 3
-					var offset_x = (col - 1) * 60.0
-					var offset_y = (row - 1) * 60.0
-					food_sprite.z_index = 10 + count
-					var tween = create_tween()
-					tween.set_parallel(true)
-					var delay = delivery_idx * 0.15
-					tween.tween_property(food_sprite, "position", Vector2(offset_x, offset_y), 0.3).set_ease(Tween.EASE_OUT).set_delay(delay)
-					tween.tween_property(food_sprite, "scale", Vector2(0.24, 0.24), 0.3).set_delay(delay)
-					found_station_info["received_count"] += 1
-				c.queue_free()
-				delivery_idx += 1
-				delivered_something = true
+			new_idx += 1
 			
-		if delivered_something:
-			on_food_delivered.emit(station.required_food_id, station.required_food_id)
+		carriages = new_carriages
+		carriage_sprites = new_sprites
+		
+		if max_shift_steps > 0:
+			await get_tree().create_timer(max_shift_steps * 0.12 + 0.05).timeout
 			
-			if foods_dict.is_empty() and carriages.is_empty():
-				level_completed.emit()
-				current_state = State.STOPPED
-				return
-	
+		# 3. Check if active tray is full or should pop
+		if tray_stack.is_active_tray_full() or _should_pop_empty_tray(tray_stack):
+			tray_stack.pop_active_tray()
+			await get_tree().create_timer(0.45).timeout
+			# The loop now cascades to the NEXT tray in the stack with the remaining carriages!
+			
+	# All deliveries at this station finished
+	if foods_dict.is_empty() and carriages.is_empty():
+		level_completed.emit()
+		current_state = State.STOPPED
+		return
+		
+	_resume_after_delivery()
+
+func _fallback_station_delivery(found_station_info: Dictionary) -> void:
+	var station = found_station_info.data
+	var station_node = found_station_info.node
+	if not found_station_info.has("received_count"):
+		found_station_info["received_count"] = 0
+		
+	var delivery_idx = 0
+	while carriages.size() > 0:
+		carriages.pop_front()
+		var c = carriage_sprites.pop_front()
+		var food_sprite: Sprite2D = null
+		for child in c.get_children():
+			if child is Sprite2D:
+				food_sprite = child
+				break
+		if food_sprite:
+			var global_pos = food_sprite.global_position
+			var global_scale = food_sprite.global_scale
+			c.remove_child(food_sprite)
+			station_node.add_child(food_sprite)
+			food_sprite.global_position = global_pos
+			food_sprite.global_scale = global_scale
+			var count = found_station_info["received_count"]
+			var row = count / 3
+			var col = count % 3
+			var offset_x = (col - 1) * 60.0
+			var offset_y = (row - 1) * 60.0
+			food_sprite.z_index = 10 + count
+			var tween = create_tween()
+			tween.set_parallel(true)
+			var delay = delivery_idx * 0.15
+			tween.tween_property(food_sprite, "position", Vector2(offset_x, offset_y), 0.3).set_ease(Tween.EASE_OUT).set_delay(delay)
+			tween.tween_property(food_sprite, "scale", Vector2(0.24, 0.24), 0.3).set_delay(delay)
+			found_station_info["received_count"] += 1
+		c.queue_free()
+		delivery_idx += 1
+		
+	on_food_delivered.emit(station.required_food_id, station.required_food_id)
+	if foods_dict.is_empty() and carriages.is_empty():
+		level_completed.emit()
+		current_state = State.STOPPED
+		return
+	_resume_after_delivery()
+
+func _resume_after_delivery() -> void:
 	# Determine next move
 	var current_track: TrackCellData = track_dict.get(current_grid_pos, null)
 	if current_track == null:
@@ -352,16 +473,14 @@ func _handle_grid_arrival() -> void:
 		# Forced path
 		current_dir = valid_exits[0]
 		_calculate_next_target()
+		current_state = State.MOVING
 	else:
 		# Junction
 		current_state = State.WAITING_AT_JUNCTION
 
 func _calculate_next_target() -> void:
 	var next_pos = current_grid_pos + current_dir
-	if tile_map:
-		target_world_pos = tile_map.map_to_local(next_pos)
-	else:
-		target_world_pos = Vector2(next_pos.x * cell_size + cell_size/2.0, next_pos.y * cell_size + cell_size/2.0)
+	target_world_pos = _get_cell_world_pos(next_pos)
 	
 	# Rotate visually based on the difference from the initial direction
 	var initial_angle = _get_angle_for_dir(initial_dir)
