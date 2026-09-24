@@ -1,7 +1,7 @@
 class_name LevelLoader
 extends Node2D
 
-@export var level_file: String = "res://level_creation_tool/Level_004.tres"
+@export var level_file: String = "res://level_creation_tool/Level_001.tres"
 @export var track_config: TrackVisualConfig
 @export var train_config: TrainVisualConfig
 @export var food_config: FoodVisualConfig
