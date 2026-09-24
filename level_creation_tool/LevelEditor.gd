@@ -15,19 +15,40 @@ extends Node2D
 	set(value):
 		if not Engine.is_editor_hint(): return
 		if value == true:
-			_extract_and_save()
 			compile_and_save = false
+			_extract_and_save()
+			notify_property_list_changed()
 		else:
-			compile_and_save = value
+			compile_and_save = false
 
 @export var load_from_tres: bool = false:
 	set(value):
 		if not Engine.is_editor_hint(): return
 		if value == true:
-			_load_level_from_tres()
 			load_from_tres = false
+			_load_level_from_tres()
+			notify_property_list_changed()
 		else:
-			load_from_tres = value
+			load_from_tres = false
+
+@export var new_level_clear: bool = false:
+	set(value):
+		if not Engine.is_editor_hint(): return
+		if value == true:
+			new_level_clear = false
+			_clear_editor()
+			notify_property_list_changed()
+		else:
+			new_level_clear = false
+
+func _clear_editor() -> void:
+	print("Clearing editor for new level...")
+	for child in get_children():
+		if child is LevelObject:
+			child.free()
+		elif child is TileMap:
+			child.clear()
+	print("Editor cleared.")
 
 func _load_level_from_tres() -> void:
 	var full_path = save_path.path_join(level_id + ".tres")
@@ -40,7 +61,7 @@ func _load_level_from_tres() -> void:
 		printerr("Cannot load level: Invalid resource type")
 		return
 		
-	print("Loading level: ", level_id, " ...")
+	print("Loading level: ", level_id, " from ", full_path, " ...")
 	grid_width = level_data.grid_width
 	grid_height = level_data.grid_height
 	self.position = level_data.level_offset
@@ -49,7 +70,7 @@ func _load_level_from_tres() -> void:
 	# Remove old LevelObjects and find TileMap
 	for child in get_children():
 		if child is LevelObject:
-			child.queue_free()
+			child.free()
 		elif child is TileMap:
 			tm = child
 			
