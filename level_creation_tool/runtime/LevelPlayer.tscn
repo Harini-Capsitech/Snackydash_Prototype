@@ -14,7 +14,6 @@
 [ext_resource type="Texture2D" uid="uid://bx6gxvtnqmvfu" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_17_51_AM-removebg-preview.png" id="12_3xarr"]
 [ext_resource type="Texture2D" uid="uid://dqk7gej4x36q0" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_20_36_AM-removebg-preview.png" id="13_0g7ux"]
 [ext_resource type="Texture2D" uid="uid://cdansxnsw3he2" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_21_19_AM-removebg-preview.png" id="14_20kn7"]
-[ext_resource type="Texture2D" uid="uid://clgvkh7hw62su" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_19_30_AM-removebg-preview.png" id="15_ahaj4"]
 [ext_resource type="Script" uid="uid://ehu1gobf2adh" path="res://level_creation_tool/data/FoodVisualConfig.gd" id="16_rairb"]
 [ext_resource type="Script" uid="uid://bx000fchw6cq4" path="res://level_creation_tool/data/StationVisualConfig.gd" id="17_m7q6f"]
 [ext_resource type="Texture2D" uid="uid://hhbhne1038q0" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_26_19_AM-removebg-preview.png" id="18_tewwp"]
@@ -53,44 +52,43 @@ metadata/_custom_type_script = "uid://ehu1gobf2adh"
 [sub_resource type="Resource" id="Resource_ovvv0"]
 script = ExtResource("19_v4tvw")
 station_id = "station_1"
+visual = ExtResource("20_nnr3n")
 metadata/_custom_type_script = "uid://dbjt61wpkqpfy"
-
-[sub_resource type="Resource" id="Resource_nisoc"]
-script = ExtResource("19_v4tvw")
-station_id = "station_2"
-required_food_type = "donut"
-visual = ExtResource("14_20kn7")
-metadata/_custom_type_script = "uid://dbjt61wpkqpfy"
-
-[sub_resource type="Resource" id="Resource_tray_burger"]
-script = ExtResource("20_traycfg")
-tray_texture = ExtResource("20_nnr3n")
-food_badge_icon = ExtResource("12_3xarr")
-
-[sub_resource type="Resource" id="Resource_cxf42"]
-script = ExtResource("20_traycfg")
-food_id = "donut"
-tray_texture = ExtResource("23_euvcl")
-food_badge_icon = ExtResource("14_20kn7")
-
-[sub_resource type="Resource" id="Resource_xslrw"]
-script = ExtResource("20_traycfg")
-food_id = "pizza"
-tray_texture = ExtResource("22_euvcl")
-food_badge_icon = ExtResource("13_0g7ux")
 
 [sub_resource type="Resource" id="Resource_tewwp"]
 script = ExtResource("19_v4tvw")
 station_id = "station_2"
 required_food_type = "pizza"
-visual = ExtResource("15_ahaj4")
+visual = ExtResource("22_euvcl")
 metadata/_custom_type_script = "uid://dbjt61wpkqpfy"
+
+[sub_resource type="Resource" id="Resource_nisoc"]
+script = ExtResource("19_v4tvw")
+station_id = "station_3"
+required_food_type = "donut"
+visual = ExtResource("23_euvcl")
+metadata/_custom_type_script = "uid://dbjt61wpkqpfy"
+
+[sub_resource type="Resource" id="Resource_tray_burger"]
+script = ExtResource("20_traycfg")
+tray_texture = ExtResource("20_nnr3n")
+
+[sub_resource type="Resource" id="Resource_xslrw"]
+script = ExtResource("20_traycfg")
+food_id = "pizza"
+tray_texture = ExtResource("22_euvcl")
+
+[sub_resource type="Resource" id="Resource_nnr3n"]
+script = ExtResource("20_traycfg")
+food_id = "donut"
+tray_texture = ExtResource("23_euvcl")
+metadata/_custom_type_script = "uid://c4eydhnk5wm8n"
 
 [sub_resource type="Resource" id="Resource_s1mdw"]
 script = ExtResource("17_m7q6f")
 default_tray_texture = ExtResource("18_tewwp")
-tray_configs = Array[ExtResource("20_traycfg")]([SubResource("Resource_tray_burger"), SubResource("Resource_cxf42"), SubResource("Resource_xslrw")])
-station_variants = Array[ExtResource("19_v4tvw")]([SubResource("Resource_ovvv0"), SubResource("Resource_nisoc"), SubResource("Resource_tewwp")])
+tray_configs = Array[ExtResource("20_traycfg")]([SubResource("Resource_tray_burger"), SubResource("Resource_xslrw"), SubResource("Resource_nnr3n")])
+station_variants = Array[ExtResource("19_v4tvw")]([SubResource("Resource_ovvv0"), SubResource("Resource_tewwp"), SubResource("Resource_nisoc")])
 metadata/_custom_type_script = "uid://bx000fchw6cq4"
 
 [node name="LevelPlayer" type="Node2D" unique_id=1091414117]

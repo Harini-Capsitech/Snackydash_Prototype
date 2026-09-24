@@ -32,7 +32,11 @@ static func validate_level(level_data: RailwayLevelData) -> Array[String]:
 		
 	var station_reqs = {}
 	for s in level_data.stations:
-		station_reqs[s.required_food_id] = station_reqs.get(s.required_food_id, 0) + 1
+		if s.tray_food_ids.size() > 0:
+			for fid in s.tray_food_ids:
+				station_reqs[fid] = station_reqs.get(fid, 0) + 1
+		elif s.required_food_id != "":
+			station_reqs[s.required_food_id] = station_reqs.get(s.required_food_id, 0) + 1
 		
 	for food_id in food_counts:
 		if not station_reqs.has(food_id):
