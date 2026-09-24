@@ -28,15 +28,6 @@ func setup(data: StationData, config: StationVisualConfig, food_counts: Dictiona
 		
 	var food_ids = data.tray_food_ids if data.tray_food_ids.size() > 0 else [data.required_food_id]
 	
-	# Filter out tray foods that do not exist at all in this level (e.g. burger in Level 1)
-	if not food_counts.is_empty():
-		var filtered_ids: Array[String] = []
-		for fid in food_ids:
-			if food_counts.get(fid, 0) > 0:
-				filtered_ids.append(fid)
-		if filtered_ids.size() > 0:
-			food_ids = filtered_ids
-	
 	# Build stack from bottom to top
 	# Index 0 is the top tray (active). Index 1 is under Index 0, etc.
 	for i in range(food_ids.size()):
@@ -48,15 +39,11 @@ func setup(data: StationData, config: StationVisualConfig, food_counts: Dictiona
 		tray_sprite.z_index = 5 - i
 		add_child(tray_sprite)
 		
-		var cap = 9
-		if not food_counts.is_empty() and food_counts.has(f_id) and food_counts[f_id] > 0:
-			cap = min(9, food_counts[f_id])
-		
 		tray_layers.append({
 			"food_id": f_id,
 			"node": tray_sprite,
 			"received_count": 0,
-			"capacity": cap,
+			"capacity": 9,
 			"food_nodes": []
 		})
 

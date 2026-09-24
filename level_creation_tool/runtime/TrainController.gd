@@ -220,27 +220,13 @@ func _can_deliver_to_station(tray_stack: TrayStack) -> bool:
 	for c in carriages:
 		if c.to_lower().replace(" ", "_") == target:
 			return true
-	if _should_pop_empty_tray(tray_stack):
-		return true
 	return false
 
-func _should_pop_empty_tray(tray_stack: TrayStack) -> bool:
-	if not tray_stack.has_active_tray():
-		return false
-	var active_food = tray_stack.get_active_food_id()
-	var target = active_food.to_lower().replace(" ", "_")
-	
-	# If any carriages have this food, it's not empty
-	for c in carriages:
-		if c.to_lower().replace(" ", "_") == target:
+func _are_all_stations_completed() -> bool:
+	for s_info in stations_dict.values():
+		var stack: TrayStack = s_info.get("tray_stack", null)
+		if stack and not stack.is_all_completed():
 			return false
-			
-	# If any foods of this type remain on the level, it's not empty
-	for f in foods_dict.values():
-		if f.food_id.to_lower().replace(" ", "_") == target:
-			return false
-			
-	# All foods of this type that exist in the game have already been delivered!
 	return true
 
 func _deliver_at_station(found_station_info: Dictionary) -> void:
@@ -261,12 +247,6 @@ func _deliver_at_station(found_station_info: Dictionary) -> void:
 	# Multi-tray cascade loop:
 	# Keep delivering as long as the train has matching items and the station has active trays
 	while carriages.size() > 0 and tray_stack.has_active_tray():
-		# Check if the active tray is empty and has no items in level/carriages
-		if _should_pop_empty_tray(tray_stack):
-			tray_stack.pop_active_tray()
-			await get_tree().create_timer(0.45).timeout
-			continue
-			
 		var active_food = tray_stack.get_active_food_id()
 		var target_food_norm = active_food.to_lower().replace(" ", "_")
 		
@@ -280,10 +260,10 @@ func _deliver_at_station(found_station_info: Dictionary) -> void:
 			# No matching carriages for the current active tray
 			break
 			
-		# Limit matching items to active tray remaining capacity
+		# Limit matching items to active tray remaining capacity (max 9 items)
 		var capacity_left = tray_stack.get_capacity() - tray_stack.get_received_count()
 		if capacity_left <= 0:
-			capacity_left = 9
+			break
 		if matching_indices.size() > capacity_left:
 			matching_indices = matching_indices.slice(0, capacity_left)
 			
@@ -374,14 +354,18 @@ func _deliver_at_station(found_station_info: Dictionary) -> void:
 		if max_shift_steps > 0:
 			await get_tree().create_timer(max_shift_steps * 0.12 + 0.05).timeout
 			
-		# 3. Check if active tray is full or should pop
-		if tray_stack.is_active_tray_full() or _should_pop_empty_tray(tray_stack):
+		# 3. ONLY pop if the active tray is filled to its maximum capacity of 9 items!
+		if tray_stack.is_active_tray_full():
 			tray_stack.pop_active_tray()
 			await get_tree().create_timer(0.45).timeout
 			# The loop now cascades to the NEXT tray in the stack with the remaining carriages!
+		else:
+			# Not full yet (less than 9 items): do NOT pop!
+			break
 			
-	# All deliveries at this station finished
-	if foods_dict.is_empty() and carriages.is_empty():
+	# All deliveries at this station finished.
+	# Level completes ONLY if all foods on track collected, all carriages empty, AND all station trays filled with 9 items!
+	if foods_dict.is_empty() and carriages.is_empty() and _are_all_stations_completed():
 		level_completed.emit()
 		current_state = State.STOPPED
 		return
@@ -426,7 +410,7 @@ func _fallback_station_delivery(found_station_info: Dictionary) -> void:
 		delivery_idx += 1
 		
 	on_food_delivered.emit(station.required_food_id, station.required_food_id)
-	if foods_dict.is_empty() and carriages.is_empty():
+	if foods_dict.is_empty() and carriages.is_empty() and _are_all_stations_completed():
 		level_completed.emit()
 		current_state = State.STOPPED
 		return
