@@ -112,6 +112,36 @@ func build(data: LevelData, grid: GridManager, game_manager: Node2D) -> Dictiona
 			truck.set_crates(dynamic_crate_stack)
 			
 			trucks.append(truck)
+		elif e.type in ["railway_barrier", "closed_gate"]:
+			var obs = Node2D.new()
+			obs.set_script(load("res://scripts/level/AnimatedObstacle.gd"))
+			
+			obs.closed_texture = entity_sprites.get(e.type, null)
+			if e.type == "railway_barrier":
+				obs.open_texture = entity_sprites.get("open_railway_barrier", null)
+			elif e.type == "closed_gate":
+				obs.open_texture = entity_sprites.get("open_gate", null)
+				
+			walls_container.add_child(obs)
+			
+			# Force it to call _ready logic if script is attached dynamically
+			if obs.has_method("_ready"):
+				obs._ready()
+				
+			obs.position = Vector2(offset_x + e.cell_x * data.cell_size.x + data.cell_size.x / 2.0, offset_y + e.cell_y * data.cell_size.y + data.cell_size.y / 2.0)
+			
+			# Scale the sprite properly
+			if obs.sprite and obs.sprite.texture:
+				var tex_size = obs.sprite.texture.get_size()
+				if tex_size.x > 0 and tex_size.y > 0:
+					var scale_factor = min(data.cell_size.x / tex_size.x, data.cell_size.y / tex_size.y)
+					obs.sprite.scale = Vector2(scale_factor, scale_factor)
+					obs.collision_shape.scale = Vector2(scale_factor, scale_factor)
+			
+			# Add to blocked cells if we need it
+			if "blocked_cells" in self:
+				self.blocked_cells.append(Vector2i(e.cell_x, e.cell_y))
+				
 		else:
 			var fruit: Fruit = fruit_scene.instantiate()
 			items_container.add_child(fruit)

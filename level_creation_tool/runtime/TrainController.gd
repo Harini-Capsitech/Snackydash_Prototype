@@ -151,17 +151,32 @@ func _unhandled_input(event: InputEvent) -> void:
 func _handle_grid_arrival() -> void:
 	# Check for obstacle collision
 	if obstacles_dict.has(current_grid_pos):
-		current_state = State.STOPPED
-		on_crashed.emit()
-		print("CRASHED into an obstacle!")
+		var obs_node = obstacles_dict[current_grid_pos].get("node")
 		
-		# Optional: add visual shake or explosion here
-		var tween = create_tween()
-		tween.tween_property(self, "position", position + Vector2(10, 0), 0.05)
-		tween.tween_property(self, "position", position - Vector2(10, 0), 0.05)
-		tween.tween_property(self, "position", position + Vector2(5, 0), 0.05)
-		tween.tween_property(self, "position", position, 0.05)
-		return
+		# If it's an AnimatedObstacle, wait for it to open instead of crashing
+		if obs_node and obs_node.has_method("open"):
+			if not obs_node.is_open:
+				current_state = State.STOPPED
+				print("Train waiting for obstacle to open...")
+				if not obs_node.opened.is_connected(_resume_from_obstacle):
+					obs_node.opened.connect(_resume_from_obstacle)
+				return
+			else:
+				# It is already open, just pass through!
+				pass
+		else:
+			# Regular static obstacle -> Crash
+			current_state = State.STOPPED
+			on_crashed.emit()
+			print("CRASHED into an obstacle!")
+			
+			# Optional: add visual shake or explosion here
+			var tween = create_tween()
+			tween.tween_property(self, "position", position + Vector2(10, 0), 0.05)
+			tween.tween_property(self, "position", position - Vector2(10, 0), 0.05)
+			tween.tween_property(self, "position", position + Vector2(5, 0), 0.05)
+			tween.tween_property(self, "position", position, 0.05)
+			return
 		
 	# Check for food
 	if foods_dict.has(current_grid_pos):
@@ -439,10 +454,16 @@ func _resume_after_delivery() -> void:
 		if current_dir != Vector2i(1, 0) and track_dict.has(current_grid_pos + Vector2i(-1, 0)): valid_exits.append(Vector2i(-1, 0))
 		if current_dir != Vector2i(-1, 0) and track_dict.has(current_grid_pos + Vector2i(1, 0)): valid_exits.append(Vector2i(1, 0))
 	
-	# Filter out any exits that contain obstacles so we don't pass through them
+	# Filter out any static obstacles (allow animated ones so we can wait at them)
 	var safe_exits = []
 	for ex in valid_exits:
-		if not obstacles_dict.has(current_grid_pos + ex):
+		var target_cell = current_grid_pos + ex
+		var is_safe = true
+		if obstacles_dict.has(target_cell):
+			var obs = obstacles_dict[target_cell].get("node")
+			if not obs or not obs.has_method("open"):
+				is_safe = false
+		if is_safe:
 			safe_exits.append(ex)
 			
 	valid_exits = safe_exits
@@ -479,8 +500,12 @@ func _get_angle_for_dir(dir: Vector2i) -> float:
 	return 0.0
 
 func _is_valid_move(pos: Vector2i, dir: Vector2i) -> bool:
-	# Immediately reject if the target cell has an obstacle
-	if obstacles_dict.has(pos + dir): return false
+	var target_cell = pos + dir
+	# Reject if the target cell has a static obstacle
+	if obstacles_dict.has(target_cell):
+		var obs = obstacles_dict[target_cell].get("node")
+		if not obs or not obs.has_method("open"):
+			return false
 	
 	var track: TrackCellData = track_dict.get(pos, null)
 	if not track: return false
@@ -490,3 +515,9 @@ func _is_valid_move(pos: Vector2i, dir: Vector2i) -> bool:
 	if dir == Vector2i(-1, 0) and track.connect_left: return true
 	if dir == Vector2i(1, 0) and track.connect_right: return true
 	return false
+
+func _resume_from_obstacle() -> void:
+	if current_state == State.STOPPED:
+		print("Obstacle opened! Train resuming...")
+		_calculate_next_target()
+		current_state = State.MOVING

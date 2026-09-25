@@ -10,7 +10,11 @@ class_name LevelEditor extends Node2D
 	"blueberry": null,
 	"peach": null,
 	"box": null,
-	"rock": load("res://Sprites/rock.png")
+	"rock": load("res://Sprites/rock.png"),
+	"railway_barrier": null,
+	"open_railway_barrier": null,
+	"closed_gate": null,
+	"open_gate": null
 }:
 	set(value):
 		entity_sprites = value
