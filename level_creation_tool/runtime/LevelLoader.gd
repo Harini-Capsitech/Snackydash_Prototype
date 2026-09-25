@@ -7,6 +7,10 @@ extends Node2D
 @export var food_config: FoodVisualConfig
 @export var station_config: StationVisualConfig
 
+@export_group("Animated Obstacles")
+@export var open_gate_texture: Texture2D
+@export var open_barrier_texture: Texture2D
+
 var track_dict: Dictionary = {}
 var foods_dict: Dictionary = {}
 var stations_dict: Dictionary = {}
@@ -66,15 +70,31 @@ func _spawn_level(data: RailwayLevelData) -> void:
 		
 	# 3.5 Spawn Obstacles
 	for o in data.obstacles:
-		var sprite = Sprite2D.new()
-		var tex = load(o.texture_path) if o.texture_path != "" else null
-		if tex:
-			sprite.texture = tex
+		var sprite
+		if o.obstacle_type in ["railway_barrier", "closed_gate"]:
+			sprite = Node2D.new()
+			sprite.set_script(load("res://scripts/level/AnimatedObstacle.gd"))
+			var tex = load(o.texture_path) if o.texture_path != "" else null
+			sprite.closed_texture = tex
+			if o.obstacle_type == "closed_gate":
+				sprite.open_texture = open_gate_texture
+			elif o.obstacle_type == "railway_barrier":
+				sprite.open_texture = open_barrier_texture
+		else:
+			sprite = Sprite2D.new()
+			var tex = load(o.texture_path) if o.texture_path != "" else null
+			if tex:
+				sprite.texture = tex
+				
 		sprite.position = o.visual_pos
 		sprite.scale = o.visual_scale
 		sprite.rotation = o.visual_rot
 		add_child(sprite)
 		obstacles_dict[o.position] = {"data": o, "node": sprite}
+		
+		# For animated obstacles, ensure _ready is called if added to tree manually
+		if sprite.has_method("_ready"):
+			sprite._ready()
 		
 	# 4. Spawn Train
 	if data.train_spawn:

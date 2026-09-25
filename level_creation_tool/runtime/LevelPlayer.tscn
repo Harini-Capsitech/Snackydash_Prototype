@@ -19,9 +19,11 @@
 [ext_resource type="Texture2D" uid="uid://hhbhne1038q0" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_26_19_AM-removebg-preview.png" id="18_tewwp"]
 [ext_resource type="Script" uid="uid://dbjt61wpkqpfy" path="res://level_creation_tool/data/StationVariant.gd" id="19_v4tvw"]
 [ext_resource type="Texture2D" uid="uid://ceowsv07ip7k2" path="res://Sprites/red tray.png" id="20_nnr3n"]
-[ext_resource type="Script" uid="uid://c4eydhnk5wm8n" path="res://level_creation_tool/data/TrayVisualConfig.gd" id="20_traycfg"]
+[ext_resource type="Script" path="res://level_creation_tool/data/TrayVisualConfig.gd" id="20_traycfg"]
 [ext_resource type="Texture2D" uid="uid://bv24t1g27ff7x" path="res://Sprites/blue tray.png" id="22_euvcl"]
+[ext_resource type="Texture2D" uid="uid://ysgohpboy0ry" path="res://level_creation_tool/sprites/ChatGPT_Image_Sep_25__2026__12_22_47_PM-removebg-preview.png" id="23_b0lpj"]
 [ext_resource type="Texture2D" uid="uid://16j5pbvvbxqo" path="res://Sprites/yellow tray.png" id="23_euvcl"]
+[ext_resource type="Texture2D" uid="uid://dvixrk1iaehi4" path="res://level_creation_tool/sprites/ChatGPT_Image_Sep_25__2026__12_23_06_PM-removebg-preview.png" id="24_54qyj"]
 
 [sub_resource type="Resource" id="Resource_n8x02"]
 script = ExtResource("5_nnr3n")
@@ -91,9 +93,23 @@ tray_configs = Array[ExtResource("20_traycfg")]([SubResource("Resource_tray_burg
 station_variants = Array[ExtResource("19_v4tvw")]([SubResource("Resource_ovvv0"), SubResource("Resource_tewwp"), SubResource("Resource_nisoc")])
 metadata/_custom_type_script = "uid://bx000fchw6cq4"
 
+[sub_resource type="CanvasTexture" id="CanvasTexture_b0lpj"]
+
 [node name="LevelPlayer" type="Node2D" unique_id=1091414117]
 script = ExtResource("1_xxx")
 track_config = SubResource("Resource_n8x02")
 train_config = SubResource("Resource_xfmm7")
 food_config = SubResource("Resource_sl75t")
 station_config = SubResource("Resource_s1mdw")
+open_gate_texture = ExtResource("23_b0lpj")
+open_barrier_texture = ExtResource("24_54qyj")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1723671598]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1080.0
+offset_bottom = 1920.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CanvasTexture_b0lpj")
