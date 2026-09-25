@@ -11,19 +11,22 @@
 [ext_resource type="Texture2D" uid="uid://k1chmv67qxed" path="res://level_creation_tool/sprites/original-image (5)-512x512.png" id="9_1ycym"]
 [ext_resource type="Script" uid="uid://b5u32s4a5bdab" path="res://level_creation_tool/data/TrainVisualConfig.gd" id="10_eotug"]
 [ext_resource type="Texture2D" uid="uid://bo0cgqfdcihr8" path="res://level_creation_tool/sprites/original-image (4)-512x512.png" id="11_7con0"]
-[ext_resource type="Texture2D" uid="uid://bx6gxvtnqmvfu" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_17_51_AM-removebg-preview.png" id="12_3xarr"]
-[ext_resource type="Texture2D" uid="uid://dqk7gej4x36q0" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_20_36_AM-removebg-preview.png" id="13_0g7ux"]
-[ext_resource type="Texture2D" uid="uid://cdansxnsw3he2" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_21_19_AM-removebg-preview.png" id="14_20kn7"]
+[ext_resource type="Texture2D" uid="uid://c2vbj8t3lmse4" path="res://level_creation_tool/sprites/ChatGPT_Image_Sep_25__2026__12_40_02_PM-removebg-preview.png" id="12_eotug"]
+[ext_resource type="Texture2D" uid="uid://c6dly3w600umr" path="res://level_creation_tool/sprites/Gemini_Generated_Image_d3835yd3835yd383-removebg-preview.png" id="13_7con0"]
+[ext_resource type="Texture2D" uid="uid://btd8ifdv50fu" path="res://level_creation_tool/sprites/ChatGPT_Image_Sep_25__2026__12_40_14_PM-removebg-preview.png" id="14_3xarr"]
+[ext_resource type="Texture2D" uid="uid://duedv8im7cjgr" path="res://level_creation_tool/sprites/ChatGPT_Image_Sep_25__2026__12_40_18_PM-removebg-preview.png" id="15_0g7ux"]
+[ext_resource type="Texture2D" uid="uid://cij4djbj1xoq4" path="res://level_creation_tool/sprites/ChatGPT_Image_Sep_25__2026__12_40_08_PM-removebg-preview.png" id="16_20kn7"]
 [ext_resource type="Script" uid="uid://ehu1gobf2adh" path="res://level_creation_tool/data/FoodVisualConfig.gd" id="16_rairb"]
 [ext_resource type="Script" uid="uid://bx000fchw6cq4" path="res://level_creation_tool/data/StationVisualConfig.gd" id="17_m7q6f"]
+[ext_resource type="Texture2D" uid="uid://cus5c63bs8e4h" path="res://level_creation_tool/sprites/Gemini_Generated_Image_h4burrh4burrh4bu-removebg-preview.png" id="18_eotug"]
 [ext_resource type="Texture2D" uid="uid://hhbhne1038q0" path="res://Sprites/ChatGPT_Image_Sep_22__2026__11_26_19_AM-removebg-preview.png" id="18_tewwp"]
 [ext_resource type="Script" uid="uid://dbjt61wpkqpfy" path="res://level_creation_tool/data/StationVariant.gd" id="19_v4tvw"]
-[ext_resource type="Texture2D" uid="uid://ceowsv07ip7k2" path="res://Sprites/red tray.png" id="20_nnr3n"]
-[ext_resource type="Script" path="res://level_creation_tool/data/TrayVisualConfig.gd" id="20_traycfg"]
-[ext_resource type="Texture2D" uid="uid://bv24t1g27ff7x" path="res://Sprites/blue tray.png" id="22_euvcl"]
+[ext_resource type="Script" uid="uid://c4eydhnk5wm8n" path="res://level_creation_tool/data/TrayVisualConfig.gd" id="20_traycfg"]
+[ext_resource type="Texture2D" uid="uid://bf52to53xcsav" path="res://level_creation_tool/sprites/burger tray.png" id="22_ahaj4"]
 [ext_resource type="Texture2D" uid="uid://ysgohpboy0ry" path="res://level_creation_tool/sprites/ChatGPT_Image_Sep_25__2026__12_22_47_PM-removebg-preview.png" id="23_b0lpj"]
-[ext_resource type="Texture2D" uid="uid://16j5pbvvbxqo" path="res://Sprites/yellow tray.png" id="23_euvcl"]
+[ext_resource type="Texture2D" uid="uid://dxj2n8ievmmhk" path="res://level_creation_tool/sprites/pizza tray.png" id="23_rairb"]
 [ext_resource type="Texture2D" uid="uid://dvixrk1iaehi4" path="res://level_creation_tool/sprites/ChatGPT_Image_Sep_25__2026__12_23_06_PM-removebg-preview.png" id="24_54qyj"]
+[ext_resource type="Texture2D" uid="uid://delnq1ws76kb" path="res://level_creation_tool/sprites/donut tray.png" id="24_m7q6f"]
 
 [sub_resource type="Resource" id="Resource_n8x02"]
 script = ExtResource("5_nnr3n")
@@ -43,47 +46,47 @@ metadata/_custom_type_script = "uid://b5u32s4a5bdab"
 
 [sub_resource type="Resource" id="Resource_sl75t"]
 script = ExtResource("16_rairb")
-burger = ExtResource("12_3xarr")
-pizza = ExtResource("13_0g7ux")
-donut = ExtResource("14_20kn7")
-fries = ExtResource("14_20kn7")
-ice_cream = ExtResource("14_20kn7")
-taco = ExtResource("14_20kn7")
+burger = ExtResource("12_eotug")
+pizza = ExtResource("16_20kn7")
+donut = ExtResource("13_7con0")
+fries = ExtResource("14_3xarr")
+ice_cream = ExtResource("15_0g7ux")
+taco = ExtResource("18_eotug")
 metadata/_custom_type_script = "uid://ehu1gobf2adh"
 
 [sub_resource type="Resource" id="Resource_ovvv0"]
 script = ExtResource("19_v4tvw")
 station_id = "station_1"
-visual = ExtResource("20_nnr3n")
+visual = ExtResource("22_ahaj4")
 metadata/_custom_type_script = "uid://dbjt61wpkqpfy"
 
 [sub_resource type="Resource" id="Resource_tewwp"]
 script = ExtResource("19_v4tvw")
 station_id = "station_2"
 required_food_type = "pizza"
-visual = ExtResource("22_euvcl")
+visual = ExtResource("23_rairb")
 metadata/_custom_type_script = "uid://dbjt61wpkqpfy"
 
 [sub_resource type="Resource" id="Resource_nisoc"]
 script = ExtResource("19_v4tvw")
 station_id = "station_3"
 required_food_type = "donut"
-visual = ExtResource("23_euvcl")
+visual = ExtResource("24_m7q6f")
 metadata/_custom_type_script = "uid://dbjt61wpkqpfy"
 
 [sub_resource type="Resource" id="Resource_tray_burger"]
 script = ExtResource("20_traycfg")
-tray_texture = ExtResource("20_nnr3n")
+tray_texture = ExtResource("22_ahaj4")
 
 [sub_resource type="Resource" id="Resource_xslrw"]
 script = ExtResource("20_traycfg")
 food_id = "pizza"
-tray_texture = ExtResource("22_euvcl")
+tray_texture = ExtResource("23_rairb")
 
 [sub_resource type="Resource" id="Resource_nnr3n"]
 script = ExtResource("20_traycfg")
 food_id = "donut"
-tray_texture = ExtResource("23_euvcl")
+tray_texture = ExtResource("24_m7q6f")
 metadata/_custom_type_script = "uid://c4eydhnk5wm8n"
 
 [sub_resource type="Resource" id="Resource_s1mdw"]
